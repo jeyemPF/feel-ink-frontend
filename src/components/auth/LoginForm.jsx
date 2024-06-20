@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,7 +12,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-sm">
+    <form onSubmit={handleSubmit} className="w-full max-w-sm bg-inherit">
       <div className="mb-4">
         <input
           type="email"
@@ -33,11 +34,12 @@ const LoginForm = () => {
           className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none placeholder-gray-400"
           placeholder="Enter your password"
         />
+        
       </div>
       <div className="flex items-center justify-between">
         <button
           type="submit"
-          className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none"
+          className="bg-violet-500 hover:bg-violet-600 text-white py-2 px-4 rounded-sm focus:outline-none w-full"
         >
           Login
         </button>
