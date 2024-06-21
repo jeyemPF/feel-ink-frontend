@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +19,7 @@ const LoginForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none placeholder-gray-400"
+          className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-violet-500 placeholder-gray-400"
           placeholder="Enter your email"
         />
       </div>
@@ -31,18 +30,25 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none placeholder-gray-400"
+          className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-violet-500 placeholder-gray-400"
           placeholder="Enter your password"
         />
-        
       </div>
       <div className="flex items-center justify-between">
         <button
           type="submit"
           className="bg-violet-500 hover:bg-violet-600 text-white py-2 px-4 rounded-sm focus:outline-none w-full"
         >
-          Login
+          Go
         </button>
+      </div>
+      <div className="mt-4 text-center">
+        <p className="text-gray-600">
+          Don't have an account?{' '}
+          <a href="/signup" className="text-violet-500 hover:text-violet-600">
+            Sign Up
+          </a>
+        </p>
       </div>
     </form>
   );
