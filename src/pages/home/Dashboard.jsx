@@ -39,7 +39,7 @@ const Dashboard = () => {
                 className="w-full h-32 border-2 border-gray-300 rounded p-2 focus:outline-none focus:border-violet-500"
                 value={card.content}
                 onChange={(e) => handleContentChange(card.id, e.target.value)}
-                placeholder="Write here..."
+                placeholder="What's on your mind..."
               />
               <button
                 className="mt-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none"
