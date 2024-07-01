@@ -1,29 +1,30 @@
 import React from 'react';
-import { FaPencilAlt } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
+import logo from '../assets/logo/logos.png';
+import ProfileDropdown from './dropdowns/ProfileDropdown';
+
+const { Title } = Typography;
 
 const Header = ({ addCard, disableAddButton }) => {
   return (
-    <header className="bg-violet-500 text-white py-4 px-8 flex justify-between items-center">
-      <h1 className="text-2xl font-bold">Free Ink</h1>
-      <div className="flex items-center">
-        <a href="/history" className="text-white hover:underline mx-4">
-          My Ink
-        </a>
-        <img
-          src="http://res.cloudinary.com/drlztlr1m/image/upload/v1706979188/oxbsppubd3rsabqwfxsr.jpg"
-          alt="Avatar"
-          className="w-10 h-10 rounded-full mx-4"
-        />
-        <button className="bg-white text-violet-500 py-2 px-4 rounded-sm hover:bg-gray-100 focus:outline-none">
-          Logout
-        </button>
+    <header className="text-violet-800 py-2 px-8 flex justify-between items-center border-2">
+      <div className="flex flex-row flex-grow">
+        <img src={logo} alt="Feelink Logo" className="w-10 h-10" />
+        <Title level={3} style={{ color: '#5B21B6', fontWeight: "bold"}} className="font-bold justify-start text-justify pt-1">
+          Feel ink
+        </Title>
+      </div>
+
+      <div className="flex items-center ml-auto">
         <button
-          className={`ml-4 text-white hover:text-gray-300 ${disableAddButton ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`ml-4 text-violet hover:text-violet-500 ${disableAddButton ? '' : ''}`}
           onClick={addCard}
-          disabled={disableAddButton}
+          disabled={disableAddButton} 
         >
-          <FaPencilAlt />
+          <PlusOutlined />
         </button>
+        <ProfileDropdown />
       </div>
     </header>
   );

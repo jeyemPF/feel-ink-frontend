@@ -42,7 +42,7 @@ const Dashboard = () => {
                 placeholder="Write here..."
               />
               <button
-                className="mt-2 bg-violet-500 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none"
+                className="mt-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none"
                 onClick={() => postCard(card.id)}
               >
                 Post
