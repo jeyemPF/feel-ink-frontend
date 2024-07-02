@@ -30,7 +30,7 @@ const Dashboard = () => {
       const avatar = postMode === 'reveal'
         ? 'http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg'
         : null;
-      
+
       const newCard = {
         id: postedCards.length + 1,
         content: newCardContent,
@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   // Function to handle reaction (increment heart count and toggle heart click state)
   const handleReaction = (cardId, reactionType) => {
-    const updatedCards = postedCards.map(card => {
+    const updatedCards = postedCards.map((card) => {
       if (card.id === cardId) {
         return {
           ...card,
@@ -74,7 +74,7 @@ const Dashboard = () => {
       <Header addCard={postCard} disableAddButton={false} />
       <div className="p-4 flex flex-col md:flex-row">
         {/* Writing section */}
-        <div className="w-full md:w-1/3 p-4 mb-4 md:mb-0">
+        <div className="w-full md:w-1/2 p-4 mb-4 md:mb-0">
           <div className="p-4 rounded relative bg-white shadow">
             <textarea
               className="w-full h-32 border-2 border-gray-300 rounded p-2 focus:outline-none"
@@ -83,22 +83,22 @@ const Dashboard = () => {
               placeholder="What's on your mind..."
               style={{ backgroundColor: selectedColor }} // Apply selected color to textarea background
             />
-            <div className="flex items-center mt-2">
+            <div className="flex flex-col md:flex-row items-center mt-2">
               {/* Display color selection dropdown */}
               <select
-                className="bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none"
+                className="bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none w-full md:w-1/2" // Added width classes
                 value={selectedColor}
                 onChange={handleColorChange}
               >
                 {colorOptions.map((color, index) => (
                   <option key={index} value={color} style={{ backgroundColor: color }}>
-                    {color}
+                     {color}
                   </option>
                 ))}
               </select>
               {/* Display post mode selection */}
               <select
-                className="ml-2 bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none"
+                className="mt-2 md:mt-0 md:ml-2 bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none"
                 value={postMode}
                 onChange={(e) => handlePostModeChange(e.target.value)}
               >
@@ -106,11 +106,11 @@ const Dashboard = () => {
                 <option value="anonymous">Anonymous</option>
               </select>
               <button
-                className="ml-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none"
-                onClick={postCard}
-              >
-                Post
-              </button>
+  className="mt-2 md:mt-0 md:ml-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none w-full" // Added w-full class
+  onClick={postCard}
+>
+  Post
+</button>
             </div>
           </div>
         </div>
@@ -120,8 +120,8 @@ const Dashboard = () => {
 
         {/* Posted cards section */}
         <div className="w-full md:w-2/3 p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-            {postedCards.map((card) => (
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {postedCards.map((card) => (
               <div key={card.id} className="p-4 rounded bg-white shadow" style={{ backgroundColor: card.color }}>
                 <p>{card.content}</p>
                 <div className="flex items-center mt-2 justify-between">
@@ -135,7 +135,7 @@ const Dashboard = () => {
                   )}
                   <div className="flex items-center">
                     <HeartOutlined
-                      style={{ color: card.isHeartClicked ? '#5B21B6' : 'black', marginRight: '5px', cursor: 'pointer' }}
+                      style={{ color: card.isHeartClicked ? 'violet' : 'black', marginRight: '5px', cursor: 'pointer' }}
                       onClick={() => handleReaction(card.id, 'heart')}
                     />
                     <p className="text-sm text-gray-500">{card.reactions.heart}</p>
