@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import Header from '../../components/Header.jsx';
-import CardPostedModal from '../../components/modals/CardPostedModal.jsx';
-import { HeartOutlined, SendOutlined } from '@ant-design/icons';
+import Header from '../../components/Header';
+import CardPostedModal from '../../components/modals/CardPostedModal';
+import { HeartOutlined } from '@ant-design/icons';
+import logo from '../../assets/logo/logos.png';
+import bump from '../../assets/logo/bump2.png'
+import { formatTimestamp } from '../../utils/dateUtils';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 const Dashboard = () => {
   const [postedCards, setPostedCards] = useState([]);
@@ -10,30 +16,26 @@ const Dashboard = () => {
   const [postMode, setPostMode] = useState('reveal'); // Default post mode
   const [selectedCard, setSelectedCard] = useState(null); // State to track selected card for modal display
 
-  // Function to handle content change of the new card
   const handleNewCardContentChange = (e) => {
     setNewCardContent(e.target.value);
   };
 
-  // Function to handle color selection from dropdown
   const handleColorChange = (e) => {
     setSelectedColor(e.target.value);
   };
 
-  // Function to handle post mode selection
   const handlePostModeChange = (mode) => {
     setPostMode(mode);
   };
 
-  // Function to add a new card to the posted cards
   const postCard = () => {
     if (newCardContent.trim() !== '') {
       const email = 'johnmarkparejafaeldonia@gmail.com';
-      const username = postMode === 'reveal' ? email.split('@')[0] : 'Anonymous';
+      const username = postMode === 'reveal' ? "@" + email.split('@')[0] : 'Anonymous';
       const avatar = postMode === 'reveal'
         ? 'http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg'
         : null;
-  
+
       const newCard = {
         id: postedCards.length + 1,
         content: newCardContent,
@@ -44,7 +46,7 @@ const Dashboard = () => {
         isHeartClicked: false, // Track whether heart icon is clicked
         timestamp: new Date().toISOString(), // Use ISO string for timestamp
       };
-  
+
       setPostedCards([...postedCards, newCard]);
       setNewCardContent('');
       // Additional logic for posting (e.g., API call)
@@ -52,7 +54,6 @@ const Dashboard = () => {
     }
   };
 
-  // Function to handle reaction (toggle heart click state and update reactions count)
   const handleReaction = (cardId, reactionType) => {
     const updatedCards = postedCards.map((card) => {
       if (card.id === cardId) {
@@ -77,44 +78,14 @@ const Dashboard = () => {
     setPostedCards(updatedCards);
   };
 
-  // Function to format timestamp based on elapsed time
-  const formatTimestamp = (timestamp) => {
-    const now = new Date();
-    const postDate = new Date(timestamp);
-    const diff = now - postDate;
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (seconds < 60) {
-      return 'Just now';
-    } else if (seconds < 120) {
-      return '1m ago';
-    } else if (minutes < 60) {
-      return `${minutes}m ago`;
-    } else if (hours < 24 && now.getDate() === postDate.getDate()) {
-      return postDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    } else if (hours < 24 && now.getDate() !== postDate.getDate()) {
-      return postDate.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: 'numeric' });
-    } else if (days < 7) {
-      return postDate.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-    } else {
-      return postDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
-    }
-  };
-
-  // Function to open modal for a selected card
   const openModal = (card) => {
     setSelectedCard(card);
   };
 
-  // Function to close modal
   const closeModal = () => {
     setSelectedCard(null);
   };
 
-  // Color options that fit within a violet theme
   const colorOptions = ['#FFFFFF', '#EDE7F6', '#D1C4E9', '#B39DDB', '#9575CD'];
 
   return (
@@ -124,41 +95,51 @@ const Dashboard = () => {
         {/* Writing section */}
         <div className="w-full md:w-1/2 p-4 mb-4 md:mb-0">
           <div className="p-4 rounded relative bg-white shadow">
+            <div className="flex items-center ">
+              <img src={logo} alt="Feelink Logo" className="w-5 h-5" />
+              <Title level={5} style={{ color: '#5B21B6' }} className="font-bold justify-start text-justify pt-1">
+                Compose Your Ink
+              </Title>
+            </div>
+
             <textarea
-              className="w-full h-32 border-2 rounded p-2 focus:outline-none"
+              className="w-full h-18 border-2 rounded p-2 focus:outline-none"
               value={newCardContent}
               onChange={handleNewCardContentChange}
-              placeholder="What's on your mind..."
+              placeholder="Write your thoughts..."
               style={{ border: `2px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}` }}
             />
 
-            <div className="flex flex-col md:flex-row items-center mt-2">
+            <div className="flex flex-col md:flex-column items-center mt-2 ">
               {/* Display color selection dropdown */}
-              <select
-                className="bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none w-full md:w-1/2" // Added width classes
-                value={selectedColor}
-                onChange={handleColorChange}
-              >
-                {colorOptions.map((color, index) => (
-                  <option key={index} value={color} style={{ backgroundColor: color }}>
-                    {color}
-                  </option>
-                ))}
-              </select>
-              {/* Display post mode selection */}
-              <select
-                className="mt-2 md:mt-0 md:ml-2 bg-white border border-gray-300 rounded px-3 py-1  focus:outline-none w-full"
-                value={postMode}
-                onChange={(e) => handlePostModeChange(e.target.value)}
-              >
-                <option value="reveal">Reveal Me</option>
-                <option value="anonymous">Anonymous</option>
-              </select>
+              <div className="flex flex-col md:flex-row sm:flex-row mb-2 w-full ">
+                <select
+                  className="mt-2 md:mt-0 md:ml-1 sm:mt-0  sm:ml-2 bg-white border border-gray-300 rounded px-3 py-1  focus:outline-none w-full md:w-full "
+                  value={selectedColor}
+                  onChange={handleColorChange}
+                >
+                  {colorOptions.map((color, index) => (
+                    <option key={index} value={color} style={{ backgroundColor: color }}>
+                      {color}
+                    </option>
+                  ))}
+                </select>
+                {/* Display post mode selection */}
+                <select
+                  className="mt-2 md:mt-0 md:mr-1 sm:mt-0 sm:ml-2 bg-white border border-gray-300 rounded px-3 py-1  focus:outline-none w-full"
+                  value={postMode}
+                  onChange={(e) => handlePostModeChange(e.target.value)}
+                >
+                  <option value="reveal">Reveal Me</option>
+                  <option value="anonymous">Anonymous</option>
+                </select>
+              </div>
+
               <button
-                className="mt-2 md:mt-0 md:ml-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none w-full" // Added w-full class
+                className="mt-2 md:mt-0 md:ml-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none w-full"
                 onClick={postCard}
               >
-                <SendOutlined />
+                <p>Publish</p>
               </button>
             </div>
           </div>
@@ -169,53 +150,64 @@ const Dashboard = () => {
 
         {/* Posted cards section */}
         <div className="w-full md:w-2/3 p-4">
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-            {postedCards.map((card) => (
-              <div
-                key={card.id}
-                className="p-4 rounded bg-white shadow cursor-pointer"
-                style={{ backgroundColor: card.color }}
-                onClick={() => openModal(card)}
-              >
-                <div className="flex items-center justify-between">
-                  {card.username === 'Anonymous' ? (
-                    <p className="text-sm text-gray-500">{card.username}</p>
-                  ) : (
-                    <div className="flex items-center">
-                      <img
-                        className="w-6 h-6 rounded-full mr-2"
-                        src={card.avatar}
-                        alt="Avatar"
-                      />
+          <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold' }} className="font-bold justify-start text-justify pt-1">
+            Inkstream
+          </Title>
+          {postedCards.length === 0 ? (
+            <>
+          <div className="flex items-center flex-col text-gray-500 mt-4">
+          <img src={bump} alt="Bump Logo" className="w-40 h-40" />
+              <p>No stories found</p>
+            </div></>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+              {postedCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="p-4 rounded bg-white shadow cursor-pointer"
+                  style={{ backgroundColor: card.color }}
+                  onClick={() => openModal(card)}
+                >
+                  <div className="flex items-center justify-between">
+                    {card.username === 'Anonymous' ? (
                       <p className="text-sm text-gray-500">{card.username}</p>
+                    ) : (
+                      <div className="flex items-center">
+                        <img
+                          className="w-6 h-6 rounded-full mr-2"
+                          src={card.avatar}
+                          alt="Avatar"
+                        />
+                        <p className="text-sm" style={{ color: card.color === '#9575CD' || card.color === '#B39DDB' ? '#f2ebeb' : 'inherit' }}>{card.username}</p>
+                      </div>
+                    )}
+                    <p className="text-xs" style={{ color: card.color === '#9575CD' || card.color === '#B39DDB' ? '#f2ebeb' : 'inherit' }}>{formatTimestamp(card.timestamp)}</p>
+                  </div>
+                  <p className="overflow-hidden overflow-ellipsis pt-2 " style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                    {card.content}
+                  </p>
+                  <div className="flex items-center mt-2 justify-end">
+                    <div className="flex items-center">
+                      <HeartOutlined
+                        style={{
+                          color: card.isHeartClicked ? 'violet' : '#1e1d1f',
+                          marginRight: '5px',
+                          marginTop: '2px',
+                          cursor: 'pointer',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleReaction(card.id, 'heart');
+                        }}
+                      />
+                      <p className="text-sm" style={{ color: card.color === '#9575CD' || card.color === '#B39DDB' ? '#f2ebeb' : 'inherit' }}>{card.reactions.heart}</p>
                     </div>
-                  )}
-                  <p className="text-xs text-gray-400">{formatTimestamp(card.timestamp)}</p>
-                </div>
-                <p className="overflow-hidden overflow-ellipsis" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-                  {card.content}
-                </p>
-                <div className="flex items-center mt-2 justify-end">
-                  <div className="flex items-center">
-                    <HeartOutlined
-                      style={{
-                        color: card.isHeartClicked ? 'violet' : 'black',
-                        marginRight: '5px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent card click event from triggering
-                        handleReaction(card.id, 'heart');
-                      }}
-                    />
-                    <p className="text-sm text-gray-500">{card.reactions.heart}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
-
 
         {/* Modal */}
         <CardPostedModal isOpen={!!selectedCard} onClose={closeModal} card={selectedCard} />
