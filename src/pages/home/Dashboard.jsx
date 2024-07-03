@@ -42,7 +42,7 @@ const Dashboard = () => {
         avatar: avatar,
         reactions: { heart: 0 }, // Initialize reactions object
         isHeartClicked: false, // Track whether heart icon is clicked
-        timestamp: new Date().toLocaleString(), // Add timestamp when the card is posted
+        timestamp: new Date().toISOString(), // Use ISO string for timestamp
       };
   
       setPostedCards([...postedCards, newCard]);
@@ -51,24 +51,57 @@ const Dashboard = () => {
       console.log('Posting:', newCardContent);
     }
   };
-  
 
-  // Function to handle reaction (increment heart count and toggle heart click state)
+  // Function to handle reaction (toggle heart click state and update reactions count)
   const handleReaction = (cardId, reactionType) => {
     const updatedCards = postedCards.map((card) => {
       if (card.id === cardId) {
+        const newReactions = { ...card.reactions };
+        const isHeartClicked = !card.isHeartClicked;
+
+        if (isHeartClicked) {
+          newReactions[reactionType] += 1; // Increment reaction count
+        } else {
+          newReactions[reactionType] -= 1; // Decrement reaction count
+        }
+
         return {
           ...card,
-          reactions: {
-            ...card.reactions,
-            [reactionType]: card.reactions[reactionType] + 1,
-          },
-          isHeartClicked: !card.isHeartClicked, // Toggle heart click state
+          reactions: newReactions,
+          isHeartClicked: isHeartClicked,
         };
       }
       return card;
     });
+
     setPostedCards(updatedCards);
+  };
+
+  // Function to format timestamp based on elapsed time
+  const formatTimestamp = (timestamp) => {
+    const now = new Date();
+    const postDate = new Date(timestamp);
+    const diff = now - postDate;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (seconds < 60) {
+      return 'Just now';
+    } else if (seconds < 120) {
+      return '1m ago';
+    } else if (minutes < 60) {
+      return `${minutes}m ago`;
+    } else if (hours < 24 && now.getDate() === postDate.getDate()) {
+      return postDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else if (hours < 24 && now.getDate() !== postDate.getDate()) {
+      return postDate.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: 'numeric' });
+    } else if (days < 7) {
+      return postDate.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+    } else {
+      return postDate.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+    }
   };
 
   // Function to open modal for a selected card
@@ -137,52 +170,52 @@ const Dashboard = () => {
         {/* Posted cards section */}
         <div className="w-full md:w-2/3 p-4">
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-          {postedCards.map((card) => (
-  <div
-    key={card.id}
-    className="p-4 rounded bg-white shadow cursor-pointer"
-    style={{ backgroundColor: card.color }}
-    onClick={() => openModal(card)}
-  >
-    <div className="flex items-center justify-between">
-      {card.username === 'Anonymous' ? (
-        <p className="text-sm text-gray-500">{card.username}</p>
-      ) : (
-        <div className="flex items-center">
-          <img
-            className="w-6 h-6 rounded-full mr-2"
-            src={card.avatar}
-            alt="Avatar"
-          />
-          <p className="text-sm text-gray-500">{card.username}</p>
-        </div>
-      )}
-      <p className="text-xs text-gray-400">{card.timestamp}</p> {/* Display timestamp */}
-    </div>
-    <p className="overflow-hidden overflow-ellipsis" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-      {card.content}
-    </p>
-    <div className="flex items-center mt-2 justify-end">
-      <div className="flex items-center">
-        <HeartOutlined
-          style={{
-            color: card.isHeartClicked ? 'violet' : 'black',
-            marginRight: '5px',
-            cursor: 'pointer',
-          }}
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent card click event from triggering
-            handleReaction(card.id, 'heart');
-          }}
-        />
-        <p className="text-sm text-gray-500">{card.reactions.heart}</p>
-      </div>
-    </div>
-  </div>
-))}
-
+            {postedCards.map((card) => (
+              <div
+                key={card.id}
+                className="p-4 rounded bg-white shadow cursor-pointer"
+                style={{ backgroundColor: card.color }}
+                onClick={() => openModal(card)}
+              >
+                <div className="flex items-center justify-between">
+                  {card.username === 'Anonymous' ? (
+                    <p className="text-sm text-gray-500">{card.username}</p>
+                  ) : (
+                    <div className="flex items-center">
+                      <img
+                        className="w-6 h-6 rounded-full mr-2"
+                        src={card.avatar}
+                        alt="Avatar"
+                      />
+                      <p className="text-sm text-gray-500">{card.username}</p>
+                    </div>
+                  )}
+                  <p className="text-xs text-gray-400">{formatTimestamp(card.timestamp)}</p>
+                </div>
+                <p className="overflow-hidden overflow-ellipsis" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+                  {card.content}
+                </p>
+                <div className="flex items-center mt-2 justify-end">
+                  <div className="flex items-center">
+                    <HeartOutlined
+                      style={{
+                        color: card.isHeartClicked ? 'violet' : 'black',
+                        marginRight: '5px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent card click event from triggering
+                        handleReaction(card.id, 'heart');
+                      }}
+                    />
+                    <p className="text-sm text-gray-500">{card.reactions.heart}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+
 
         {/* Modal */}
         <CardPostedModal isOpen={!!selectedCard} onClose={closeModal} card={selectedCard} />
