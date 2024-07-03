@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CardPostedModal = ({ isOpen, onClose, card }) => {
   if (!isOpen || !card) return null;
+
+  const { avatar, username, content } = card;
 
   return (
     <div
@@ -13,16 +16,16 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
         onClick={(e) => e.stopPropagation()} // Prevents click inside CardPostedModal from closing it
       >
         <div className="flex items-center mb-4">
-          {card.avatar && (
+          {avatar && (
             <img
               className="w-10 h-10 rounded-full mr-4"
-              src={card.avatar}
+              src={avatar}
               alt="Avatar"
             />
           )}
-          <p className="text-lg font-semibold">{card.username}</p>
+          {username && <p className="text-lg font-semibold">{username}</p>}
         </div>
-        <p className="mb-4">{card.content}</p>
+        <p className="mb-4">{content}</p>
         <button
           className="mt-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
           onClick={onClose}
@@ -32,6 +35,16 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
       </div>
     </div>
   );
+};
+
+CardPostedModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  card: PropTypes.shape({
+    avatar: PropTypes.string,
+    username: PropTypes.string,
+    content: PropTypes.string.isRequired,
+  }),
 };
 
 export default CardPostedModal;

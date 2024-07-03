@@ -33,7 +33,7 @@ const Dashboard = () => {
       const avatar = postMode === 'reveal'
         ? 'http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg'
         : null;
-
+  
       const newCard = {
         id: postedCards.length + 1,
         content: newCardContent,
@@ -42,14 +42,16 @@ const Dashboard = () => {
         avatar: avatar,
         reactions: { heart: 0 }, // Initialize reactions object
         isHeartClicked: false, // Track whether heart icon is clicked
+        timestamp: new Date().toLocaleString(), // Add timestamp when the card is posted
       };
-
+  
       setPostedCards([...postedCards, newCard]);
       setNewCardContent('');
       // Additional logic for posting (e.g., API call)
       console.log('Posting:', newCardContent);
     }
   };
+  
 
   // Function to handle reaction (increment heart count and toggle heart click state)
   const handleReaction = (cardId, reactionType) => {
@@ -94,7 +96,7 @@ const Dashboard = () => {
               value={newCardContent}
               onChange={handleNewCardContentChange}
               placeholder="What's on your mind..."
-              style={{ border: `2px solid ${selectedColor}` }}
+              style={{ border: `2px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}` }}
             />
 
             <div className="flex flex-col md:flex-row items-center mt-2">
@@ -135,47 +137,50 @@ const Dashboard = () => {
         {/* Posted cards section */}
         <div className="w-full md:w-2/3 p-4">
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-            {postedCards.map((card) => (
-              <div
-                key={card.id}
-                className="p-4 rounded bg-white shadow cursor-pointer"
-                style={{ backgroundColor: card.color }}
-                onClick={() => openModal(card)}
-              >
-                {card.username === 'Anonymous' ? (
-                  <p className="text-sm text-gray-500">{card.username}</p>
-                ) : (
-                  <div className="flex items-center">
-                    <img
-                      className="w-6 h-6 rounded-full mr-2"
-                      src={card.avatar}
-                      alt="Avatar"
-                    />
-                    <p className="text-sm text-gray-500">{card.username}</p>
-                  </div>
-                )}
-                <p className="overflow-hidden overflow-ellipsis" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-                  {card.content}
-                </p>
-                <div className="flex items-center mt-2 justify-end">
-                  
-                  <div className="flex items-center">
-                    <HeartOutlined
-                      style={{
-                        color: card.isHeartClicked ? 'violet' : 'black',
-                        marginRight: '5px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent card click event from triggering
-                        handleReaction(card.id, 'heart');
-                      }}
-                    />
-                    <p className="text-sm text-gray-500">{card.reactions.heart}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {postedCards.map((card) => (
+  <div
+    key={card.id}
+    className="p-4 rounded bg-white shadow cursor-pointer"
+    style={{ backgroundColor: card.color }}
+    onClick={() => openModal(card)}
+  >
+    <div className="flex items-center justify-between">
+      {card.username === 'Anonymous' ? (
+        <p className="text-sm text-gray-500">{card.username}</p>
+      ) : (
+        <div className="flex items-center">
+          <img
+            className="w-6 h-6 rounded-full mr-2"
+            src={card.avatar}
+            alt="Avatar"
+          />
+          <p className="text-sm text-gray-500">{card.username}</p>
+        </div>
+      )}
+      <p className="text-xs text-gray-400">{card.timestamp}</p> {/* Display timestamp */}
+    </div>
+    <p className="overflow-hidden overflow-ellipsis" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+      {card.content}
+    </p>
+    <div className="flex items-center mt-2 justify-end">
+      <div className="flex items-center">
+        <HeartOutlined
+          style={{
+            color: card.isHeartClicked ? 'violet' : 'black',
+            marginRight: '5px',
+            cursor: 'pointer',
+          }}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click event from triggering
+            handleReaction(card.id, 'heart');
+          }}
+        />
+        <p className="text-sm text-gray-500">{card.reactions.heart}</p>
+      </div>
+    </div>
+  </div>
+))}
+
           </div>
         </div>
 
