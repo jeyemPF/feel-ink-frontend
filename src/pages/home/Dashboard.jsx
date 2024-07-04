@@ -87,10 +87,13 @@ const Dashboard = () => {
       <div className="p-4 flex flex-col md:flex-row">
         <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
         <div className="hidden md:block bg-gray-300 w-px min-h-full "></div>
+        
         <div className="w-full md:w-2/3 p-4">
-          <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold' }} className="font-bold justify-start text-justify pt-1">
+          {/* Updated Title with custom font */}
+          <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
             Inkstream
           </Title>
+
           {postedCards.length === 0 ? (
             <EmptyState />
           ) : (

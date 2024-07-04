@@ -17,6 +17,7 @@ const Header = ({ addCard, disableAddButton }) => {
         <Link to="/dashboard" className="flex items-center">
           <img src={logo} alt="Feelink Logo" className="w-10 h-10" />
         </Link>
+        <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }} className="font-bold justify-start text-justify pt-1">Feel Ink</Title>
       </div>
 
       <div className="flex items-center ml-auto">

@@ -13,8 +13,8 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
     <div className="w-full md:w-1/2 p-4 mb-4 md:mb-0">
       <div className="p-4 rounded relative bg-white shadow">
         <div className="flex items-center">
-          <img src={logo} alt="Feelink Logo" className="w-5 h-5" />
-          <Title level={5} style={{ color: '#5B21B6' }} className="font-bold justify-start text-justify pt-1">
+          {/* <img src={logo} alt="Feelink Logo" className="w-8 h-8" /> */}
+          <Title level={5} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }} className="font-bold justify-start text-justify pt-1">
             Compose Your Ink
           </Title>
         </div>
