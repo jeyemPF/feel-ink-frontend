@@ -11,7 +11,7 @@ const { Title } = Typography;
 
 const Header = ({ addCard, disableAddButton }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white text-violet-800 py-2 px-3 flex justify-between items-center border-2 ">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white text-violet-800 py-2 px-3 flex justify-between items-center border-2  ">
       <div className="flex flex-row flex-grow">
         {/* Use Link to navigate to the dashboard */}
         <Link to="/dashboard" className="flex items-center">

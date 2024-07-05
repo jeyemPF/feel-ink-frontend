@@ -14,11 +14,11 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white p-4 rounded-lg shadow-lg w-full h-3/4 lg:h-3/4 lg:w-1/3"
+        className="bg-white p-4 rounded-lg shadow-lg w-full h-3/4 lg:h-3/4 lg:w-1/3 "
         style={{ maxWidth: '80vw', backgroundColor: color, color: '#333333' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center justify-between mb-1 ">
           <div className="flex items-center w-full justify-between">
             <div className="flex flex-row">
               {avatar && (
@@ -42,8 +42,8 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
           </div>
         </div>
 
-        <div className="overflow-auto  " style={{ height: 'calc(100% - 64px)' }}>
-          <p className="pb-10 text-sm" style={{ wordBreak: 'break-spaces' }}>{content}</p>
+        <div className="overflow-auto pl-2 " style={{ height: 'calc(100% - 64px)' }}>
+          <p className="pb-10 text-sm" style={{ wordBreak: 'prewrap' }}>{content}</p>
         </div>
       </div>
     </div>
