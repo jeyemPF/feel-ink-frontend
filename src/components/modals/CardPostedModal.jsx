@@ -15,13 +15,13 @@
         onClick={onClose}
       >
         <div
-          className="bg-white p-4 rounded-lg shadow-lg"
-          style={{ maxWidth: '80vw', backgroundColor: color, color: '#333333' }}
+          className="bg-white p-4 rounded-lg shadow-lg w-full h-3/4 overflow-auto"
+          style={{ maxWidth: '80vw', backgroundColor: color, color: '#333333' }}  
           onClick={(e) => e.stopPropagation()} 
         >
           <div className="flex items-center justify-between mb-4 ">
             <div className="flex items-center  w-full justify-between">
-            <div className='flex flex-row'>
+            <div className='flex flex-row '>
               {avatar && (
                 <img
                   className="w-10 h-10 rounded-full mr-4"
@@ -29,21 +29,26 @@
                   alt="Avatar"
                 />
               )}
-              <div className='flex flex-col justify-center align-center '>
-              {username && <p className="text-lg font-semibold">{username}</p>}
-              <p className="text-sm text-gray-500 mb-4">{formatTimestamp(timestamp)}</p>
+              <div className='flex flex-col justify-center align-center'>
+              {username && <p className="text-sm md:text-sm  sm:text-sm font-semibold">{username}</p>}
+              <p className="text-xs md:text-xs sm:text-sm  text-gray-500 mb-4">{formatTimestamp(timestamp)}</p>
             </div>
             </div>
-            <ShrinkOutlined 
-              className="text-lg font-bold text-gray-500 hover:text-gray-800 focus:outline-none pb-10	"
-              onClick={onClose}></ShrinkOutlined>
-            
-        
             </div>
       
             
           </div>
-          <p className="pb-10 text-lg">{content}</p>
+
+          <div className='overflow-auto h-auto'>
+            <p className="pb-10 text-sm overflow-hidden " style={{ wordBreak: 'break-word', whiteSpace: '  ' }} >{content}</p>
+          </div>
+          
+          <div>
+            <ShrinkOutlined 
+                className="text-lg font-bold text-gray-500 hover:text-gray-800 focus:outline-none 	"
+                onClick={onClose}>
+            </ShrinkOutlined>
+          </div>
 
         </div>
       </div>

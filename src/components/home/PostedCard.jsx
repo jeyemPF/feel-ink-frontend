@@ -32,7 +32,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         </p>
       </div>
       <div className=''>
-      <p className="overflow-hidden overflow-ellipsis pt-2" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
+      <p className="truncate pt-2" style={{ wordBreak: 'break-word', whiteSpace: 'nowrap' }}>
         {card.content}
       </p>
       </div>
