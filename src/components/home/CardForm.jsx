@@ -20,7 +20,7 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
         </div>
 
         <textarea
-          className="w-full h-18 border-2 rounded p-2 focus:outline-none"
+          className="w-full h-18 border-2 rounded p-2 focus:outline-none "
           value={newCardContent}
           onChange={(e) => handleFormChange('newCardContent', e.target.value)}
           placeholder="Write your thoughts..."
