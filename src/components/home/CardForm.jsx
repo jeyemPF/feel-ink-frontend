@@ -4,7 +4,7 @@ import logo from '../../assets/logo/logos.png';
 
 const { Title } = Typography;
 
-const colorOptions = ['#FFFFFF', '#EDE7F6', '#D1C4E9', '#B39DDB', '#9575CD'];
+const colorOptions = ['#FFFFFF',  '#D1C4E9', '#9575CD'];
 
 const CardForm = ({ formState, handleFormChange, postCard }) => {
   const { newCardContent, selectedColor, postMode } = formState;
