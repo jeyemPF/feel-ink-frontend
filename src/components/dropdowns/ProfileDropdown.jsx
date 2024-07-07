@@ -15,7 +15,7 @@ const ProfileDropdown = () => {
       <img
         src="http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg"
         alt="Avatar"
-        className="w-8 h-8 rounded-full mx-4 cursor-pointer"
+        className="w-6 h-6 rounded-full mx-4 cursor-pointer"
         onClick={toggleDropdown}
       />
       

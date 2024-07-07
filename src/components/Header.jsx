@@ -11,7 +11,7 @@ const Header = ({ disableAddButton }) => {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white text-violet-800 py-2 px-3 flex justify-between items-center border-2">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-opacity-100 bg-opacity-80 text-violet-800 py-2 px-3 flex justify-between items-center border-2">
         
         {/* Centered logo */}
         <div className="flex items-center justify-center flex-grow md:justify-start">
@@ -34,7 +34,7 @@ const Header = ({ disableAddButton }) => {
       </header>
 
       {/* Bottom Navigation (visible on mobile screens) */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 z-50 md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 z-50 md:hidden md:bg-opacity-50 bg-opacity-80">
         <div className="flex justify-around py-2">
           {/* Home Icon */}
           <Link to="/dashboard" className={`text-violet hover:text-violet-500 ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}>
