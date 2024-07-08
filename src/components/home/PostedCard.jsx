@@ -35,7 +35,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         </p>
       </div>
       <p
-        className="font-extralight pt-5 text-sm overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2"
+        className="font-extralight  pt-5 text-xs overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2"
         style={{
           color: textColor(card.color),
         }}

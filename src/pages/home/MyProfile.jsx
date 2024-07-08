@@ -18,7 +18,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header /> {/* Your custom Header component */}
+      <Header /> {/* Your custom Header component */} 
       <div className="max-w-lg mx-auto mt-8 bg-white shadow-md rounded-lg overflow-hidden">
         <div className="flex items-center p-6">
           <img
