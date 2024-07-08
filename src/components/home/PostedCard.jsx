@@ -8,18 +8,41 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
     openModal(card);
   };
 
-  const textColor = (color) => (color === '#9575CD' || color === '#B39DDB' ? '#FAFAFA' : 'inherit');
-  const iconColor = (color, isHeartClicked) => (isHeartClicked ? 'violet' : (color === '#9575CD' ? '#FFFFFF' : '#1e1d1f'));
+  const textColor = (color) => {
+    switch (color) {
+      case '#FFFFFF':
+        return '#374151'; // Dark gray for white background
+      case '#D1C4E9':
+        return '#4B5563'; // Medium gray for light purple background
+      case '#9575CD':
+        return '#FAFAFA'; // Very light gray for purple background
+      default:
+        return 'inherit';
+    }
+  };
+
+  const iconColor = (color, isHeartClicked) => {
+    switch (color) {
+      case '#FFFFFF':
+        return isHeartClicked ? '#8B5CF6' : '#374151'; // Dark gray for white background
+      case '#D1C4E9':
+        return isHeartClicked ? '#8B5CF6' : '#4B5563'; // Medium gray for light purple background
+      case '#9575CD':
+        return isHeartClicked ? '#8B5CF6' : '#FAFAFA'; // Very light gray for purple background
+      default:
+        return 'inherit';
+    }
+  };
 
   const UserInfo = ({ username, avatar, color }) => (
     username === 'Anonymous' ? (
-      <p className="text-sm font-medium	" style={{ color: textColor(color) }}>
+      <p className="text-sm font-medium" style={{ color: textColor(color) }}>
         {username}
       </p>
     ) : (
       <div className="flex items-center">
         <img className="w-6 h-6 rounded-full mr-2" src={avatar} alt="Avatar" />
-        <p className="text-sm font-medium	" style={{ color: textColor(color) }}>
+        <p className="text-sm font-medium" style={{ color: textColor(color) }}>
           {username}
         </p>
       </div>
@@ -35,15 +58,18 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         </p>
       </div>
       <p
-        className="font-extralight  pt-5 text-xs overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2"
-        style={{
-          color: textColor(card.color),
-        }}
+        className="font-light pt-5 text-sm overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2"
+        style={{ color: textColor(card.color) }}
       >
         {card.content}
       </p>
       <div className="flex items-center mt-2 justify-end w-full">
-        <ArrowsAltOutlined style={{ marginRight: '8px', cursor: 'pointer' }} onClick={handleIconClick} />
+        <ArrowsAltOutlined 
+          style={{ marginRight: '8px', cursor: 'pointer', color: textColor(card.color) }} 
+          onClick={handleIconClick} 
+          onMouseOver={(e) => e.target.style.color = '#6B7280'} 
+          onMouseOut={(e) => e.target.style.color = textColor(card.color)}
+        />
         <div className="flex flex-row gap-1 items-center">
           <HeartOutlined
             style={{ color: iconColor(card.color, card.isHeartClicked), cursor: 'pointer' }}
@@ -51,8 +77,10 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
               e.stopPropagation();
               handleReaction(card.id, 'heart');
             }}
+            onMouseOver={(e) => e.target.style.color = '#6B7280'} 
+            onMouseOut={(e) => e.target.style.color = iconColor(card.color, card.isHeartClicked)}
           />
-          <p className="text-xs" style={{ color: textColor(card.color) }}>
+          <p className="text-sm" style={{ color: textColor(card.color) }}>
             {card.reactions.heart}
           </p>
         </div>

@@ -3,6 +3,7 @@ import Header from '../../components/Header'; // Assuming you have a Header comp
 
 const Profile = () => {
   const [postContent, setPostContent] = useState('');
+  const [userPosts, setUserPosts] = useState([]);
 
   const handlePostChange = (e) => {
     setPostContent(e.target.value);
@@ -10,15 +11,20 @@ const Profile = () => {
 
   const handlePostSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically handle the posting logic, like an API call
-    console.log('Posting:', postContent);
+    // Simulate posting logic
+    const newPost = {
+      id: userPosts.length + 1,
+      content: postContent,
+      timestamp: new Date().toLocaleString(),
+    };
+    setUserPosts([newPost, ...userPosts]);
     // Reset the input after posting
     setPostContent('');
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header /> {/* Your custom Header component */} 
+      <Header /> {/* Your custom Header component */}
       <div className="max-w-lg mx-auto mt-8 bg-white shadow-md rounded-lg overflow-hidden">
         <div className="flex items-center p-6">
           <img
@@ -48,6 +54,21 @@ const Profile = () => {
             </button>
           </div>
         </form>
+      </div>
+
+      {/* Display User Posts */}
+      <div className="max-w-lg mx-auto mt-4">
+        {userPosts.map((post) => (
+          <div
+            key={post.id}
+            className="bg-white shadow-md rounded-lg overflow-hidden border-l-4 border-violet-500 mt-4"
+          >
+            <div className="p-4">
+              <p className="text-gray-600 text-sm mb-2">{post.timestamp}</p>
+              <p className="text-lg">{post.content}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
