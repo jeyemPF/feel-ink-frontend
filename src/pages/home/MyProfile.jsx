@@ -1,97 +1,86 @@
-import React, { useState } from 'react';
-import Header from '../../components/Header'; // Assuming you have a Header component
+  import React, { useState } from 'react';
+  import Header from '../../components/Header'; // Assuming you have a Header component
+  import { CameraOutlined } from '@ant-design/icons';
 
-const Profile = () => {
-  const [postContent, setPostContent] = useState('');
-  const [userPosts, setUserPosts] = useState([]);
+  const Profile = () => {
+    const [postContent, setPostContent] = useState('');
+    const [userPosts, setUserPosts] = useState([]);
 
-  const handlePostChange = (e) => {
-    setPostContent(e.target.value);
-  };
-
-  const handlePostSubmit = (e) => {
-    e.preventDefault();
-    // Simulate posting logic
-    const newPost = {
-      id: userPosts.length + 1,
-      content: postContent,
-      timestamp: new Date().toLocaleString(),
+    const handlePostChange = (e) => {
+      setPostContent(e.target.value);
     };
-    setUserPosts([newPost, ...userPosts]);
-    // Reset the input after posting
-    setPostContent('');
-  };
 
-  return (
-    <div className="min-h-screen bg-gray-100 pt-16">
-      <Header /> {/* Your custom Header component */}
-      <div className="flex flex-col max-w-6xl mx-auto mt-8">
-        {/* Profile Section */}
-        <div className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="relative">
+    const handlePostSubmit = (e) => {
+      e.preventDefault();
+      // Simulate posting logic
+      const newPost = {
+        id: userPosts.length + 1,
+        content: postContent,
+        timestamp: new Date().toLocaleString(),
+      };
+      setUserPosts([newPost, ...userPosts]);
+      // Reset the input after posting
+      setPostContent('');
+    };
+
+    const handleCoverPhotoChange = (e) => {
+      // Logic to handle cover photo change
+      console.log(e.target.files[0]);
+    };
+
+    const toggleDropdown = () => {
+      // Define the logic for toggling the dropdown
+      console.log('Dropdown toggled');
+    };
+
+    return (
+      <div className="min-h-screen bg-gray-100 pt-8">
+        <Header /> {/* Your custom Header component */}
+        <div className="flex flex-col max-w-6xl mx-auto mt-8">
+          {/* Profile Section */}
+          <div className="relative w-full flex justify-center items-center">
             <img
-              className="w-full h-64 object-cover"
+              className="w-10/12 h-22rem object-cover rounded"
               src="https://via.placeholder.com/1500x500" // Fallback cover photo URL
               alt="Cover"
               onError={(e) => {
                 e.target.src = "https://via.placeholder.com/1500x500"; // Fallback image URL in case of error
               }}
             />
-            <div className="absolute top-40 left-4 transform -translate-y-1/2 z-10">
-              <img
-                className="h-32 w-32 rounded-full object-cover border-4 border-white"
-                src="http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg" // Profile photo URL
-                alt="User Avatar"
-              />
-            </div>
-            <div className="absolute top-64 left-44 transform -translate-y-1/2 z-10">
-              <div className="text-left">
-                <h1 className="text-2xl font-bold">User Name</h1>
-                <p className="text-gray-600">@username</p>
-                <p className="text-gray-600">2.5K friends</p>
-              </div>
-            </div>
+            <input
+              type="file"
+              id="coverPhoto"
+              className="hidden"
+              onChange={handleCoverPhotoChange}
+            />
+            <label
+              htmlFor="coverPhoto"
+              className="absolute bottom-4 right-32 bg-white text-black py-2 px-4 rounded cursor-pointer text-sm flex items-center space-x-2 shadow-md hover:bg-gray-200 transition duration-200"
+            >
+              <CameraOutlined />
+              <span className='font-thin'>Add cover photo</span>
+            </label>
           </div>
-        </div>
-        {/* Posts Section */}
-        <div className="w-full mt-8">
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <form onSubmit={handlePostSubmit} className="px-6 py-4">
-              <textarea
-                className="w-full border rounded-md p-2 focus:outline-none"
-                placeholder="What's on your mind?"
-                value={postContent}
-                onChange={handlePostChange}
-                rows="3"
-              />
-              <div className="flex justify-end mt-2">
-                <button
-                  type="submit"
-                  className="bg-violet-500 text-white py-2 px-4 rounded-md hover:bg-violet-600 focus:outline-none"
-                >
-                  Post
-                </button>
+          <div className="w-full flex justify-center relative mt-8 bg-yellow-300 ">
+            <div className="absolute -top-28 w-10/12 flex items-center p-4 rounded  gap-8">
+              <div className="relative left-4">
+                <img
+                  src="http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg"
+                  alt="Avatar"
+                  className="w-44 h-44  rounded-full border-4 border-white cursor-pointer"
+                  onClick={toggleDropdown}
+                />
               </div>
-            </form>
-          </div>
-          {/* Display User Posts */}
-          <div className="mt-4">
-            {userPosts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-white shadow-md rounded-lg overflow-hidden border-l-4 border-violet-500 mt-4"
-              >
-                <div className="p-4">
-                  <p className="text-gray-600 text-sm mb-2">{post.timestamp}</p>
-                  <p className="text-lg">{post.content}</p>
-                </div>
+              <div className="flex flex-col text-start relative pt-20 ">
+                <h1 className="text-3xl font-bold ">Johnmack Faeldonia</h1>
+                <p className="text-gray-600">4 Publish content</p>
               </div>
-            ))}
+            </div>
+           
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-export default Profile;
+  export default Profile;

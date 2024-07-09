@@ -19,6 +19,9 @@ export default {
       maxHeight: {
         '6': '3em', // Adjust this value depending on your line-height and font-size
       },
+      height: {
+        '21rem': '21rem', // Adding custom height for 22rem
+      },
     },
   },
   variants: {
