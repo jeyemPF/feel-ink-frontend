@@ -11,7 +11,7 @@ const Header = ({ disableAddButton }) => {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-opacity-100 bg-opacity-80 text-violet-800 py-2 px-3 flex justify-between items-center border-2">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-opacity-100  text-violet-800 py-2 px-3 flex justify-between items-center border">
         
         {/* Centered logo */}
         <div className="flex items-center justify-center flex-grow md:justify-start">
