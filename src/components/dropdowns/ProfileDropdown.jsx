@@ -13,7 +13,7 @@ const ProfileDropdown = () => {
   return (
     <div className="relative">
       <img
-        src="http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg"
+        src="https://res.cloudinary.com/dihmqs39z/image/upload/v1720565151/v5-portrait-of-thomas-shelby-peaky-blinders-v0-owp85jioauna1_vrieuc.webp"
         alt="Avatar"
         className="w-6 h-6 rounded-full mx-4 cursor-pointer"
         onClick={toggleDropdown}

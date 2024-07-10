@@ -27,10 +27,10 @@ const Dashboard = () => {
   const postCard = () => {
     const { newCardContent, selectedColor, postMode } = formState;
     if (newCardContent.trim() !== '') {
-      const email = 'johnmarkparejafaeldonia@gmail.com';
+      const email = 'thomasshelby@gmail.com';
       const username = postMode === 'reveal' ? "@" + email.split('@')[0] : 'Anonymous';
       const avatar = postMode === 'reveal'
-        ? 'http://res.cloudinary.com/dihmqs39z/image/upload/v1717393349/ll3mgk5u2p1cvtzrjwyl.jpg'
+        ? 'https://res.cloudinary.com/dihmqs39z/image/upload/v1720565151/v5-portrait-of-thomas-shelby-peaky-blinders-v0-owp85jioauna1_vrieuc.webp'
         : null;
 
       const newCard = {
