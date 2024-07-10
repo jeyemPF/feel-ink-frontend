@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+// tailwind.config.js
+
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}"
@@ -9,7 +10,7 @@ export default {
       colors: {
         primary: '#FFC107',
         secondary: '#FF9800',
-        accent: '#$4343ds',
+        accent: '#$4343ds', // This color value seems incorrect, please verify
         error: '#F44336',
         abo: "#e5e7eb",
       },
@@ -21,6 +22,9 @@ export default {
       },
       height: {
         '21rem': '21rem', // Adding custom height for 22rem
+      },
+      screens: {
+        'mobile': '842px', // Define your custom breakpoint
       },
     },
   },

@@ -68,10 +68,10 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-100 pt-5">
       <Header />
-      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded">
+      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded ">
         <div className="relative w-full flex justify-center items-center">
           <img
-            className="w-full lg:w-10/12 h-22rem object-cover rounded"
+            className="w-full lg:w-10/12 md:w-10/12 h-22rem object-cover rounded"
             src={coverPhoto}
             alt="Cover"
             onError={(e) => {
