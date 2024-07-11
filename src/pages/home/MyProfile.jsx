@@ -68,7 +68,7 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-100 pt-5">
       <Header />
-      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded">
+      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded bg-white">
         <div className="relative w-full flex justify-center items-center">
           <img
             className="w-full lg:w-10/12 md:w-10/12 h-21rem object-cover rounded"
@@ -119,7 +119,23 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        {/* Write a Post Card */}
+       
+       
       </div>
+      <div className="mt-8 p-4  rounded w-full max-w-4xl mx-auto pt-32">
+          <h2 className="text-xl font-bold mb-4 text-violet-800">My Inks</h2>
+          <div className="mt-8 w-full max-w-4xl mx-auto ">
+          {userPosts.map((post) => (
+            <div key={post.id} className="bg-white p-4 rounded shadow-md mb-4">
+              <p>{post.content}</p>
+              <p className="text-gray-600 text-sm">{post.timestamp}</p>
+            </div>
+          ))}
+        </div>
+        </div>
+        {/* User Posts */}
+      
     </div>
   );
 };
