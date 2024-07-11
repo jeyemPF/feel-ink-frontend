@@ -123,17 +123,12 @@ const Profile = () => {
        
        
       </div>
-      <div className="mt-8 p-4  rounded w-full max-w-4xl mx-auto pt-32">
+      <div className="mt-8 p-4  rounded w-full max-w-4xl mx-auto bg-red-100 pt-40 ">
           <h2 className="text-xl font-bold mb-4 text-violet-800">My Inks</h2>
           <div className="mt-8 w-full max-w-4xl mx-auto ">
-          {userPosts.map((post) => (
-            <div key={post.id} className="bg-white p-4 rounded shadow-md mb-4">
-              <p>{post.content}</p>
-              <p className="text-gray-600 text-sm">{post.timestamp}</p>
-            </div>
-          ))}
+          
         </div>
-        </div>
+        </div>  
         {/* User Posts */}
       
     </div>
