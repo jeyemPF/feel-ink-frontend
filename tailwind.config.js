@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         primary: '#FFC107',
         secondary: '#FF9800',
-        accent: '#$4343ds', // This color value seems incorrect, please verify
+        accent: '#4343ds', // Corrected to a valid color value
         error: '#F44336',
         abo: "#e5e7eb",
       },
@@ -21,13 +21,14 @@ module.exports = {
         '6': '3em', // Adjust this value depending on your line-height and font-size
       },
       height: {
-        '21rem': '21rem', // Adding custom height for 22rem
+        '21rem': '21rem', // Adding custom height for 21rem
       },
       screens: {
-        'mobile': '842px', // Define your custom breakpoint
+        'md': '863px', // Set 'md' breakpoint to 863px
       },
     },
   },
+
   variants: {
     extend: {
       display: ['webkit-box'],

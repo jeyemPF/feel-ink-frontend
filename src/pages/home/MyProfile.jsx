@@ -68,17 +68,16 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-100 pt-5">
       <Header />
-      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded ">
+      <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded">
         <div className="relative w-full flex justify-center items-center">
           <img
-            className="w-full lg:w-10/12 md:w-10/12 h-22rem object-cover rounded"
+            className="w-full lg:w-10/12 md:w-10/12 h-21rem object-cover rounded"
             src={coverPhoto}
             alt="Cover"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/1500x500';
             }}
           />
-          {/* Hidden file input */}
           <input
             ref={fileInputRef}
             type="file"
@@ -86,7 +85,6 @@ const Profile = () => {
             className="hidden"
             onChange={handleCoverPhotoChange}
           />
-          {/* Label for the button */}
           <label
             htmlFor="coverPhoto"
             className="absolute bottom-4 right-6 md:right-32 bg-white text-black py-2 px-4 md:px-2 rounded cursor-pointer text-sm flex items-center space-x-2 shadow-md hover:bg-gray-200 transition duration-200 z-10"
@@ -95,7 +93,6 @@ const Profile = () => {
             <span className="font-thin md:block hidden">Add cover photo</span>
           </label>
         </div>
-        {/* profile with avatar and companions */}
         <div className="w-full flex justify-center relative mt-8">
           <div className="absolute -top-28 w-10/12 flex flex-col md:flex-row items-center p-4 rounded md:gap-8">
             <div className="relative left-4">
@@ -111,7 +108,7 @@ const Profile = () => {
                 <h1 className="text-3xl md:text-3xl font-bold">Thomas Shelby</h1>
                 <p className="text-gray-600 font-thin text-sm">4 Publish Inks</p>
               </div>
-              <div className="absolute top-16  md:right-0 flex flex-wrap m:flex-row gap-3 md:pt-6 md:px-0 justify-center md:w-auto  ">
+              <div className="absolute top-16 md:right-0 flex flex-wrap md:flex-row gap-3 md:pt-6 md:px-0 justify-center md:w-auto w-full">
                 <button className="bg-violet-800 hover:bg-violet-700 text-white text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min">
                   <PlusOutlined /> Write post
                 </button>
