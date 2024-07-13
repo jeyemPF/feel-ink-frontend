@@ -4,18 +4,22 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleLogin = () => {
+    // Handle login logic here
+    console.log('Logging in with', { email, password });
+  };
+
   const handleGoogleSignIn = () => {
     console.log('Signing in with Google');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Logging in with', { email, password });
+    handleLogin();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-sm bg-inherit ">
+    <form onSubmit={handleSubmit} className="w-full max-w-sm bg-inherit">
       <div className="mb-4">
         <input
           type="email"
