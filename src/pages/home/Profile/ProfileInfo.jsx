@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, CameraOutlined } from '@ant-design/icons';
 
 const ProfileInfo = ({ toggleDropdown }) => (
   <div className="w-full flex justify-center relative mt-8">
@@ -11,6 +11,12 @@ const ProfileInfo = ({ toggleDropdown }) => (
           className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white cursor-pointer"
           onClick={toggleDropdown}
         />
+        <div
+          className="absolute bottom-1 right-4 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer"
+          onClick={toggleDropdown}
+        >
+          <CameraOutlined className="text-white" />
+        </div>
       </div>
       <div className="flex flex-col md:flex-row flex-grow text-center md:text-start relative md:pt-20 md:gap-64 items-center md:w-auto w-full">
         <div className="mb-1 md:mb-0 relative items-center">
