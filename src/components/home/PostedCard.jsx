@@ -41,8 +41,8 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
       </p>
     ) : (
       <div className="flex items-center">
-        <img className="w-6 h-6 rounded-full mr-2" src={avatar} alt="Avatar" />
-        <p className="text-sm font-medium" style={{ color: textColor(color) }}>
+        <img className="w-6 h-6 rounded-full mr-2 select-none" src={avatar} alt="Avatar" />
+        <p className="text-sm font-medium select-none" style={{ color: textColor(color) }}>
           {username}
         </p>
       </div>
