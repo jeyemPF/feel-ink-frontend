@@ -8,11 +8,11 @@ const ProfileInfo = ({ toggleDropdown }) => (
         <img
           src="https://res.cloudinary.com/dihmqs39z/image/upload/v1720565151/v5-portrait-of-thomas-shelby-peaky-blinders-v0-owp85jioauna1_vrieuc.webp"
           alt="Avatar"
-          className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white cursor-pointer"
+          className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white cursor-pointer select-none"
           onClick={toggleDropdown}
         />
         <div
-          className="absolute bottom-1 right-4 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer"
+          className="absolute bottom-2 right-1 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer"
           onClick={toggleDropdown}
         >
           <CameraOutlined className="text-white" />
