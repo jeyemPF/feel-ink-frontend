@@ -23,13 +23,13 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
             <div className="flex flex-row">
               {avatar && (
                 <img
-                  className="w-10 h-10 rounded-full mr-4 select-none"
+                  className="w-10 h-10 rounded-full mr-4"
                   src={avatar}
                   alt="Avatar"
                 />
               )}
-              <div className="flex flex-col justify-center align-center"> 
-                {username && <p className="text-sm md:text-sm sm:text-sm font-semibold select-none">{username}</p>}
+              <div className="flex flex-col justify-center align-center">
+                {username && <p className="text-sm md:text-sm sm:text-sm font-semibold">{username}</p>}
                 <p className="text-xs md:text-xs sm:text-sm text-gray-500 mb-4">{formatTimestamp(timestamp)}</p>
               </div>
             </div>
