@@ -1,7 +1,6 @@
-// components/dropdowns/ProfileDropdown.js
 import React, { useState, useEffect, useRef } from 'react';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ direction }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -32,7 +31,9 @@ const ProfileDropdown = () => {
       />
 
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10">
+        <div
+          className={`absolute ${direction === 'up' ? 'bottom-10' : 'mt-2'} right-0 w-64 bg-white rounded-md shadow-lg z-10`}
+        >
           <div className="px-4 py-3 flex items-center">
             <div className="flex flex-col">
               <p className="text-violet-800 font-bold">John Doe</p>

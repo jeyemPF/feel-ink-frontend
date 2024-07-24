@@ -28,7 +28,7 @@ const Header = ({ disableAddButton }) => {
           </Link>
           
           {/* Profile Dropdown */}
-          <ProfileDropdown />
+          <ProfileDropdown direction="down" />
         </div>
 
       </header>
@@ -42,7 +42,7 @@ const Header = ({ disableAddButton }) => {
           </Link>
           
           {/* Profile Dropdown */}
-          <ProfileDropdown />
+          <ProfileDropdown direction="up" />
         </div>
       </nav>
     </>
