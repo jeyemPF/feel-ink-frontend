@@ -9,6 +9,7 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
   const { avatar, username, content, color, timestamp } = card;
 
   return (
+    <div className="fixed inset-0 flex items-center justify-center z-50">
     <div
       className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center"
       onClick={onClose}
@@ -46,6 +47,7 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
           <p className="pb-10 text-sm" style={{ wordBreak: 'prewrap' }}>{content}</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

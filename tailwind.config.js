@@ -24,7 +24,7 @@ module.exports = {
         '21rem': '21rem', // Adding custom height for 21rem
       },
       screens: {
-        'md': '863px', // Set 'md' breakpoint to 863px
+        'md': '1040px', // Set 'md' breakpoint to 863px
       },
     },
   },

@@ -97,7 +97,7 @@ const Dashboard = () => {
           {postedCards.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 ">
               {postedCards.map((card) => (
                 <PostedCard
                   key={card.id}
