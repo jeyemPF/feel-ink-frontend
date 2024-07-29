@@ -1,16 +1,23 @@
+// LoginForm.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Handle login logic here
     console.log('Logging in with', { email, password });
+    // Assume login is successful
+    navigate('/dashboard');
   };
 
   const handleGoogleSignIn = () => {
     console.log('Signing in with Google');
+    // Assume Google sign-in is successful
+    navigate('/dashboard');
   };
 
   const handleSubmit = (e) => {
@@ -46,7 +53,6 @@ const LoginForm = () => {
       </div>
 
       <div className="flex items-center justify-between mb-6">
-        {/* Regular Login Button */}
         <button
           type="submit"
           className="text-white py-1 px-4 rounded-sm focus:outline-none w-full"
@@ -63,8 +69,8 @@ const LoginForm = () => {
 
       <div className="mt-4 text-center">
         <p className="text-gray-600 mb-2">or</p>
-        {/* Google Sign-In Button */}
         <button
+          type="button"
           onClick={handleGoogleSignIn}
           className="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 rounded-sm border border-gray-300 w-full flex items-center justify-center text-sm"
         >
