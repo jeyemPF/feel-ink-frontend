@@ -46,9 +46,6 @@ const ProfileDropdown = ({ direction }) => {
           <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
             Profile
           </a>
-          <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-            Settings
-          </a>
           <hr className="my-1" />
           <a href="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
             Logout
