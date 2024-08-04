@@ -1,23 +1,31 @@
-// LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log('Logging in with', { email, password });
-    // Assume login is successful
-    navigate('/dashboard');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+        email,
+        password,
+      });
+      
+      const { access_token } = response.data;
+      localStorage.setItem('access_token', access_token);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Invalid email or password');
+    }
   };
 
   const handleGoogleSignIn = () => {
-    console.log('Signing in with Google');
-    // Assume Google sign-in is successful
-    navigate('/dashboard');
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
   };
 
   const handleSubmit = (e) => {
@@ -27,6 +35,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-sm bg-inherit">
+      {error && <p className="text-red-500 text-xs italic">{error}</p>}
       <div className="mb-4">
         <input
           type="email"
