@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Header from '../Header'; // Ensure you have this import correctly
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -8,11 +9,23 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
         email,
         password,
+      }, {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+        }
       });
       
       const { access_token } = response.data;
