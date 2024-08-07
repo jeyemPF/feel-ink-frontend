@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
@@ -14,12 +14,13 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Use the environment variable
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+    setErrors({});
     try {
       const response = await axios.post(`${apiUrl}/api/login`, {
         email: formData.email,
@@ -29,26 +30,27 @@ const LoginForm = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       console.log('Login successful:', response.data);
-      setToken(response.data.token); // Adjust based on your response
+      localStorage.setItem('access_token', response.data.token);
+      setToken(response.data.token); // Update context or state
       navigate('/dashboard'); // Redirect after successful login
-  
     } catch (error) {
-      if (error.response) {
-        console.error('Response Status:', error.response.status);
-        console.error('Response Body:', error.response.data);
-        setError(`Login failed: ${error.response.data.message || 'Unknown error'}`);
-      } else if (error.request) {
-        console.error('No response received:', error.request);
-        setError('No response received from the server.');
+      if (error.response && error.response.data) {
+        const { message, errors: serverErrors } = error.response.data;
+        setError(message || 'An error occurred');
+        setErrors(serverErrors || {});
       } else {
-        console.error('Error:', error.message);
-        setError(`Error: ${error.message}`);
+        setError('An error occurred. Please try again.');
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    // Implement your Google Sign-In logic here
+    console.log('Google Sign-In button clicked');
   };
 
   return (
@@ -85,6 +87,21 @@ const LoginForm = () => {
       >
         {loading ? 'Logging in...' : 'Login'}
       </button>
+      <div className="mt-4 text-center">
+        <p className="text-gray-600 mb-2">or</p>
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="bg-white hover:bg-gray-100 text-gray-800 py-2 px-4 rounded-sm border border-gray-300 w-full flex items-center justify-center text-sm"
+        >
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="Google Logo"
+            className="h-4 mr-2"
+          />
+          Sign in with Google
+        </button>
+      </div>
     </form>
   );
 };
