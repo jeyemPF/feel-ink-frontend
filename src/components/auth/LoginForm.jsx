@@ -1,19 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
 
 const LoginForm = () => {
-  const { setToken } = useContext(AppContext);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const { setToken, setUser } = useContext(AppContext);
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleLogin = async (e) => {
@@ -26,14 +22,14 @@ const LoginForm = () => {
         email: formData.email,
         password: formData.password,
       }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       console.log('Login successful:', response.data);
-      localStorage.setItem('access_token', response.data.token);
-      setToken(response.data.token); // Update context or state
+      localStorage.setItem('access_token', response.data.access_token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      setToken(response.data.access_token); // Update context or state
+      setUser(response.data.user); // Update user context
       navigate('/dashboard'); // Redirect after successful login
     } catch (error) {
       if (error.response && error.response.data) {

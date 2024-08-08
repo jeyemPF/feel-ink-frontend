@@ -2,12 +2,9 @@ import React, { useState, useRef } from 'react';
 import { PlusOutlined, EditOutlined, CameraOutlined } from '@ant-design/icons';
 import EditProfileModal from '../../../components/modals/EditProfileModal';
 
-
-const ProfileInfo = ({ toggleDropdown }) => {
-  const [avatarUrl, setAvatarUrl] = useState("https://res.cloudinary.com/dihmqs39z/image/upload/v1720565151/v5-portrait-of-thomas-shelby-peaky-blinders-v0-owp85jioauna1_vrieuc.webp");
+const ProfileInfo = ({ toggleDropdown, avatar, name }) => {
   const [previewUrl, setPreviewUrl] = useState(null); // To show a preview of the selected image
   const [showModal, setShowModal] = useState(false); // State to show/hide modal
-  const [name, setName] = useState("Thomas Shelby");
   const fileInputRef = useRef(null);
 
   const handleFileChange = async (event) => {
@@ -45,7 +42,8 @@ const ProfileInfo = ({ toggleDropdown }) => {
         console.log('Uploaded image data:', data);
         
         if (data.secure_url) {
-          setAvatarUrl(data.secure_url); // Update avatar URL with the new image URL
+          // Update avatar URL with the new image URL
+          // You might want to set it in the context or send it to the server
           setPreviewUrl(null); // Clear preview URL once the upload is complete
         } else {
           console.error('No secure URL returned in the response');
@@ -66,7 +64,7 @@ const ProfileInfo = ({ toggleDropdown }) => {
       <div className="absolute -top-28 w-10/12 flex flex-col md:flex-row items-center p-4 rounded md:gap-8">
         <div className="relative left-4">
           <img
-            src={previewUrl || avatarUrl} // Show preview if available, otherwise show the current avatar
+            src={previewUrl || avatar} // Show preview if available, otherwise show the current avatar
             alt="Avatar"
             className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white cursor-pointer select-none"
             onClick={() => fileInputRef.current.click()}
@@ -111,7 +109,6 @@ const ProfileInfo = ({ toggleDropdown }) => {
       {showModal && (
         <EditProfileModal
           name={name}
-          setName={setName}
           handleFileChange={handleFileChange}
           fileInputRef={fileInputRef}
           onClose={() => setShowModal(false)}

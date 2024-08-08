@@ -1,14 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';    
 import MyInks from './MyInks';
+import { AppContext } from '../../../context/AppContext';
 
 const Profile = () => {
+  const { user } = useContext(AppContext);
   const [postContent, setPostContent] = useState('');
   const [userPosts, setUserPosts] = useState([]);
-  const [coverPhoto, setCoverPhoto] = useState('https://via.placeholder.com/1500x500');
+  const [coverPhoto, setCoverPhoto] = useState(user?.cover_photo || 'https://via.placeholder.com/1500x500');
   const [cropImage, setCropImage] = useState(null);
   const [showCrop, setShowCrop] = useState(false);
   const fileInputRef = useRef(null);
@@ -63,12 +65,14 @@ const Profile = () => {
             onCoverPhotoChange={handleCoverPhotoChange}
             fileInputRef={fileInputRef}
           />
-          <ProfileInfo toggleDropdown={toggleDropdown} />
+          <ProfileInfo
+            toggleDropdown={toggleDropdown}
+            avatar={user?.avatar}  // Pass avatar URL from user context
+            name={user?.name}     // Pass name from user context
+          />
           <MyInks />
         </>
-        
       )}
-    
     </div>
   );
 };
