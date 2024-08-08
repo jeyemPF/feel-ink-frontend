@@ -45,8 +45,7 @@ const LoginForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    // Implement your Google Sign-In logic here
-    console.log('Google Sign-In button clicked');
+    window.location.href = `${apiUrl}/api/auth/google`;
   };
 
   return (
