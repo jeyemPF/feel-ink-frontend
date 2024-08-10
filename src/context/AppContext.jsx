@@ -1,3 +1,5 @@
+// src/components/context/AppContext.jsx
+
 import React, { createContext, useEffect, useState } from 'react';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -20,6 +22,7 @@ export default function AppProvider({ children }) {
   });
   const [loading, setLoading] = useState(true);
 
+  // Fetch user data if token exists
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
@@ -47,8 +50,36 @@ export default function AppProvider({ children }) {
     fetchUser();
   }, [token]);
 
+  // Function to handle Google Sign-In
+  const handleGoogleSignIn = async (googleToken) => {
+    try {
+      // Send Google token to backend for verification and exchange for access token
+      const response = await fetch(`${apiUrl}/auth/google/callback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: googleToken }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Set token and user data
+        setToken(data.access_token);
+        setUser(data.user);
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('Login successful:', data); // Log success message
+      } else {
+        console.error('Failed to authenticate with Google');
+      }
+    } catch (error) {
+      console.error('Error during Google Sign-In:', error);
+    }
+  };
+
   return (
-    <AppContext.Provider value={{ token, setToken, user, setUser, loading }}>
+    <AppContext.Provider value={{ token, setToken, user, setUser, loading, handleGoogleSignIn }}>
       {children}
     </AppContext.Provider>
   );

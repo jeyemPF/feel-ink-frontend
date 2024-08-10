@@ -4,7 +4,9 @@ import Login from './pages/auth/Login';
 import Dashboard from './pages/home/Dashboard';
 import Profile from './pages/home/Profile/Profile';
 import PrivateRoute from './components/PrivateRoute';
+import GoogleCallback from './components/auth/GoogleCallback';
 import './index.css';
+import LoginSuccess from './components/auth/LoginSuccess';
 
 function App() {
   return (
@@ -28,6 +30,9 @@ function App() {
               </PrivateRoute>
             } 
           />
+          {/* <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
+          <Route path="/auth/google/callback" element={<LoginSuccess />} />
+
           <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
