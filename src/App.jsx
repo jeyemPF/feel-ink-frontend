@@ -6,7 +6,7 @@ import Profile from './pages/home/Profile/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import GoogleCallback from './components/auth/GoogleCallback';
 import './index.css';
-import LoginSuccess from './components/auth/LoginSuccess';
+import LoginSuccess from './components/auth/LoginSucess';
 
 function App() {
   return (
