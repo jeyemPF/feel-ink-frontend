@@ -1,44 +1,33 @@
-// src/pages/home/Profile/MyInks.jsx
-
-import React, { useEffect, useState } from 'react';
-import { Typography, Spin } from 'antd';
-import PostedCard from '../../../components/home/PostedCard';
+import React, { useContext } from 'react';
+import { Typography, Spin, Button } from 'antd';
+import { HeartOutlined } from '@ant-design/icons';
+import { AppContext } from '../../../context/AppContext';
 
 const { Title } = Typography;
 
 const MyInks = () => {
-  const [userPosts, setUserPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch user posts from API
-  useEffect(() => {
-    const fetchUserPosts = async () => {
-      try {
-        const response = await fetch('/api/user/posts'); // Replace with your API endpoint
-        const data = await response.json();
-        setUserPosts(data);
-      } catch (error) {
-        console.error('Error fetching user posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserPosts();
-  }, []);
+  const { posts, postLoading, postError } = useContext(AppContext);
 
   const handleReaction = (id, reaction) => {
     console.log(`Reacted to post ${id} with ${reaction}`);
   };
 
-  const openModal = (card) => {
-    console.log(`Open modal for post ${card.id}`);
+  const openModal = (id) => {
+    console.log(`Open modal for post ${id}`);
   };
 
-  if (loading) {
+  if (postLoading) {
     return (
       <div className="flex justify-center items-center h-full">
         <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (postError) {
+    return (
+      <div className="text-center text-red-500">
+        <p>{postError}</p>
       </div>
     );
   }
@@ -51,9 +40,17 @@ const MyInks = () => {
         </Title>
       </div>
       <div className="mt-8 w-full max-w-4xl mx-auto space-y-4">
-        {userPosts.length > 0 ? (
-          userPosts.map((post) => (
-            <PostedCard key={post.id} card={post} openModal={openModal} handleReaction={handleReaction} />
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id} className="p-4 bg-white shadow-md rounded-lg">
+              <p>{post.content}</p>
+              <div className="flex justify-between items-center mt-2">
+                <Button onClick={() => openModal(post.id)}>Open Modal</Button>
+                <Button onClick={() => handleReaction(post.id, 'like')}>
+                  <HeartOutlined /> {post.reactions_count}
+                </Button>
+              </div>
+            </div>
           ))
         ) : (
           <p className="text-center text-gray-500">No posts found.</p>

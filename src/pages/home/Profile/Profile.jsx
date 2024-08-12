@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
 import ProfileHeader from './ProfileHeader';
@@ -7,7 +7,7 @@ import MyInks from './MyInks';
 import { AppContext } from '../../../context/AppContext';
 
 const Profile = () => {
-  const { user } = useContext(AppContext);
+  const { user, updateUser } = useContext(AppContext); // Added updateUser function for profile update
   const [postContent, setPostContent] = useState('');
   const [userPosts, setUserPosts] = useState([]);
   const [coverPhoto, setCoverPhoto] = useState(user?.cover_photo || 'https://via.placeholder.com/1500x500');
@@ -15,17 +15,27 @@ const Profile = () => {
   const [showCrop, setShowCrop] = useState(false);
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    // Fetch user posts if needed
+    // Example: fetchUserPosts();
+  }, [user]);
+
   const handlePostChange = (e) => setPostContent(e.target.value);
 
-  const handlePostSubmit = (e) => {
+  const handlePostSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
-      id: userPosts.length + 1,
-      content: postContent,
-      timestamp: new Date().toLocaleString(),
-    };
-    setUserPosts([newPost, ...userPosts]);
-    setPostContent('');
+    try {
+      const newPost = {
+        id: userPosts.length + 1,
+        content: postContent,
+        timestamp: new Date().toLocaleString(),
+      };
+      // Ideally, send newPost to your backend
+      setUserPosts((prevPosts) => [newPost, ...prevPosts]);
+      setPostContent('');
+    } catch (error) {
+      console.error('Failed to submit post:', error);
+    }
   };
 
   const handleCoverPhotoChange = (e) => {
@@ -40,9 +50,17 @@ const Profile = () => {
     }
   };
 
-  const handleCropComplete = (croppedImage) => {
-    setCoverPhoto(croppedImage);
-    setShowCrop(false);
+  const handleCropComplete = async (croppedImage) => {
+    try {
+      setCoverPhoto(croppedImage);
+      setShowCrop(false);
+      // Ideally, update the cover photo on your backend
+      if (updateUser) {
+        await updateUser({ cover_photo: croppedImage });
+      }
+    } catch (error) {
+      console.error('Failed to update cover photo:', error);
+    }
   };
 
   const toggleDropdown = () => {
@@ -70,7 +88,9 @@ const Profile = () => {
             avatar={user?.avatar}  // Pass avatar URL from user context
             name={user?.name}     // Pass name from user context
           />
-          <MyInks />
+          <MyInks 
+            post={user?.post}
+          />
         </>
       )}
     </div>

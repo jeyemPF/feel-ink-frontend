@@ -21,8 +21,10 @@ export default function AppProvider({ children }) {
     return null;
   });
   const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [postLoading, setPostLoading] = useState(true);
+  const [postError, setPostError] = useState(null);
 
-  // Fetch user data if token exists
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
@@ -50,10 +52,31 @@ export default function AppProvider({ children }) {
     fetchUser();
   }, [token]);
 
-  // Function to handle Google Sign-In
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      if (token) {
+        try {
+          const response = await fetch(`${apiUrl}/api/user/data`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setPosts(data.posts);
+        } catch (err) {
+          console.error('Failed to fetch posts:', err);
+          setPostError('Failed to fetch posts');
+        } finally {
+          setPostLoading(false);
+        }
+      }
+    };
+
+    fetchUserPosts();
+  }, [token]);
+
   const handleGoogleSignIn = async (googleToken) => {
     try {
-      // Send Google token to backend for verification and exchange for access token
       const response = await fetch(`${apiUrl}/auth/google/callback`, {
         method: 'POST',
         headers: {
@@ -64,7 +87,6 @@ export default function AppProvider({ children }) {
 
       if (response.ok) {
         const data = await response.json();
-        // Set token and user data
         setToken(data.access_token);
         setUser(data.user);
         localStorage.setItem('access_token', data.access_token);
@@ -79,7 +101,7 @@ export default function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ token, setToken, user, setUser, loading, handleGoogleSignIn }}>
+    <AppContext.Provider value={{ token, setToken, user, setUser, loading, handleGoogleSignIn, posts, postLoading, postError }}>
       {children}
     </AppContext.Provider>
   );
