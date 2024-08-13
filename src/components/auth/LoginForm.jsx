@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const LoginForm = () => {
   const { setToken, setUser } = useContext(AppContext);
@@ -9,6 +10,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -63,9 +65,9 @@ const LoginForm = () => {
         />
         {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
       </div>
-      <div className="mb-6">
+      <div className="mb-6 relative">
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="password"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -73,6 +75,12 @@ const LoginForm = () => {
           className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none placeholder-gray-400 focus:border-violet-500 text-sm"
           placeholder="Enter your password"
         />
+        <span
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute inset-y-0 right-0 pr-3 pb-2 flex items-center text-gray-500 cursor-pointer"
+        >
+          {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+        </span>
         {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
       </div>
       <button
