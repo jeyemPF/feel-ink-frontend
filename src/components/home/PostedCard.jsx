@@ -81,7 +81,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
             onMouseOut={(e) => e.target.style.color = iconColor(card.color, card.isHeartClicked)}
           />
           <p className="text-sm" style={{ color: textColor(card.color) }}>
-            {card.reactions.heart}
+            {card.reactions?.heart || 0} {/* Added optional chaining and default value */}
           </p>
         </div>
       </div>

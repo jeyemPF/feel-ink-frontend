@@ -1,21 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../../components/Header';
 import CardPostedModal from '../../components/modals/CardPostedModal';
 import PostedCard from '../../components/home/PostedCard';
 import CardForm from '../../components/home/CardForm';
 import EmptyState from '../../components/home/EmptyState';
 import { Typography } from 'antd';
+import { AppContext } from '../../context/AppContext';
 
 const { Title } = Typography;
 
 const Dashboard = () => {
-  const [postedCards, setPostedCards] = useState([]);
+  const { token, handleGoogleSignIn } = useContext(AppContext);
+  const [allPosts, setAllPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [allPostLoading, setAllPostLoading] = useState(true);
+  const [allPostError, setAllPostError] = useState('');
+  const [postLoading, setPostLoading] = useState(true);
+  const [postError, setPostError] = useState('');
   const [formState, setFormState] = useState({
     newCardContent: '',
     selectedColor: '#FFFFFF',
     postMode: 'reveal',
   });
   const [selectedCard, setSelectedCard] = useState(null);
+
+  // Fetch all posts
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setAllPosts(data.posts);
+          setPosts(data.posts); // Initialize user's posts or all posts
+        } else {
+          console.error('Failed to fetch all posts:', data.message);
+          setAllPostError('Failed to fetch all posts');
+        }
+      } catch (err) {
+        console.error('Failed to fetch all posts:', err);
+        setAllPostError('Failed to fetch all posts');
+      } finally {
+        setAllPostLoading(false);
+      }
+    };
+
+    fetchAllPosts();
+  }, [token]);
+
+  // Fetch user posts if needed
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      if (token) {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setPosts(data.posts);
+          } else {
+            console.error('Failed to fetch user posts:', data.message);
+            setPostError('Failed to fetch user posts');
+          }
+        } catch (err) {
+          console.error('Failed to fetch user posts:', err);
+          setPostError('Failed to fetch user posts');
+        } finally {
+          setPostLoading(false);
+        }
+      }
+    };
+
+    fetchUserPosts();
+  }, [token]);
 
   const handleFormChange = (key, value) => {
     setFormState((prevState) => ({
@@ -24,7 +88,7 @@ const Dashboard = () => {
     }));
   };
 
-  const postCard = () => {
+  const postCard = async () => {
     const { newCardContent, selectedColor, postMode } = formState;
     if (newCardContent.trim() !== '') {
       const email = 'thomasshelby@gmail.com';
@@ -34,27 +98,43 @@ const Dashboard = () => {
         : null;
 
       const newCard = {
-        id: postedCards.length + 1,
         content: newCardContent,
         color: selectedColor,
         username,
         avatar,
-        reactions: { heart: 0 },
-        isHeartClicked: false,
-        timestamp: new Date().toISOString(),
       };
 
-      setPostedCards((prevCards) => [...prevCards, newCard]);
-      setFormState({
-        newCardContent: '',
-        selectedColor: '#FFFFFF',
-        postMode: 'reveal',
-      });
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Include the access token in the Authorization header
+          },
+          body: JSON.stringify(newCard),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setPosts((prevPosts) => [...prevPosts, data]);
+          setFormState({
+            newCardContent: '',
+            selectedColor: '#FFFFFF',
+            postMode: 'reveal',
+          });
+        } else {
+          const errorData = await response.json();
+          console.error('Error creating post:', errorData);
+          alert(errorData.error || 'An error occurred while creating the post.');
+        }
+      } catch (error) {
+        console.error('Error creating post:', error.message);
+        alert('An error occurred while creating the post.');
+      }
     }
   };
 
   const handleReaction = (cardId, reactionType) => {
-    const updatedCards = postedCards.map((card) => {
+    const updatedCards = posts.map((card) => {
       if (card.id === cardId) {
         const newReactions = { ...card.reactions };
         const isHeartClicked = !card.isHeartClicked;
@@ -70,7 +150,7 @@ const Dashboard = () => {
       return card;
     });
 
-    setPostedCards(updatedCards);
+    setPosts(updatedCards);
   };
 
   const openModal = (card) => {
@@ -86,19 +166,22 @@ const Dashboard = () => {
       <Header addCard={postCard} disableAddButton={false} />
       <div className="p-4 flex flex-col md:flex-row">
         <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
-        <div className="hidden md:block bg-gray-300 w-px min-h-full "></div>
-        
+        <div className="hidden md:block bg-gray-300 w-px min-h-full"></div>
+
         <div className="w-full md:w-2/3 p-4">
-          {/* Updated Title with custom font */}
           <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
             Inkstream
           </Title>
 
-          {postedCards.length === 0 ? (
+          {allPostLoading ? (
+            <p>Loading all posts...</p>
+          ) : allPostError ? (
+            <p>{allPostError}</p>
+          ) : posts.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 ">
-              {postedCards.map((card) => (
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+              {posts.map((card) => (
                 <PostedCard
                   key={card.id}
                   card={card}

@@ -26,7 +26,7 @@ const LoginForm = () => {
       }, {
         headers: { 'Content-Type': 'application/json' },
       });
-
+  
       console.log('Login successful:', response.data);
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -41,10 +41,12 @@ const LoginForm = () => {
       } else {
         setError('An error occurred. Please try again.');
       }
+      console.error('Login error:', error.response ? error.response.data : error.message);
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleGoogleSignIn = () => {
     window.location.href = `${apiUrl}/api/auth/google`;
