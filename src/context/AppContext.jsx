@@ -89,7 +89,7 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/posts`, { 
+        const response = await fetch(`${apiUrl}/api/all/posts`, { 
           headers: {
             Authorization: `Bearer ${token}`,
           },

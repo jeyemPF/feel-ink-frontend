@@ -34,16 +34,16 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
     }
   };
 
-  const UserInfo = ({ username, avatar, color }) => (
-    username === 'Anonymous' ? (
+  const UserInfo = ({ name, avatar, color }) => (
+    card.is_anonymous ? (
       <p className="text-sm font-medium" style={{ color: textColor(color) }}>
-        {username}
+        Anonymous
       </p>
     ) : (
       <div className="flex items-center">
-        <img className="w-6 h-6 rounded-full mr-2 select-none" src={avatar} alt="Avatar" />
+        <img className="w-6 h-6 rounded-full mr-2 select-none" src={avatar || 'default-avatar-url'} alt="Avatar" />
         <p className="text-sm font-medium select-none" style={{ color: textColor(color) }}>
-          {username}
+          {name}
         </p>
       </div>
     )
@@ -52,7 +52,11 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   return (
     <div key={card.id} className="p-4 rounded bg-white shadow" style={{ backgroundColor: card.color }}>
       <div className="flex items-center justify-between">
-        <UserInfo username={card.username} avatar={card.avatar} color={card.color} />
+        <UserInfo 
+          name={card.user?.name || 'Anonymous'} 
+          avatar={card.user?.avatar} 
+          color={card.color} 
+        />
         <p className="text-xs" style={{ color: textColor(card.color) }}>
           {formatTimestamp(card.timestamp)}
         </p>

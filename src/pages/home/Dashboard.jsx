@@ -28,7 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/all/posts`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,7 +57,7 @@ const Dashboard = () => {
     const fetchUserPosts = async () => {
       if (token) {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/all/posts`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
