@@ -1,6 +1,9 @@
+// src/App.jsx
+
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/auth/Login';
+import Register from './pages/auth/Register'; // Import the Register component
 import Dashboard from './pages/home/Dashboard';
 import Profile from './pages/home/Profile/Profile';
 import PrivateRoute from './components/PrivateRoute';
@@ -14,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> {/* Add the Register route */}
           <Route 
             path="/dashboard" 
             element={
@@ -30,9 +34,7 @@ function App() {
               </PrivateRoute>
             } 
           />
-          {/* <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
           <Route path="/auth/google/callback" element={<LoginSuccess />} />
-
           <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>

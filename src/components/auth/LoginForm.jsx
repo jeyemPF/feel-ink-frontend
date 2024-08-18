@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Ensure this import is only here once
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Ensure this is declared only once
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleLogin = async (e) => {
@@ -26,7 +26,7 @@ const LoginForm = () => {
       }, {
         headers: { 'Content-Type': 'application/json' },
       });
-  
+
       console.log('Login successful:', response.data);
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -46,7 +46,6 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
-  
 
   const handleGoogleSignIn = () => {
     window.location.href = `${apiUrl}/api/auth/google`;
@@ -106,6 +105,9 @@ const LoginForm = () => {
           />
           Sign in with Google
         </button>
+      </div>
+      <div className="mt-4 text-center">
+        <p className="text-gray-600">Don't have an account? <Link to="/register" className="text-violet-500 hover:text-violet-700">Register here</Link></p>
       </div>
     </form>
   );
