@@ -1,18 +1,26 @@
-// src/pages/auth/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ confirmPassword: "Passwords do not match" });
+      setLoading(false);
+      return;
+    }
+
     try {
       await axios.post(`${apiUrl}/api/register`, formData, {
         headers: { 'Content-Type': 'application/json' },
@@ -54,9 +62,9 @@ const Register = () => {
         />
         {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
       </div>
-      <div className="mb-6 relative">
+      <div className="mb-4 relative">
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="password"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -64,7 +72,31 @@ const Register = () => {
           className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none placeholder-gray-400 focus:border-violet-500 text-sm"
           placeholder="Enter your password"
         />
+        <span
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute inset-y-0 right-0 pr-3 pb-2 flex items-center text-gray-500 cursor-pointer"
+        >
+          {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+        </span>
         {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
+      </div>
+      <div className="mb-6 relative">
+        <input
+          type={showConfirmPassword ? 'text' : 'password'}
+          id="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+          required
+          className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none placeholder-gray-400 focus:border-violet-500 text-sm"
+          placeholder="Confirm your password"
+        />
+        <span
+          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          className="absolute inset-y-0 right-0 pr-3 pb-2 flex items-center text-gray-500 cursor-pointer"
+        >
+          {showConfirmPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+        </span>
+        {errors.confirmPassword && <p className="text-red-500 text-xs italic">{errors.confirmPassword}</p>}
       </div>
       <button
         type="submit"
