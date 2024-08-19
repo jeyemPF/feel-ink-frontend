@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; 
 import axios from 'axios';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
@@ -105,6 +105,15 @@ const Register = () => {
       >
         {loading ? 'Registering...' : 'Register'}
       </button>
+
+      <div className="mt-4 text-center">
+        <p className="text-gray-600 text-xs">
+          Already have an account?{' '}
+          <Link to="/login" className="text-violet-500 hover:text-violet-700 text-xs">
+            Login here
+          </Link>
+        </p>
+      </div>
     </form>
   );
 };
