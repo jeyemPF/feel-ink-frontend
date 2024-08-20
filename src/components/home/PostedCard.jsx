@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeartOutlined, ArrowsAltOutlined } from '@ant-design/icons';
 import { formatTimestamp } from '../../utils/dateUtils';
 
 const PostedCard = ({ card, openModal, handleReaction }) => {
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
+
   const handleIconClick = (e) => {
     e.stopPropagation();
     openModal(card);
+  };
+
+  const handleHeartClick = (e) => {
+    e.stopPropagation();
+    handleReaction(card.id, 'heart');
+    setIsHeartClicked(!isHeartClicked); // Toggle heart click state
   };
 
   const textColor = (color) => {
@@ -85,18 +93,15 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         <div className="flex flex-row gap-1 items-center">
           <HeartOutlined
             style={{ 
-              color: iconColor(card.color, card.isHeartClicked), 
+              color: iconColor(card.color, isHeartClicked), 
               cursor: 'pointer' 
             }}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReaction(card.id, 'heart');
-            }}
+            onClick={handleHeartClick}
             onMouseOver={(e) => e.target.style.color = '#6B7280'} 
-            onMouseOut={(e) => e.target.style.color = iconColor(card.color, card.isHeartClicked)}
+            onMouseOut={(e) => e.target.style.color = iconColor(card.color, isHeartClicked)}
           />
           <p className="text-sm" style={{ color: textColor(card.color) }}>
-            {card.reactions?.heart?.count || 0}
+            {card.reactions_count || 0}
           </p>
         </div>
       </div>

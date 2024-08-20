@@ -135,8 +135,8 @@ const Dashboard = () => {
   };
 
   const handleReaction = async (cardId, reactionType) => {
-    console.log(`Reacted to post ${id} with ${reaction}`);
-
+    console.log(`Reacted to post ${cardId} with ${reactionType}`);
+  
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${cardId}/react`, {
         method: 'POST',
@@ -149,7 +149,7 @@ const Dashboard = () => {
   
       if (response.ok) {
         const updatedCard = await response.json(); // Expect the backend to return the updated card
-        
+  
         // Update the posts state with the updated card
         setPosts((prevPosts) => 
           prevPosts.map((card) =>
