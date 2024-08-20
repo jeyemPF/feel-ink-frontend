@@ -80,7 +80,7 @@ const Register = () => {
         </span>
         {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
       </div>
-      <div className="mb-6 relative">
+      <div className="mb-4 relative">
         <input
           type={showConfirmPassword ? 'text' : 'password'}
           id="confirmPassword"

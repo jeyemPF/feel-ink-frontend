@@ -12,7 +12,7 @@ const Header = ({ disableAddButton }) => {
   const { user } = useContext(AppContext);
   const avatar = user?.avatar;  // Access the avatar URL from the user object
   const username = user?.name;  // Access the username
-  const email = user?.email;
+  const email = user?.email; // access the email
 
   return (
     <>
@@ -27,7 +27,7 @@ const Header = ({ disableAddButton }) => {
           <Link to="/dashboard" className={`ml-4 text-violet hover:text-violet-500 ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}>
             <HomeOutlined />
           </Link>
-          <ProfileDropdown direction="down" avatar={avatar} username={username} />
+          <ProfileDropdown direction="down" avatar={avatar} username={username} email={email} />
         </div>
       </header>
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 z-50 md:hidden md:bg-opacity-50 bg-opacity-80">
@@ -35,7 +35,7 @@ const Header = ({ disableAddButton }) => {
           <Link to="/dashboard" className={`text-violet hover:text-violet-500 ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}>
             <HomeOutlined />
           </Link>
-          <ProfileDropdown direction="up" avatar={avatar} username={username} />
+          <ProfileDropdown direction="up" avatar={avatar} username={username} email={email} />
         </div>
       </nav>
     </>
