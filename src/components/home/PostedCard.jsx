@@ -41,7 +41,11 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
       </p>
     ) : (
       <div className="flex items-center">
-        <img className="w-6 h-6 rounded-full mr-2 select-none" src={avatar || 'default-avatar-url'} alt="Avatar" />
+        <img
+          className="w-6 h-6 rounded-full mr-2 select-none"
+          src={avatar || 'default-avatar-url'}
+          alt="Avatar"
+        />
         <p className="text-sm font-medium select-none" style={{ color: textColor(color) }}>
           {name}
         </p>
@@ -69,14 +73,21 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
       </p>
       <div className="flex items-center mt-2 justify-end w-full">
         <ArrowsAltOutlined 
-          style={{ marginRight: '8px', cursor: 'pointer', color: textColor(card.color) }} 
+          style={{ 
+            marginRight: '8px', 
+            cursor: 'pointer', 
+            color: textColor(card.color) 
+          }} 
           onClick={handleIconClick} 
           onMouseOver={(e) => e.target.style.color = '#6B7280'} 
           onMouseOut={(e) => e.target.style.color = textColor(card.color)}
         />
         <div className="flex flex-row gap-1 items-center">
           <HeartOutlined
-            style={{ color: iconColor(card.color, card.isHeartClicked), cursor: 'pointer' }}
+            style={{ 
+              color: iconColor(card.color, card.isHeartClicked), 
+              cursor: 'pointer' 
+            }}
             onClick={(e) => {
               e.stopPropagation();
               handleReaction(card.id, 'heart');
@@ -85,7 +96,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
             onMouseOut={(e) => e.target.style.color = iconColor(card.color, card.isHeartClicked)}
           />
           <p className="text-sm" style={{ color: textColor(card.color) }}>
-            {card.reactions?.heart || 0} {/* Added optional chaining and default value */}
+            {card.reactions?.heart?.count || 0}
           </p>
         </div>
       </div>

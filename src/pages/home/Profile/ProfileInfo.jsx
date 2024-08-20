@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { PlusOutlined, EditOutlined, CameraOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import EditProfileModal from '../../../components/modals/EditProfileModal';
 
 const ProfileInfo = ({ toggleDropdown, avatar, name }) => {
   const [previewUrl, setPreviewUrl] = useState(null); // To show a preview of the selected image
   const [showModal, setShowModal] = useState(false); // State to show/hide modal
   const fileInputRef = useRef(null);
+
+  const navigate = useNavigate(); 
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -93,7 +96,10 @@ const ProfileInfo = ({ toggleDropdown, avatar, name }) => {
             <p className="text-gray-600 font-thin text-sm">4 Publish Inks</p>
           </div>
           <div className="absolute top-16 md:right-0 flex flex-wrap md:flex-row gap-3 md:pt-6 md:px-0 justify-center md:w-auto w-full">
-            <button className="bg-violet-800 hover:bg-violet-700 text-white text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min">
+            <button 
+              className="bg-violet-800 hover:bg-violet-700 text-white text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min"
+              onClick={() => navigate('/dashboard')}
+            >
               <PlusOutlined /> Write post
             </button>
             <button 

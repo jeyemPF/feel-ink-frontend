@@ -7,6 +7,7 @@ import EmptyState from '../../components/home/EmptyState';
 import { Typography } from 'antd';
 import { AppContext } from '../../context/AppContext';
 
+
 const { Title } = Typography;
 
 const Dashboard = () => {
@@ -133,25 +134,39 @@ const Dashboard = () => {
     }
   };
 
-  const handleReaction = (cardId, reactionType) => {
-    const updatedCards = posts.map((card) => {
-      if (card.id === cardId) {
-        const newReactions = { ...card.reactions };
-        const isHeartClicked = !card.isHeartClicked;
+  const handleReaction = async (cardId, reactionType) => {
+    console.log(`Reacted to post ${id} with ${reaction}`);
 
-        if (isHeartClicked) {
-          newReactions[reactionType] += 1;
-        } else {
-          newReactions[reactionType] -= 1;
-        }
-
-        return { ...card, reactions: newReactions, isHeartClicked };
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${cardId}/react`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reactionType }),
+      });
+  
+      if (response.ok) {
+        const updatedCard = await response.json(); // Expect the backend to return the updated card
+        
+        // Update the posts state with the updated card
+        setPosts((prevPosts) => 
+          prevPosts.map((card) =>
+            card.id === cardId ? { ...card, ...updatedCard } : card
+          )
+        );
+      } else {
+        const errorData = await response.json();
+        console.error('Error updating reaction:', errorData);
+        alert(errorData.error || 'An error occurred while updating the reaction.');
       }
-      return card;
-    });
-
-    setPosts(updatedCards);
+    } catch (error) {
+      console.error('Error updating reaction:', error.message);
+      alert('An error occurred while updating the reaction.');
+    }
   };
+  
 
   const openModal = (card) => {
     setSelectedCard(card);
