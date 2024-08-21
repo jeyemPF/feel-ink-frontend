@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
+import { AppContext } from '../../context/AppContext'; // Import your AppContext
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const ProfileDropdown = ({ direction, avatar, username, email }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate(); // Use navigate to redirect after logout
+  const { setUser, setToken } = useContext(AppContext); // Access context to reset user and token
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -20,6 +27,32 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('access_token'); // Assuming you're storing the token in local storage
+      if (token) {
+        await axios.post(`${apiUrl}/api/logout`, {}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      
+      // Clear token and user data from storage
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      
+      // Reset user and token in the context
+      setUser(null);
+      setToken(null);
+
+      // Redirect to login page
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout Failed', error);  
+    }
+  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -51,9 +84,12 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
             Profile
           </a>
           <hr className="my-1" />
-          <a href="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+          <button 
+            onClick={handleLogout}
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+          >
             Logout
-          </a>
+          </button>
         </div>
       )}
     </div>
