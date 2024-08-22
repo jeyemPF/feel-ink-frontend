@@ -3,14 +3,14 @@ import { PlusOutlined, EditOutlined, CameraOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import EditProfileModal from '../../../components/modals/EditProfileModal';
 
-const ProfileInfo = ({ toggleDropdown, avatar, name }) => {
+const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
   const [previewUrl, setPreviewUrl] = useState(null); // To show a preview of the selected image
   const [showModal, setShowModal] = useState(false); // State to show/hide modal
   const fileInputRef = useRef(null);
 
   const navigate = useNavigate(); 
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       // Check if the selected file is an image
@@ -26,34 +26,8 @@ const ProfileInfo = ({ toggleDropdown, avatar, name }) => {
       };
       reader.readAsDataURL(file);
 
-      // Upload the file to your server or cloud storage
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'your_upload_preset'); // If using Cloudinary
-
-      try {
-        const response = await fetch('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', {
-          method: 'POST',
-          body: formData,
-        });
-        
-        if (!response.ok) {
-          throw new Error('Failed to upload image');
-        }
-        
-        const data = await response.json();
-        console.log('Uploaded image data:', data);
-        
-        if (data.secure_url) {
-          // Update avatar URL with the new image URL
-          // You might want to set it in the context or send it to the server
-          setPreviewUrl(null); // Clear preview URL once the upload is complete
-        } else {
-          console.error('No secure URL returned in the response');
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
+      // Call the passed-in handleAvatarChange function
+      handleAvatarChange(event);
     }
   };
 

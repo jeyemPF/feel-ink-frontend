@@ -1,24 +1,27 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
 import ProfileHeader from './ProfileHeader';
-import ProfileInfo from './ProfileInfo';    
+import ProfileInfo from './ProfileInfo';
 import MyInks from './MyInks';
 import { AppContext } from '../../../context/AppContext';
+import { getCroppedImg } from '../../../utils/cropImage'; // Ensure this is correctly defined
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
-  const { user, updateUser } = useContext(AppContext); // Added updateUser function for profile update
+  const { user, setUser } = useContext(AppContext); // Assuming you have user context set up
   const [postContent, setPostContent] = useState('');
   const [userPosts, setUserPosts] = useState([]);
   const [coverPhoto, setCoverPhoto] = useState(user?.cover_photo || 'https://via.placeholder.com/1500x500');
   const [cropImage, setCropImage] = useState(null);
   const [showCrop, setShowCrop] = useState(false);
+  const [avatar, setAvatar] = useState(null);  // Added avatar state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    // Fetch user posts if needed
-    // Example: fetchUserPosts();
-  }, [user]);
+  const token = user?.token; // Ensure token is correctly retrieved
 
   const handlePostChange = (e) => setPostContent(e.target.value);
 
@@ -38,15 +41,19 @@ const Profile = () => {
     }
   };
 
-  const handleCoverPhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCropImage(reader.result);
-        setShowCrop(true);
-      };
-      reader.readAsDataURL(file);
+  const handleCoverPhotoChange = async (e) => {
+    try {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCropImage(reader.result);
+          setShowCrop(true); // Show the cropping UI
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch (error) {
+      console.error('Failed to handle cover photo change:', error);
     }
   };
 
@@ -54,18 +61,83 @@ const Profile = () => {
     try {
       setCoverPhoto(croppedImage);
       setShowCrop(false);
-      // Ideally, update the cover photo on your backend
-      if (updateUser) {
-        await updateUser({ cover_photo: croppedImage });
+
+      const formData = new FormData();
+      formData.append('cover_photo', croppedImage);
+
+      const response = await axios.post(`${apiUrl}/api/user/cover-photo/${user.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.data.cover_photo) {
+        setUser({ ...user, cover_photo: response.data.cover_photo });
       }
     } catch (error) {
-      console.error('Failed to update cover photo:', error);
+      console.error('Failed to update cover photo:', error.response || error.message);
     }
   };
+
+  const handleAvatarChange = async (e) => {
+    e.preventDefault();
+    
+    // Get the file directly from the file input
+    const file = e.target.files[0];
+
+    if (!file) {
+        setError('Please select an avatar to upload.');
+        return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        // Retrieve access_token from local storage
+        const token = localStorage.getItem('access_token');
+        console.log('Access Token:', token); // Debugging
+
+        if (!token) {
+            setError('No token found, please log in again.');
+            setLoading(false);
+            return;
+        }
+
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/update-profile/${user.id}`,
+            formData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
+
+        // Assuming response.data.user.avatar is the new avatar URL
+        setUser({ ...user, avatar: response.data.user.avatar });
+        alert('Avatar updated successfully!');
+    } catch (error) {
+        setError('Failed to update avatar. Please try again.');
+        console.error('Avatar update error:', error.response || error.message);
+    } finally {
+        setLoading(false);
+    }
+};
+
 
   const toggleDropdown = () => {
     console.log('Dropdown toggled');
   };
+
+  if (!user) {
+    return <div>Loading...</div>; // Or some other placeholder
+  }
 
   return (
     <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded">
@@ -85,11 +157,12 @@ const Profile = () => {
           />
           <ProfileInfo
             toggleDropdown={toggleDropdown}
-            avatar={user?.avatar}  // Pass avatar URL from user context
-            name={user?.name}     // Pass name from user context
+            avatar={user.avatar}
+            name={user.name}
+            handleAvatarChange={handleAvatarChange}
           />
           <MyInks 
-            post={user?.post}
+            post={userPosts} // Use userPosts instead of user?.post
           />
         </>
       )}

@@ -3,7 +3,7 @@ import { HeartOutlined, ArrowsAltOutlined } from '@ant-design/icons';
 import { formatTimestamp } from '../../utils/dateUtils';
 
 const PostedCard = ({ card, openModal, handleReaction }) => {
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(card.is_heart_clicked || false); // Initialize state
 
   const handleIconClick = (e) => {
     e.stopPropagation();

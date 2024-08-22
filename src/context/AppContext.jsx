@@ -62,7 +62,7 @@ export default function AppProvider({ children }) {
     const fetchUserPosts = async () => {
       if (token) {
         try {
-          const response = await fetch(`${apiUrl}/api/user/posts`, {
+          const response = await fetch(`${apiUrl}/api/user/data`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -121,14 +121,13 @@ export default function AppProvider({ children }) {
         },
         body: JSON.stringify({ token: googleToken }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        setToken(data.access_token);
+        setToken(data.access_token); // Update state
         setUser(data.user);
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        console.log('Login successful:', data);
+        localStorage.setItem('access_token', data.access_token); // Update local storage
+        localStorage.setItem('user', JSON.stringify(data.user)); // Update local storage
       } else {
         console.error('Failed to authenticate with Google:', await response.text());
       }
@@ -136,7 +135,7 @@ export default function AppProvider({ children }) {
       console.error('Error during Google Sign-In:', error);
     }
   };
-
+  
   const handleLogout = async () => {
     try {
       await fetch(`${apiUrl}/api/logout`, {
@@ -156,6 +155,36 @@ export default function AppProvider({ children }) {
     }
   };
 
+  const updateUser = async (updatedData) => {
+    if (!token) {
+      console.error('No token available');
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${apiUrl}/api/user/update/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        // Update the user state with the new data
+        setUser(prevUser => ({ ...prevUser, ...updatedData }));
+        localStorage.setItem('user', JSON.stringify({ ...user, ...updatedData }));
+      } else {
+        console.error('Failed to update user:', data.message);
+      }
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+  
+
   return (
     <AppContext.Provider
       value={{
@@ -172,6 +201,7 @@ export default function AppProvider({ children }) {
         allPosts,
         allPostLoading,
         allPostError,
+        updateUser
       }}
     >
       {children}
