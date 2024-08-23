@@ -49,8 +49,8 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
               e.target.src = 'https://via.placeholder.com/150';
             }}
           />
-          <div
-            className="absolute bottom-2 right-1 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer"
+           <div
+            className="absolute bottom-2 right-1 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors duration-200"
             onClick={() => fileInputRef.current.click()}
           >
             <CameraOutlined className="text-white" />
