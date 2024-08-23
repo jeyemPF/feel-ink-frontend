@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import axios from 'axios';
 import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
@@ -6,22 +6,22 @@ import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
 import MyInks from './MyInks';
 import { AppContext } from '../../../context/AppContext';
-import { getCroppedImg } from '../../../utils/cropImage'; // Ensure this is correctly defined
+
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
-  const { user, setUser } = useContext(AppContext); // Assuming you have user context set up
+  const { user, setUser } = useContext(AppContext); 
   const [postContent, setPostContent] = useState('');
   const [userPosts, setUserPosts] = useState([]);
   const [coverPhoto, setCoverPhoto] = useState(user?.cover_photo || 'https://via.placeholder.com/1500x500');
   const [cropImage, setCropImage] = useState(null);
   const [showCrop, setShowCrop] = useState(false);
-  const [avatar, setAvatar] = useState(null);  // Added avatar state
+  const [avatar, setAvatar] = useState(null);  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
-  const token = user?.token; // Ensure token is correctly retrieved
+  const token = user?.token; 
 
   const handlePostChange = (e) => setPostContent(e.target.value);
 
@@ -131,7 +131,7 @@ const Profile = () => {
 };
 
 
-  const toggleDropdown = () => {
+  const toggleDropdown = () => {  
     console.log('Dropdown toggled');
   };
 
