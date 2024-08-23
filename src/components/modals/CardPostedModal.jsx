@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatTimestamp } from '../../utils/dateUtils';
-import { ShrinkOutlined } from '@ant-design/icons';
+import { ShrinkOutlined, ShareAltOutlined, HeartOutlined } from '@ant-design/icons';
 
 const CardPostedModal = ({ isOpen, onClose, card }) => {
   if (!isOpen || !card) return null;
 
   // Destructure card object, including nested user object
-  const { content, color, timestamp, user } = card;
+  const { content, color, timestamp, user, reactions_count } = card;
   const { avatar, name: username } = user || {};
 
   return (
@@ -48,6 +48,18 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
           <div className="overflow-auto pl-2" style={{ height: 'calc(100% - 64px)' }}>
             <p className="pb-10 text-sm" style={{ wordBreak: 'prewrap' }}>{content}</p>
           </div>
+
+          {/* Icons Section */}
+          <div className="flex justify-end gap-3 items-center  ">
+          <div className="flex items-center gap-1">
+              <HeartOutlined className="text-lg text-violet-500 cursor-pointer" />
+              {reactions_count > 0 && (
+                <span className="text-sm text-violet-600">{reactions_count}</span>
+              )}
+            </div>
+            {/* <ShareAltOutlined className="text-lg text-gray-500 hover:text-gray-800 cursor-pointer" /> */}
+            
+          </div>
         </div>
       </div>
     </div>
@@ -65,8 +77,8 @@ CardPostedModal.propTypes = {
       avatar: PropTypes.string,
       name: PropTypes.string,
     }),
+    reactions_count: PropTypes.number.isRequired,
   }),
 };
 
 export default CardPostedModal;
-  
