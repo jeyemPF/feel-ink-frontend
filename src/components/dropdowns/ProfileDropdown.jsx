@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
-import { AppContext } from '../../context/AppContext'; // Import your AppContext
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const ProfileDropdown = ({ direction, avatar, username, email }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const navigate = useNavigate(); // Use navigate to redirect after logout
-  const { setUser, setToken } = useContext(AppContext); // Access context to reset user and token
+  const navigate = useNavigate();
+  const { setUser, setToken } = useContext(AppContext);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -30,7 +30,7 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('access_token'); // Assuming you're storing the token in local storage
+      const token = localStorage.getItem('access_token');
       if (token) {
         await axios.post(`${apiUrl}/api/logout`, {}, {
           headers: {
@@ -39,15 +39,12 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
         });
       }
       
-      // Clear token and user data from storage
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
       
-      // Reset user and token in the context
       setUser(null);
       setToken(null);
 
-      // Redirect to login page
       navigate('/login');
     } catch (error) {
       console.error('Logout Failed', error);  
@@ -57,9 +54,9 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <img
-        src={avatar || 'https://via.placeholder.com/150'}  // Fallback if avatar is not available
+        src={avatar || 'https://via.placeholder.com/150'} 
         alt="Avatar"
-        className="w-6 h-6 rounded-full mx-4 cursor-pointer"
+        className="w-6 h-6 rounded-full mx-4 cursor-pointer hover:opacity-80 transition-opacity duration-200"
         onClick={toggleDropdown}
       />
       {isDropdownOpen && (
@@ -68,7 +65,7 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
         >
           <div className="px-4 py-3 flex items-center">
             <img
-              src={avatar || 'https://via.placeholder.com/150'}  // Display the avatar
+              src={avatar || 'https://via.placeholder.com/150'}
               alt="Avatar"
               className="w-12 h-12 rounded-full mr-3"
             />
@@ -80,13 +77,13 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
             </div>
           </div>
           <hr className="my-1" />
-          <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+          <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-violet-700 transition-colors duration-200">
             Profile
           </a>
           <hr className="my-1" />
           <button 
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-violet-700 transition-colors duration-200"
           >
             Logout
           </button>

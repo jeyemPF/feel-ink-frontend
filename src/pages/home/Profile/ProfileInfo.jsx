@@ -44,7 +44,6 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
             src={previewUrl || avatar} // Show preview if available, otherwise show the current avatar
             alt="Avatar"
             className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white cursor-pointer select-none"
-            onClick={() => fileInputRef.current.click()}
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/150';
             }}

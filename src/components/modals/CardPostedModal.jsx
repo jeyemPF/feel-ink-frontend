@@ -81,4 +81,4 @@ CardPostedModal.propTypes = {
   }),
 };
 
-export default CardPostedModal;
+export default CardPostedModal; 
