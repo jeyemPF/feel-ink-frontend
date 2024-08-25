@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Typography, Spin, Button } from 'antd';
+import { Typography, Spin, Card, Popover, Skeleton } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import { AppContext } from '../../../context/AppContext';
 
@@ -33,24 +33,31 @@ const MyInks = () => {
   }
 
   return (
-    <div className="mt-8 p-4 rounded w-full max-w-4xl mx-auto pt-40 md:pt-14">
+    <div className="mt-8 p-4 rounded w-full max-w-6xl mx-auto pt-40 md:pt-14">
       <div className="bg-red py-10">
         <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
           My Inks
         </Title>
       </div>
-      <div className="mt-8 w-full max-w-4xl mx-auto space-y-4">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div key={post.id} className="p-4 bg-white shadow-md rounded-lg">
-              <p>{post.content}</p>
-              <div className="flex justify-between items-center mt-2">
-                <Button onClick={() => openModal(post.id)}>Open Modal</Button>
-                <Button onClick={() => handleReaction(post.id, 'like')}>
-                  <HeartOutlined /> {post.reactions_count}
-                </Button>
-              </div>
-            </div>
+            <Card
+              key={post.id}
+              hoverable
+              className="shadow-md rounded-lg"
+              onClick={() => openModal(post.id)}
+              cover={<img alt="example" src={post.cover_image} />}
+            >
+              <Skeleton loading={postLoading} active>
+                <p>{post.content}</p>
+                <div className="flex justify-between items-center mt-2">
+                  <Popover content="React to this post">
+                    <HeartOutlined onClick={() => handleReaction(post.id, 'like')} /> {post.reactions_count}
+                  </Popover>
+                </div>
+              </Skeleton>
+            </Card>
           ))
         ) : (
           <p className="text-center text-gray-500">No posts found.</p>

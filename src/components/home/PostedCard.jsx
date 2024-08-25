@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { HeartOutlined, ArrowsAltOutlined } from '@ant-design/icons';
+import { Popover } from 'antd';
 import { formatTimestamp } from '../../utils/dateUtils';
 
 const PostedCard = ({ card, openModal, handleReaction }) => {
-  const [isHeartClicked, setIsHeartClicked] = useState(card.is_heart_clicked || false); // Initialize state
+  const [isHeartClicked, setIsHeartClicked] = useState(card.is_heart_clicked || false);
 
   const handleIconClick = (e) => {
     e.stopPropagation();
@@ -13,17 +14,17 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   const handleHeartClick = (e) => {
     e.stopPropagation();
     handleReaction(card.id, 'heart');
-    setIsHeartClicked(!isHeartClicked); // Toggle heart click state
+    setIsHeartClicked(!isHeartClicked);
   };
 
   const textColor = (color) => {
     switch (color) {
       case '#FFFFFF':
-        return '#374151'; // Dark gray for white background
+        return '#374151'; 
       case '#D1C4E9':
-        return '#4B5563'; // Medium gray for light purple background
+        return '#4B5563'; 
       case '#9575CD':
-        return '#FAFAFA'; // Very light gray for purple background
+        return '#FAFAFA'; 
       default:
         return 'inherit';
     }
@@ -32,11 +33,11 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   const iconColor = (color, isHeartClicked) => {
     switch (color) {
       case '#FFFFFF':
-        return isHeartClicked ? '#8B5CF6' : '#374151'; // Dark gray for white background
+        return isHeartClicked ? '#8B5CF6' : '#374151';
       case '#D1C4E9':
-        return isHeartClicked ? '#8B5CF6' : '#4B5563'; // Medium gray for light purple background
+        return isHeartClicked ? '#8B5CF6' : '#4B5563';
       case '#9575CD':
-        return isHeartClicked ? '#8B5CF6' : '#FAFAFA'; // Very light gray for purple background
+        return isHeartClicked ? '#8B5CF6' : '#FAFAFA';
       default:
         return 'inherit';
     }
@@ -80,6 +81,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         {card.content}
       </p>
       <div className="flex items-center mt-2 justify-end w-full">
+      <Popover content="Expand the ink" placement="top">
         <ArrowsAltOutlined 
           style={{ 
             marginRight: '8px', 
@@ -90,16 +92,19 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           onMouseOver={(e) => e.target.style.color = '#6B7280'} 
           onMouseOut={(e) => e.target.style.color = textColor(card.color)}
         />
+        </Popover>
         <div className="flex flex-row gap-1 items-center">
-          <HeartOutlined
-            style={{ 
-              color: iconColor(card.color, isHeartClicked), 
-              cursor: 'pointer' 
-            }}
-            onClick={handleHeartClick}
-            onMouseOver={(e) => e.target.style.color = '#6B7280'} 
-            onMouseOut={(e) => e.target.style.color = iconColor(card.color, isHeartClicked)}
-          />
+          <Popover content="React to this ink" placement="top">
+            <HeartOutlined
+              style={{ 
+                color: iconColor(card.color, isHeartClicked), 
+                cursor: 'pointer' 
+              }}
+              onClick={handleHeartClick}
+              onMouseOver={(e) => e.target.style.color = '#6B7280'} 
+              onMouseOut={(e) => e.target.style.color = iconColor(card.color, isHeartClicked)}
+            />
+          </Popover>
           <p className="text-sm" style={{ color: textColor(card.color) }}>
             {card.reactions_count || 0}
           </p>
