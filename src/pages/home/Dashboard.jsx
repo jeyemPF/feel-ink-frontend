@@ -7,11 +7,10 @@ import EmptyState from '../../components/home/EmptyState';
 import { Typography } from 'antd';
 import { AppContext } from '../../context/AppContext';
 
-
 const { Title } = Typography;
 
 const Dashboard = () => {
-  const { token, handleGoogleSignIn } = useContext(AppContext);
+  const { token } = useContext(AppContext);
   const [allPosts, setAllPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [allPostLoading, setAllPostLoading] = useState(true);
@@ -127,7 +126,6 @@ const Dashboard = () => {
       }
     }
   };
-  
 
   const handleReaction = async (cardId, reactionType) => {
     console.log(`Reacted to post ${cardId} with ${reactionType}`);
@@ -161,7 +159,6 @@ const Dashboard = () => {
       alert('An error occurred while updating the reaction.');
     }
   };
-  
 
   const openModal = (card) => {
     setSelectedCard(card);
@@ -172,8 +169,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-16">
-      <Header addCard={postCard} disableAddButton={false} />
+    <div className="min-h-screen pt-16 bg-gray-100 dark:bg-gray-900">
+      <Header disableAddButton={false} />
       <div className="p-4 flex flex-col md:flex-row">
         <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
         <div className="hidden md:block bg-gray-300 w-px min-h-full"></div>
