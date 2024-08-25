@@ -3,7 +3,12 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-const colorOptions = ['#FFFFFF',  '#D1C4E9', '#9575CD'];
+// Map hex codes to color names
+const colorOptions = [
+  { hex: '#FFFFFF', name: 'White' },
+  { hex: '#D1C4E9', name: 'Lavender' },
+  { hex: '#9575CD', name: 'Purple' },
+];
 
 const CardForm = ({ formState, handleFormChange, postCard }) => {
   const { newCardContent, selectedColor, postMode } = formState;
@@ -32,9 +37,9 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
               value={selectedColor}
               onChange={(e) => handleFormChange('selectedColor', e.target.value)}
             >
-              {colorOptions.map((color, index) => (
-                <option key={index} value={color} style={{ backgroundColor: color }}>
-                  {color}
+              {colorOptions.map((option, index) => (
+                <option key={index} value={option.hex} style={{ backgroundColor: option.hex }}>
+                  {option.name}
                 </option>
               ))}
             </select>

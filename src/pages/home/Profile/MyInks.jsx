@@ -8,10 +8,6 @@ const { Title } = Typography;
 const MyInks = () => {
   const { posts, postLoading, postError } = useContext(AppContext);
 
-  const handleReaction = (id, reaction) => {
-    console.log(`Reacted to post ${id} with ${reaction}`);
-  };
-
   const openModal = (id) => {
     console.log(`Open modal for post ${id}`);
   };
@@ -47,13 +43,12 @@ const MyInks = () => {
               hoverable
               className="shadow-md rounded-lg"
               onClick={() => openModal(post.id)}
-              cover={<img alt="example" src={post.cover_image} />}
             >
               <Skeleton loading={postLoading} active>
                 <p>{post.content}</p>
                 <div className="flex justify-between items-center mt-2">
-                  <Popover content="React to this post">
-                    <HeartOutlined onClick={() => handleReaction(post.id, 'like')} /> {post.reactions_count}
+                  <Popover content="Reactions">
+                    <HeartOutlined /> {post.reactions_count}
                   </Popover>
                 </div>
               </Skeleton>

@@ -90,33 +90,27 @@ const Dashboard = () => {
   };
 
   const postCard = async () => {
-    const { newCardContent, selectedColor, postMode } = formState;
+    const { newCardContent, postMode } = formState;
+  
     if (newCardContent.trim() !== '') {
-      const email = 'thomasshelby@gmail.com';
-      const username = postMode === 'reveal' ? "@" + email.split('@')[0] : 'Anonymous';
-      const avatar = postMode === 'reveal'
-        ? 'https://res.cloudinary.com/dihmqs39z/image/upload/v1720565151/v5-portrait-of-thomas-shelby-peaky-blinders-v0-owp85jioauna1_vrieuc.webp'
-        : null;
-
       const newCard = {
         content: newCardContent,
-        color: selectedColor,
-        username,
-        avatar,
+        is_anonymous: postMode === 'anonymous',
       };
-
+  
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`, // Include the access token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(newCard),
         });
+  
         if (response.ok) {
           const data = await response.json();
-          setPosts((prevPosts) => [...prevPosts, data]);
+          setPosts((prevPosts) => [...prevPosts, data.post]);
           setFormState({
             newCardContent: '',
             selectedColor: '#FFFFFF',
@@ -125,7 +119,7 @@ const Dashboard = () => {
         } else {
           const errorData = await response.json();
           console.error('Error creating post:', errorData);
-          alert(errorData.error || 'An error occurred while creating the post.');
+          alert(errorData.errors || 'An error occurred while creating the post.');
         }
       } catch (error) {
         console.error('Error creating post:', error.message);
@@ -133,6 +127,7 @@ const Dashboard = () => {
       }
     }
   };
+  
 
   const handleReaction = async (cardId, reactionType) => {
     console.log(`Reacted to post ${cardId} with ${reactionType}`);
