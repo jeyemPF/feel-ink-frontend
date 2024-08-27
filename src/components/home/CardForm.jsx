@@ -3,7 +3,6 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-// Map hex codes to color names
 const colorOptions = [
   { hex: '#FFFFFF', name: 'White' },
   { hex: '#D1C4E9', name: 'Lavender' },
@@ -15,25 +14,31 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
 
   return (
     <div className="w-full md:w-1/2 p-4 mb-4 md:mb-0">
-      <div className="p-4 rounded relative bg-white shadow">
+      <div className="p-4 rounded relative bg-white dark:bg-gray-800 shadow">
         <div className="flex items-center">
-          <Title level={5} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }} className="font-bold justify-start text-justify pt-1">
+          <Title
+            level={5}
+            style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}
+            className="font-bold justify-start text-justify pt-1 text-gray-900 dark:text-white"
+          >
             Compose Your Ink
           </Title>
         </div>
 
         <textarea
-          className="w-full h-18 border-2 rounded p-2 focus:outline-none"
+          className="w-full h-18 border-2 rounded p-2 focus:outline-none bg-white dark:bg-gray-700 dark:text-white"
           value={newCardContent}
           onChange={(e) => handleFormChange('newCardContent', e.target.value)}
           placeholder="Write your thoughts..."
-          style={{ border: `2px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}` }}
+          style={{
+            border: `2px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}`,
+          }}
         />
 
         <div className="flex flex-col md:flex-column items-center mt-2">
           <div className="flex flex-col md:flex-row sm:flex-row mb-2 w-full">
             <select
-              className="mt-2 md:mt-0 md:ml-1 sm:mt-0 sm:ml-2 bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none w-full md:w-full"
+              className="mt-2 md:mt-0 md:ml-1 sm:mt-0 sm:ml-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full md:w-full dark:text-white"
               value={selectedColor}
               onChange={(e) => handleFormChange('selectedColor', e.target.value)}
             >
@@ -44,7 +49,7 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
               ))}
             </select>
             <select
-              className="mt-2 md:mt-0 md:mr-1 sm:mt-0 sm:ml-2 bg-white border border-gray-300 rounded px-3 py-1 focus:outline-none w-full"
+              className="mt-2 md:mt-0 md:mr-1 sm:mt-0 sm:ml-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full dark:text-white"
               value={postMode}
               onChange={(e) => handleFormChange('postMode', e.target.value)}
             >

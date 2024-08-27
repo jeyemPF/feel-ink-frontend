@@ -18,19 +18,25 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   };
 
   const textColor = (color) => {
+    if (document.documentElement.classList.contains('dark')) {
+      return '#FAFAFA'; // Light text for dark mode
+    }
     switch (color) {
       case '#FFFFFF':
-        return '#374151'; 
+        return '#374151'; // Light gray for white background
       case '#D1C4E9':
-        return '#4B5563'; 
+        return '#4B5563'; // Slightly darker gray for lavender background
       case '#9575CD':
-        return '#FAFAFA'; 
+        return '#FAFAFA'; // White for purple background
       default:
         return 'inherit';
     }
   };
 
   const iconColor = (color, isHeartClicked) => {
+    if (document.documentElement.classList.contains('dark')) {
+      return isHeartClicked ? '#8B5CF6' : '#FAFAFA'; // Adjusted colors for dark mode
+    }
     switch (color) {
       case '#FFFFFF':
         return isHeartClicked ? '#8B5CF6' : '#374151';
@@ -63,7 +69,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   );
 
   return (
-    <div key={card.id} className="p-4 rounded bg-white shadow" style={{ backgroundColor: card.color }}>
+    <div key={card.id} className="p-4 rounded bg-white dark:bg-gray-800 shadow" style={{ backgroundColor: card.color }}>
       <div className="flex items-center justify-between">
         <UserInfo 
           name={card.user?.name || 'Anonymous'} 
@@ -81,17 +87,17 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
         {card.content}
       </p>
       <div className="flex items-center mt-2 justify-end w-full">
-      <Popover content="Expand the ink" placement="top">
-        <ArrowsAltOutlined 
-          style={{ 
-            marginRight: '8px', 
-            cursor: 'pointer', 
-            color: textColor(card.color) 
-          }} 
-          onClick={handleIconClick} 
-          onMouseOver={(e) => e.target.style.color = '#6B7280'} 
-          onMouseOut={(e) => e.target.style.color = textColor(card.color)}
-        />
+        <Popover content="Expand the ink" placement="top">
+          <ArrowsAltOutlined 
+            style={{ 
+              marginRight: '8px', 
+              cursor: 'pointer', 
+              color: textColor(card.color) 
+            }} 
+            onClick={handleIconClick} 
+            onMouseOver={(e) => e.target.style.color = '#6B7280'} 
+            onMouseOut={(e) => e.target.style.color = textColor(card.color)}
+          />
         </Popover>
         <div className="flex flex-row gap-1 items-center">
           <Popover content="React to this ink" placement="top">
