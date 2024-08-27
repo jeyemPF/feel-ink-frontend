@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { HomeOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'; // Importing Ant Design icons
+import { HomeOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import { AppContext } from '../context/AppContext';
 import logo from '../assets/logo/logos.png';
@@ -75,7 +75,7 @@ const Header = ({ disableAddButton }) => {
           {renderProfileDropdown('down')}
         </div>
       </header>
-      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t-2 z-50 md:hidden md:bg-opacity-50 bg-opacity-80">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#18191a] border-t-1 z-50 md:hidden md:bg-opacity-50 bg-opacity-60">
         <div className="flex justify-around py-2">
           <button
             onClick={toggleDarkMode}
