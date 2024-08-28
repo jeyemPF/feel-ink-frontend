@@ -35,28 +35,28 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
           }}
         />
 
-        <div className="flex flex-col md:flex-column items-center mt-2">
-          <div className="flex flex-col md:flex-row sm:flex-row mb-2 w-full">
-            <select
-              className="mt-2 md:mt-0 md:ml-1 sm:mt-0 sm:ml-2 bg-white dark:bg-[#3A3B3C] border-gray-300 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full md:w-full dark:text-white"
-              value={selectedColor}
-              onChange={(e) => handleFormChange('selectedColor', e.target.value)}
-            >
-              {colorOptions.map((option, index) => (
-                <option key={index} value={option.hex} style={{ backgroundColor: option.hex }}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-            <select
-              className="mt-2 md:mt-0 md:mr-1 sm:mt-0 sm:ml-2 bg-white dark:bg-[#3A3B3C] border-gray-300 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full dark:text-white"
-              value={postMode}
-              onChange={(e) => handleFormChange('postMode', e.target.value)}
-            >
-              <option value="reveal">Reveal Me</option>
-              <option value="anonymous">Anonymous</option>
-            </select>
-          </div>
+          <div className="flex flex-col md:flex-column items-center mt-2">
+            <div className="flex flex-col md:flex-row sm:flex-row mb-2 w-full">
+              <select
+                className="mt-2 md:mt-0 md:ml-1 sm:mt-0 sm:ml-2 bg-white dark:bg-[#3A3B3C] border border-gray-400 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full md:w-full dark:text-white"
+                value={selectedColor}
+                onChange={(e) => handleFormChange('selectedColor', e.target.value)}
+              >
+                {colorOptions.map((option, index) => (
+                  <option key={index} value={option.hex} style={{ backgroundColor: option.hex }}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="mt-2 md:mt-0 md:mr-1 sm:mt-0 sm:ml-2 bg-white dark:bg-[#3A3B3C] border  border-gray-400 dark:border-gray-600 rounded px-3 py-1 focus:outline-none w-full dark:text-white"
+                value={postMode}
+                onChange={(e) => handleFormChange('postMode', e.target.value)}
+              >
+                <option value="reveal">Reveal Me</option>
+                <option value="anonymous">Anonymous</option>
+              </select>
+            </div>
 
           <button
             className="mt-2 md:mt-0 md:ml-2 bg-violet-800 text-white py-1 px-3 rounded hover:bg-violet-600 focus:outline-none w-full"
