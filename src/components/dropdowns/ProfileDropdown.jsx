@@ -61,29 +61,29 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
       />
       {isDropdownOpen && (
         <div
-          className={`absolute ${direction === 'up' ? 'bottom-10' : 'mt-2'} right-0 w-64 bg-white rounded-md shadow-lg z-10`}
+          className={`absolute ${direction === 'up' ? 'bottom-10' : 'mt-2'} right-0 w-64 bg-gray-800 text-white rounded-md shadow-lg z-10`}
         >
-          <div className="px-4 py-3 flex items-center">
+          <div className="px-4 py-3 flex items-center bg-gray-900">
             <img
               src={avatar || 'https://via.placeholder.com/150'}
               alt="Avatar"
               className="w-12 h-12 rounded-full mr-3"
             />
             <div className="flex flex-col">
-              <p className="text-violet-800 font-bold">{username || 'User'}</p>
-              <p className="text-gray-600 text-sm truncate w-48">
+              <p className="text-violet-300 font-bold">{username || 'User'}</p>
+              <p className="text-gray-400 text-sm truncate w-48">
                 {email || 'user@example.com'}
               </p>
             </div>
           </div>
-          <hr className="my-1" />
-          <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-violet-700 transition-colors duration-200">
+          <hr className="my-1 border-gray-700" />
+          <a href="/profile" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-violet-300 transition-colors duration-200">
             Profile
           </a>
-          <hr className="my-1" />
+          <hr className="my-1 border-gray-700" />
           <button 
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-violet-700 transition-colors duration-200"
+            className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-violet-300 transition-colors duration-200"
           >
             Logout
           </button>
