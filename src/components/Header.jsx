@@ -46,7 +46,7 @@ const Header = ({ disableAddButton }) => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#242526] md:bg-opacity-100 text-violet-800 dark:text-white py-2 px-3 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#242526] md:bg-opacity-100 text-violet-800 dark:text-white py-2 px-3 flex justify-between items-center border-b border-gray-200 dark:border-violet-900">
         <div className="flex items-center justify-center flex-grow md:justify-start">
           <Link to="/dashboard" className="flex items-center">
             <img src={logo} alt="Feelink Logo" className="w-16 h-16 lg:w-10 md:h-10" />

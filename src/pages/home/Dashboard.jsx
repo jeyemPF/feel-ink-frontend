@@ -173,7 +173,7 @@ const Dashboard = () => {
     <Header disableAddButton={false} />
     <div className="p-4 flex flex-col md:flex-row">
       <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
-      <div className="hidden md:block bg-gray-300 dark:bg-gray-700 w-px min-h-full"></div>
+      <div className="hidden md:block bg-gray-300 dark:bg-violet-900 w-px min-h-full"></div>
   
       <div className="w-full md:w-2/3 p-4">
         <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
