@@ -68,7 +68,7 @@ const Header = ({ disableAddButton }) => {
           </button>
           <Link
             to="/dashboard"
-            className={`ml-4 text-violet hover:text-violet-500 dark:text-white ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`ml-4 text-violet hover:text-violet-500 dark:text-whit  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
             <HomeOutlined />
           </Link>
@@ -85,7 +85,7 @@ const Header = ({ disableAddButton }) => {
           </button>
           <Link
             to="/dashboard"
-            className={`text-violet hover:text-violet-500 dark:text-white ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`text-violet hover:text-violet-500 dark:text-white  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
             <HomeOutlined />
           </Link>
