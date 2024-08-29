@@ -140,6 +140,7 @@ const Profile = () => {
   }
 
   return (
+    <div className='dark:bg-[#18191A] '>
     <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded  dark:bg-[#292b2d] ">
       <Header />
       {showCrop && cropImage ? (
@@ -147,15 +148,19 @@ const Profile = () => {
           imageSrc={cropImage}
           onCancel={() => setShowCrop(false)}
           onCropComplete={handleCropComplete}
+          className="dark:bg-[#292b2d]"
         />
       ) : (
         <>
+        
           <ProfileHeader
             coverPhoto={coverPhoto}
             onCoverPhotoChange={handleCoverPhotoChange}
             fileInputRef={fileInputRef}
             
           />
+      
+          
           <ProfileInfo
             toggleDropdown={toggleDropdown}
             avatar={user.avatar}
@@ -166,8 +171,12 @@ const Profile = () => {
             post={userPosts} // Use userPosts instead of user?.post
           />
         </>
+        
       )}
     </div>
+    </div>
+    
+   
   );
 };
 

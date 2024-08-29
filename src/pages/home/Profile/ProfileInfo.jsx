@@ -37,8 +37,8 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
   };
 
   return (
-    <div className="w-full flex justify-center relative mt-8">
-      <div className="absolute -top-28 w-10/12 flex flex-col md:flex-row items-center p-4 rounded md:gap-8">
+    <div className="w-full flex justify-center relative mt-8 dark:bg-[#ffffff]">
+      <div className="absolute -top-28 w-10/12 flex flex-col md:flex-row items-center p-4 rounded md:gap-8 ">
         <div className="relative left-4">
           <img
             src={previewUrl || avatar} // Show preview if available, otherwise show the current avatar
