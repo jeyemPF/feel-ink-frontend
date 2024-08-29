@@ -140,7 +140,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded">
+    <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded  dark:bg-[#292b2d] ">
       <Header />
       {showCrop && cropImage ? (
         <CropComponent
@@ -154,6 +154,7 @@ const Profile = () => {
             coverPhoto={coverPhoto}
             onCoverPhotoChange={handleCoverPhotoChange}
             fileInputRef={fileInputRef}
+            
           />
           <ProfileInfo
             toggleDropdown={toggleDropdown}

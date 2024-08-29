@@ -65,7 +65,7 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
         </div>
         <div className="flex flex-col md:flex-row flex-grow text-center md:text-start relative md:pt-20 md:gap-64 items-center md:w-auto w-full">
           <div className="mb-1 md:mb-0 relative items-center">
-            <h1 className="text-3xl md:text-3xl font-bold">{name}</h1>
+            <h1 className="text-3xl md:text-3xl font-bold  dark:text-[#ffffff]">{name}</h1>
             <p className="text-gray-600 font-thin text-sm">4 Publish Inks</p>
           </div>
           <div className="absolute top-16 md:right-0 flex flex-wrap md:flex-row gap-3 md:pt-6 md:px-0 justify-center md:w-auto w-full">
