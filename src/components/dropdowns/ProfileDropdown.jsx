@@ -54,7 +54,7 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <img
-        src={avatar || 'https://via.placeholder.com/150'} 
+        src={avatar || 'https://via.placeholder.com/150'}
         alt="Avatar"
         className="w-6 h-6 rounded-full mx-4 cursor-pointer hover:opacity-80 transition-opacity duration-200 select-none"
         onClick={toggleDropdown}
@@ -77,13 +77,16 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
             </div>
           </div>
           <hr className="my-1 border-gray-200 dark:border-gray-700" />
-          <a href="/profile" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#242526] hover:text-violet-700 transition-colors duration-200">
+          <a
+            href="/profile"
+            className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#242526] hover:text-violet-700 dark:hover:text-violet-600 transition-colors duration-200 text-sm"
+          >
             Profile
           </a>
           <hr className="my-1 border-gray-200 dark:border-gray-700" />
           <button 
             onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#242526] transition-colors duration-200"
+            className="text-sm block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#242526] hover:text-violet-700 dark:hover:text-violet-600 transition-colors duration-200"
           >
             Logout
           </button>

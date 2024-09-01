@@ -46,7 +46,7 @@ const Header = ({ disableAddButton }) => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#242526] md:bg-opacity-100 text-violet-800 dark:text-white py-2 px-3 flex justify-between items-center border-b border-gray-200 dark:border-violet-900">
+      <header className=" transition-all duration-200 fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#242526] md:bg-opacity-100 text-violet-800 dark:text-white py-2 px-3 flex justify-between items-center border-b border-gray-200 dark:border-violet-900">
         <div className="flex items-center justify-center flex-grow md:justify-start">
           <Link to="/dashboard" className="flex items-center">
             <img src={logo} alt="Feelink Logo" className="w-16 h-16 lg:w-10 md:h-10" />
@@ -62,13 +62,13 @@ const Header = ({ disableAddButton }) => {
         <div className="hidden md:flex items-center  justify-center">
           <button
             onClick={toggleDarkMode}
-            className="text-violet hover:text-violet-500 dark:text-white"
+            className="text-violet hover:text-violet-500 dark:text-white dark:hover:text-violet-500" 
           >
             {darkMode ? <SunOutlined className="text-sm" /> : <MoonOutlined className="text-sm" />}
           </button>
           <Link
             to="/dashboard"
-            className={`ml-4 text-violet hover:text-violet-500 dark:text-whit  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`ml-4 text-violet hover:text-violet-500 dark:text-white dark:hover:text-violet-500   ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
             <HomeOutlined className='text-sm' />
           </Link>
@@ -79,13 +79,13 @@ const Header = ({ disableAddButton }) => {
         <div className="flex justify-around py-2">
           <button
             onClick={toggleDarkMode}
-            className="text-violet hover:text-violet-500 dark:text-white"
+            className="text-violet-700 hover:text-violet-500 dark:text-white dark:hover:text-violet-500 "
           >
-            {darkMode ? <SunOutlined className="text-sm" /> : <MoonOutlined className="text-sm" />}
+            {darkMode ? <SunOutlined className="text-sm " /> : <MoonOutlined className="text-sm" />}
           </button>
           <Link
             to="/dashboard"
-            className={`text-violet hover:text-violet-500 dark:text-white  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`text-violet-700 hover:text-violet-500 dark:text-white dark:hover:text-violet-500 ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
             <HomeOutlined className='text-sm' />
           </Link>

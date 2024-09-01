@@ -31,7 +31,7 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
           onChange={(e) => handleFormChange('newCardContent', e.target.value)}
           placeholder="Write your thoughts..."
           style={{
-            border: `2px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}`,
+            border: `1px solid ${selectedColor !== '#FFFFFF' ? selectedColor : '#c0c0c0'}`,
           }}
         />
 

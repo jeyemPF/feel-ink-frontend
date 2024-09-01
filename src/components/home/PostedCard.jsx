@@ -19,39 +19,22 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
 
   const textColor = (color) => {
     if (document.documentElement.classList.contains('dark')) {
-      return '#E4E6EB'; // Match content color in dark mode
+      return '#E4E6EB'; // Light text for dark mode
     }
-    switch (color) {
-      case '#FFFFFF':
-        return '#374151'; // Dark text for light background
-      case '#D1C4E9':
-        return '#4B5563';
-      case '#9575CD':
-        return '#FAFAFA';
-      default:
-        return '#374151'; // Default dark text for other colors
-    }
+    return color === '#FFFFFF' ? '#374151' : '#333333'; // Dark text for light backgrounds
   };
 
-  const iconColor = (color, isHeartClicked) => {
-    if (document.documentElement.classList.contains('dark')) {
-      return isHeartClicked ? '#E4E6EB' : '#E4E6EB'; // Match content color in dark mode
-    }
-    switch (color) {
-      case '#FFFFFF':
-        return isHeartClicked ? '#8B5CF6' : '#374151';
-      case '#D1C4E9':
-        return isHeartClicked ? '#8B5CF6' : '#4B5563';
-      case '#9575CD':
-        return isHeartClicked ? '#8B5CF6' : '#FAFAFA';
-      default:
-        return 'inherit';
-    }
+  const iconColor = (isHeartClicked) => {
+    return isHeartClicked
+      ? document.documentElement.classList.contains('dark')
+        ? '#E4E6EB' // Active icon color in dark mode
+        : '#8B5CF6' // Active icon color in light mode
+      : '#374151'; // Default icon color
   };
 
   const UserInfo = ({ name, avatar, color }) => (
     card.is_anonymous ? (
-      <p className="text-sm font-medium dark:bg-[#242526]" style={{ color: textColor(color) }}>
+      <p className="text-sm font-medium dark:text-[#E4E6EB]" style={{ color: textColor(color) }}>
         Anonymous
       </p>
     ) : (
@@ -61,7 +44,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           src={avatar || 'default-avatar-url'}
           alt="Avatar"
         />
-        <p className="text-sm font-medium select-none dark:bg-[#242526]" style={{ color: textColor(color) }}>
+        <p className="text-sm font-medium select-none dark:text-[#E4E6EB]" style={{ color: textColor(color) }}>
           {name}
         </p>
       </div>
@@ -69,14 +52,14 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   );
 
   return (
-    <div key={card.id} className="p-4 rounded bg-white dark:bg-[#242526] shadow" style={{ backgroundColor: card.color }}>
+    <div key={card.id} className="p-4 rounded shadow bg-white dark:bg-[#242526]" style={{ backgroundColor: card.color }}>
       <div className="flex items-center justify-between">
         <UserInfo 
           name={card.user?.name || 'Anonymous'} 
           avatar={card.user?.avatar} 
           color={card.color} 
         />
-        <p className="text-xs" style={{ color: textColor(card.color) }}>
+        <p className="text-xs dark:text-[#E4E6EB]" style={{ color: textColor(card.color) }}>
           {formatTimestamp(card.timestamp)}
         </p>
       </div>
@@ -100,15 +83,15 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           <Popover content="React to this ink" placement="top">
             <HeartOutlined
               style={{ 
-                color: iconColor(card.color, isHeartClicked), 
+                color: iconColor(isHeartClicked), 
                 cursor: 'pointer' 
               }}
               onClick={handleHeartClick}
               onMouseOver={(e) => e.target.style.color = '#6B7280'} 
-              onMouseOut={(e) => e.target.style.color = iconColor(card.color, isHeartClicked)}
+              onMouseOut={(e) => e.target.style.color = iconColor(isHeartClicked)}
             />
           </Popover>
-          <p className="text-sm" style={{ color: textColor(card.color) }}>
+          <p className="text-sm dark:text-[#E4E6EB]" style={{ color: textColor(card.color) }}>
             {card.reactions_count || 0}
           </p>
         </div>

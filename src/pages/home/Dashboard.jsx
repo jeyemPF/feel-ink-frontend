@@ -169,7 +169,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-gray-100 dark:bg-[#18191A]">
+    <div className="min-h-screen pt-16 bg-gray-100 dark:bg-[#18191A] transition-all duration-200 ">
     <Header disableAddButton={false} />
     <div className="p-4 flex flex-col md:flex-row">
       <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
