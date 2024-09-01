@@ -59,18 +59,18 @@ const Header = ({ disableAddButton }) => {
             </Title>
           </Link>
         </div>
-        <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center  justify-center">
           <button
             onClick={toggleDarkMode}
             className="text-violet hover:text-violet-500 dark:text-white"
           >
-            {darkMode ? <SunOutlined className="" /> : <MoonOutlined className="" />}
+            {darkMode ? <SunOutlined className="text-sm" /> : <MoonOutlined className="text-sm" />}
           </button>
           <Link
             to="/dashboard"
             className={`ml-4 text-violet hover:text-violet-500 dark:text-whit  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
-            <HomeOutlined />
+            <HomeOutlined className='text-sm' />
           </Link>
           {renderProfileDropdown('down')}
         </div>
@@ -81,13 +81,13 @@ const Header = ({ disableAddButton }) => {
             onClick={toggleDarkMode}
             className="text-violet hover:text-violet-500 dark:text-white"
           >
-            {darkMode ? <SunOutlined className="text-xl" /> : <MoonOutlined className="text-xl" />}
+            {darkMode ? <SunOutlined className="text-sm" /> : <MoonOutlined className="text-sm" />}
           </button>
           <Link
             to="/dashboard"
             className={`text-violet hover:text-violet-500 dark:text-white  ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
           >
-            <HomeOutlined />
+            <HomeOutlined className='text-sm' />
           </Link>
           {renderProfileDropdown('up')}
         </div>
