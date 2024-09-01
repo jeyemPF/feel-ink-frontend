@@ -8,7 +8,7 @@ import ProfileDropdown from './dropdowns/ProfileDropdown';
 
 const { Title } = Typography;
 
-const Header = ({ disableAddButton }) => {
+const Header = ({ disableAddButton, onHomeClick }) => {
   const { user } = useContext(AppContext);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -62,6 +62,7 @@ const Header = ({ disableAddButton }) => {
         <div className="hidden md:flex items-center  justify-center">
           <button
             onClick={toggleDarkMode}
+            
             className="text-violet hover:text-violet-500 dark:text-white dark:hover:text-violet-500" 
           >
             {darkMode ? <SunOutlined className="text-sm" /> : <MoonOutlined className="text-sm" />}
@@ -69,6 +70,7 @@ const Header = ({ disableAddButton }) => {
           <Link
             to="/dashboard"
             className={`ml-4 text-violet hover:text-violet-500 dark:text-white dark:hover:text-violet-500   ${disableAddButton ? 'cursor-not-allowed opacity-50' : ''}`}
+            onClick={onHomeClick}
           >
             <HomeOutlined className='text-sm' />
           </Link>

@@ -6,6 +6,7 @@ import CardForm from '../../components/home/CardForm';
 import EmptyState from '../../components/home/EmptyState';
 import { Typography } from 'antd';
 import { AppContext } from '../../context/AppContext';
+import Loading from '../../components/Loading'; 
 
 const { Title } = Typography;
 
@@ -168,41 +169,46 @@ const Dashboard = () => {
     setSelectedCard(null);
   };
 
+  const refreshPosts = () => {
+    setAllPostLoading(true);
+    fetchPosts();
+  };
+ 
+
   return (
-    <div className="min-h-screen pt-16 bg-gray-100 dark:bg-[#18191A] transition-all duration-200 ">
-    <Header disableAddButton={false} />
-    <div className="p-4 flex flex-col md:flex-row">
-      <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
-      <div className="hidden md:block bg-gray-300 dark:bg-violet-900 w-px min-h-full"></div>
+    <div className="min-h-screen pt-16 bg-gray-100 dark:bg-[#18191A] transition-all duration-200">
+      <Header disableAddButton={false}  onHomeClick={refreshPosts}/>
+      <div className="p-4 flex flex-col md:flex-row">
+        <CardForm formState={formState} handleFormChange={handleFormChange} postCard={postCard} />
+        <div className="hidden md:block bg-gray-300 dark:bg-violet-900 w-px min-h-full"></div>
   
-      <div className="w-full md:w-2/3 p-4">
-        <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
-          Inkstream
-        </Title>
+        <div className="w-full md:w-2/3 p-4">
+          <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
+            Inkstream
+          </Title>
   
-        {allPostLoading ? (
-          <p className="text-gray-800 dark:text-gray-200">Loading all posts...</p>
-        ) : allPostError ? (
-          <p className="text-red-500 dark:text-red-300">{allPostError}</p>
-        ) : posts.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
-            {posts.map((card) => (
-              <PostedCard
-                key={card.id}
-                card={card}
-                openModal={openModal}
-                handleReaction={handleReaction}
-              />
-            ))}
-          </div>
-        )}
+          {allPostLoading ? (
+            <Loading /> // Use the custom Loading component
+          ) : allPostError ? (
+            <p className="text-red-500 dark:text-red-300">{allPostError}</p>
+          ) : posts.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+              {posts.map((card) => (
+                <PostedCard
+                  key={card.id}
+                  card={card}
+                  openModal={openModal}
+                  handleReaction={handleReaction}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <CardPostedModal isOpen={!!selectedCard} onClose={closeModal} card={selectedCard} />
       </div>
-      <CardPostedModal isOpen={!!selectedCard} onClose={closeModal} card={selectedCard} />
     </div>
-  </div>
-  
   );
 };
 

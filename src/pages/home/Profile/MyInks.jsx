@@ -12,21 +12,8 @@ const MyInks = () => {
     console.log(`Open modal for post ${id}`);
   };
 
-  if (postLoading) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <Spin size="large" />
-      </div>
-    );
-  }
+ 
 
-  if (postError) {
-    return (
-      <div className="text-center text-red-500">
-        <p>{postError}</p>
-      </div>
-    );
-  }
 
   return (
     <div className="mt-8 p-4 rounded w-full max-w-4xl mx-auto pt-40 md:pt-14">
@@ -47,14 +34,14 @@ const MyInks = () => {
               onClick={() => openModal(post.id)}
             >
 
-              <Skeleton loading={postLoading} active>
+            
                 <p>{post.content}</p>
                 <div className="flex justify-between items-center mt-2">
                   <Popover content="Reactions">
                     <HeartOutlined className="text-violet-800 dark:text-violet-500" /> {post.reactions_count}
                   </Popover>
                 </div>
-              </Skeleton>
+              
             </Card>
           ))
         ) : (
