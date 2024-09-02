@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatTimestamp } from '../../utils/dateUtils';
-import { ShrinkOutlined, ShareAltOutlined, HeartOutlined } from '@ant-design/icons';
+import { ShrinkOutlined } from '@ant-design/icons';
 
 const CardPostedModal = ({ isOpen, onClose, card }) => {
   if (!isOpen || !card) return null;
 
-  // Destructure card object, including nested user object
-  const { content, color, timestamp, user, reactions_count } = card;
+  const { content, color, timestamp, user } = card;
   const { avatar, name: username } = user || {};
 
   return (
@@ -17,8 +16,8 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
         onClick={onClose}
       >
         <div
-          className="bg-white p-4 rounded-lg shadow-lg w-full h-3/4 lg:h-3/4 lg:w-1/3"
-          style={{ maxWidth: '80vw', backgroundColor: color || 'white', color: '#333333' }}
+          className="bg-white dark:bg-[#242526] p-4 rounded-lg shadow-lg w-full h-3/4 lg:h-3/4 lg:w-1/3"
+          style={{ maxWidth: '80vw', color: '#333333' }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-1">
@@ -31,35 +30,25 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
                     alt="Avatar"
                   />
                 )}
-                <div className="flex flex-col justify-center align-center">
-                  {username && <p className="text-sm md:text-sm sm:text-sm font-semibold">{username}</p>}
-                  <p className="text-xs md:text-xs sm:text-sm text-gray-500 mb-4">{formatTimestamp(timestamp)}</p>
+                <div className="flex flex-col justify-center">
+                  {username && <p className="text-sm font-semibold dark:text-gray-200">{username}</p>}
+                  <p className="text-xs mb-4 dark:text-gray-400">{formatTimestamp(timestamp)}</p>
                 </div>
               </div>
             </div>
             <div>
               <ShrinkOutlined
-                className="text-lg font-bold text-gray-500 hover:text-gray-800 focus:outline-none pb-6"
+                className="text-lg font-bold dark:text-gray-200 cursor-pointer"
                 onClick={onClose}
               />
             </div>
           </div>
 
           <div className="overflow-auto pl-2" style={{ height: 'calc(100% - 64px)' }}>
-            <p className="pb-10 text-sm" style={{ wordBreak: 'prewrap' }}>{content}</p>
+            <p className="pb-10 text-sm dark:text-gray-300" style={{ wordBreak: 'break-word' }}>{content}</p>
           </div>
 
-          {/* Icons Section */}
-          <div className="flex justify-end gap-3 items-center  ">
-          <div className="flex items-center gap-1">
-              <HeartOutlined className="text-lg text-violet-500 cursor-pointer" />
-              {reactions_count > 0 && (
-                <span className="text-sm text-violet-600">{reactions_count}</span>
-              )}
-            </div>
-            {/* <ShareAltOutlined className="text-lg text-gray-500 hover:text-gray-800 cursor-pointer" /> */}
-            
-          </div>
+          
         </div>
       </div>
     </div>
@@ -81,4 +70,4 @@ CardPostedModal.propTypes = {
   }),
 };
 
-export default CardPostedModal; 
+export default CardPostedModal;
