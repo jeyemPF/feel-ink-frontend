@@ -14,8 +14,8 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
   const handleHeartClick = (e) => {
     e.stopPropagation();
     handleReaction(card.id, 'heart');
-    setIsHeartClicked(!isHeartClicked);
-  };
+    setIsHeartClicked(prevState => !prevState);
+};
 
   const textColor = (color) => {
     if (document.documentElement.classList.contains('dark')) {
@@ -26,11 +26,12 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
 
   const iconColor = (isHeartClicked) => {
     return isHeartClicked
-      ? document.documentElement.classList.contains('dark')
-        ? '#E4E6EB' // Active icon color in dark mode
-        : '#8B5CF6' // Active icon color in light mode
-      : '#374151'; // Default icon color
-  };
+        ? document.documentElement.classList.contains('dark')
+            ? '#E4E6EB' // Active icon color in dark mode
+            : '#8B5CF6' // Active icon color in light mode
+        : '#374151'; // Default icon color
+};
+
 
   const UserInfo = ({ name, avatar, color }) => (
     card.is_anonymous ? (

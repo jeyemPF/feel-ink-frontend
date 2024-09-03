@@ -28,31 +28,30 @@ const Dashboard = () => {
   // Fetch all posts
   useEffect(() => {
     const fetchAllPosts = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/all/posts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setAllPosts(data.posts);
-          setPosts(data.posts); // Initialize user's posts or all posts
-        } else {
-          console.error('Failed to fetch all posts:', data.message);
-          setAllPostError('Failed to fetch all posts');
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/all/posts`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setAllPosts(data.posts);
+                setPosts(data.posts); // Initialize user's posts or all posts
+            } else {
+                console.error('Failed to fetch all posts:', data.message);
+                setAllPostError('Failed to fetch all posts');
+            }
+        } catch (err) {
+            console.error('Failed to fetch all posts:', err);
+            setAllPostError('Failed to fetch all posts');
+        } finally {
+            setAllPostLoading(false);
         }
-      } catch (err) {
-        console.error('Failed to fetch all posts:', err);
-        setAllPostError('Failed to fetch all posts');
-      } finally {
-        setAllPostLoading(false);
-      }
     };
 
     fetchAllPosts();
-  }, [token]);
-
+}, [token]);
   // Fetch user posts if needed
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -129,37 +128,36 @@ const Dashboard = () => {
   };
 
   const handleReaction = async (cardId, reactionType) => {
-    console.log(`Reacted to post ${cardId} with ${reactionType}`);
-  
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${cardId}/react`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ reactionType }),
-      });
-  
-      if (response.ok) {
-        const updatedCard = await response.json(); // Expect the backend to return the updated card
-  
-        // Update the posts state with the updated card
-        setPosts((prevPosts) => 
-          prevPosts.map((card) =>
-            card.id === cardId ? { ...card, ...updatedCard } : card
-          )
-        );
-      } else {
-        const errorData = await response.json();
-        console.error('Error updating reaction:', errorData);
-        alert(errorData.error || 'An error occurred while updating the reaction.');
-      }
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${cardId}/react`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ reactionType }),
+        });
+
+        if (response.ok) {
+            const updatedCard = await response.json(); // Expect the backend to return the updated state
+            
+            // Update the posts state with the updated card
+            setPosts((prevPosts) =>
+                prevPosts.map((card) =>
+                    card.id === cardId ? { ...card, is_heart_clicked: updatedCard.is_heart_clicked } : card
+                )
+            );
+        } else {
+            const errorData = await response.json();
+            console.error('Error updating reaction:', errorData);
+            alert(errorData.error || 'An error occurred while updating the reaction.');
+        }
     } catch (error) {
-      console.error('Error updating reaction:', error.message);
-      alert('An error occurred while updating the reaction.');
+        console.error('Error updating reaction:', error.message);
+        alert('An error occurred while updating the reaction.');
     }
-  };
+};
+
 
   const openModal = (card) => {
     setSelectedCard(card);
