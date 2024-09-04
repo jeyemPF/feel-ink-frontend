@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HeartOutlined, ArrowsAltOutlined } from '@ant-design/icons';
 import { Popover } from 'antd';
 import { formatTimestamp } from '../../utils/dateUtils';
 
 const PostedCard = ({ card, openModal, handleReaction }) => {
   const [isHeartClicked, setIsHeartClicked] = useState(card.is_heart_clicked || false);
+  const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
+
+  useEffect(() => {
+    const darkModeObserver = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    });
+
+    darkModeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    return () => darkModeObserver.disconnect();
+  }, []);
 
   const handleIconClick = (e) => {
     e.stopPropagation();
@@ -18,20 +29,12 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
 };
 
   const textColor = (color) => {
-    if (document.documentElement.classList.contains('dark')) {
-      return '#E4E6EB'; // Light text for dark mode
-    }
-    return color === '#FFFFFF' ? '#374151' : '#333333'; // Dark text for light backgrounds
+    return isDarkMode ? '#E4E6EB' : (color === '#FFFFFF' ? '#374151' : '#333333');
   };
 
   const iconColor = (isHeartClicked) => {
-    return isHeartClicked
-        ? document.documentElement.classList.contains('dark')
-            ? '#E4E6EB' // Active icon color in dark mode
-            : '#8B5CF6' // Active icon color in light mode
-        : '#374151'; // Default icon color
-};
-
+    return isHeartClicked ? (isDarkMode ? '#E4E6EB' : '#8B5CF6') : '#374151';
+  };
 
   const UserInfo = ({ name, avatar, color }) => (
     card.is_anonymous ? (
