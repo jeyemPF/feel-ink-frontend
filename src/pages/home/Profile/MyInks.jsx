@@ -16,8 +16,9 @@ const MyInks = () => {
 
 
   return (
-    <div className="mt-8 p-4 rounded w-full max-w-4xl mx-auto pt-40 md:pt-14">
-      <div className="bg-red py-10">
+    <div className="mt-8 p-4 rounded w-full max-w-4xl mx-auto pt-30 md:pt-1  ">
+    <div className='dark:bg-[#292b2d] rounded p-8   '>
+      <div className=" ">
         <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
           My Inks
         </Title>
@@ -47,6 +48,7 @@ const MyInks = () => {
         ) : (
           <p className="text-center text-gray-500 dark:text-gray-400">No posts found.</p>
         )}
+      </div>
       </div>
     </div>
   );

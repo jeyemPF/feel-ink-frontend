@@ -27,7 +27,7 @@
     return (
       <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-4 rounded-lg shadow-lg">
-          <div className="relative w-96 h-96">
+          <div className="relative w-96 h-96 ">
             <Cropper
               image={imageSrc}
               crop={crop}
