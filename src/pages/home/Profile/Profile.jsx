@@ -170,13 +170,16 @@ const Profile = () => {
      
         </div>
         </div>
-        <div className='dark:bg-[#18191A] flex flex-row-reverse'>
-    
-          <MyInks 
-            post={userPosts} // Use userPosts instead of user?.post
-          />
-          <PhotoHistory />
+        <div className='dark:bg-[#18191A] flex flex-row-reverse justify-center '>
+          <div>
+              <MyInks 
+              post={userPosts} // Use userPosts instead of user?.post
+              />
+          </div>
 
+            <div>
+              <PhotoHistory />
+            </div>
         </div>
 
       
