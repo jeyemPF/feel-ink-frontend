@@ -57,28 +57,39 @@ const Profile = () => {
     }
   };
 
-  const handleCropComplete = async (croppedImage) => {
+  const handleCropComplete = async (croppedImageFile) => {
     try {
-      setCoverPhoto(croppedImage);
-      setShowCrop(false);
+        setCoverPhoto(URL.createObjectURL(croppedImageFile)); // Set a URL for display purposes
+        setShowCrop(false);
 
-      const formData = new FormData();
-      formData.append('cover_photo', croppedImage);
+        const formData = new FormData();
+        formData.append('cover_photo', croppedImageFile); // Use File directly
 
-      const response = await axios.post(`${apiUrl}/api/user/cover-photo/${user.id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            setError('You must be logged in to perform this action.');
+            return;
         }
-      });
 
-      if (response.data.cover_photo) {
-        setUser({ ...user, cover_photo: response.data.cover_photo });
-      }
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        const response = await axios.post(`${apiUrl}/api/user/cover-photo/${user.id}`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        if (response.data.cover_photo) {
+            setUser({ ...user, cover_photo: response.data.cover_photo });
+        }
     } catch (error) {
-      console.error('Failed to update cover photo:', error.response || error.message);
+        console.error('Failed to update cover photo:', error.response?.data?.message || error.message);
+        setError('Failed to update cover photo.');
     }
-  };
+};
+
+  
 
   const handleAvatarChange = async (e) => {
     e.preventDefault();
