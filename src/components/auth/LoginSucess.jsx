@@ -1,32 +1,24 @@
-import React, { useEffect, useContext } from 'react';
+// src/components/auth/LoginSuccess.jsx
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
+import { useContext } from 'react';
 
 const LoginSuccess = () => {
+  const { handleGoogleSignIn } = useContext(AppContext);
   const navigate = useNavigate();
-  const { setToken, setUser } = useContext(AppContext);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const token = queryParams.get('token');
+    const query = new URLSearchParams(window.location.search);
+    const googleToken = query.get('token');
 
-    if (token) {
-      // Save the token and fetch user data if necessary
-      localStorage.setItem('access_token', token);
-      setToken(token);
-
-      // Optionally, fetch user data using the token
-      // fetchUserData(token).then(user => {
-      //   setUser(user);
-      // });
-
-      // Redirect to the dashboard
+    if (googleToken) {
+      handleGoogleSignIn(googleToken);
       navigate('/dashboard');
     } else {
-      console.error('No token found');
       navigate('/login');
     }
-  }, [navigate, setToken, setUser]);
+  }, [handleGoogleSignIn, navigate]);
 
   return <div>Loading...</div>;
 };
