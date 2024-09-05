@@ -2,7 +2,7 @@ import React from 'react';
 import { CameraOutlined } from '@ant-design/icons';
 
 const ProfileHeader = ({ coverPhoto, onCoverPhotoChange, fileInputRef }) => (
-  <div className="relative w-full flex justify-center items-center ">
+  <div className="relative w-full flex justify-center items-center  ">
     <img
       className="w-full lg:w-10/12 md:w-10/12 h-21rem object-cover rounded select-none"
       src={coverPhoto}

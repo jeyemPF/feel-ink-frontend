@@ -140,9 +140,9 @@ const Profile = () => {
 
   return (
     <div className='dark:bg-[#18191A] min-h-screen'>
-     <div className='dark:bg-[#292b2d] md:h-[68vh] h-[80vh]'>
 
-        <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded dark:bg-[#292b2d] transition-all duration-300">
+     <div className='dark:bg-[#292b2d] pb-52 md:pb-32'>
+        <div className="flex flex-col max-w-6xl mx-auto mt-8 rounded dark:bg-[#292b2d] transition-all duration-300 ">
           <Header />
           {showCrop && cropImage ? (
             <CropComponent
@@ -166,6 +166,7 @@ const Profile = () => {
               />
             </>
           )}
+     
         </div>
         </div>
         <div className='dark:bg-[#18191A] '>
