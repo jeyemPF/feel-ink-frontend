@@ -70,8 +70,8 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
               className="w-12 h-12 rounded-full mr-3 select-none"
             />
             <div className="flex flex-col">
-              <p className="text-violet-800 dark:text-white font-bold">{username || 'User'}</p>
-              <p className="text-gray-600 dark:text-gray-300 text-sm truncate w-48">
+              <p className="text-violet-800 dark:text-[#D3D3D3] font-bold">{username || 'User'}</p>
+              <p className="text-gray-600 dark:text-[#D3D3D3] text-sm truncate w-48">
                 {email || 'user@example.com'}
               </p>
             </div>

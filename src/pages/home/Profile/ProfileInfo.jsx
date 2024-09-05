@@ -65,18 +65,18 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
         </div>
         <div className="flex flex-col md:flex-row flex-grow text-center md:text-start relative md:pt-20 md:gap-64 items-center md:w-auto w-full">
           <div className="mb-1 md:mb-0 relative items-center">
-            <h1 className="text-3xl md:text-3xl font-bold  dark:text-[#ffffff]">{name}</h1>
-            <p className="text-gray-600 font-thin text-sm dark:text-[#c3c1c1]">4 Publish Inks</p>
+            <h1 className="text-3xl md:text-3xl font-bold  dark:text-[#D3D3D3]">{name}</h1>
+            <p className="text-gray-600 font-thin text-sm dark:text-[#b2afaf]">4 Publish Inks</p>
           </div>
           <div className="absolute top-16 md:right-0 flex flex-wrap md:flex-row gap-3 md:pt-6 md:px-0 justify-center md:w-auto w-full">
             <button 
-              className="bg-violet-800 hover:bg-violet-700 text-white text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min"
+              className="bg-violet-800 hover:bg-violet-700 text-white text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min dark:text-[#D3D3D3]"
               onClick={() => navigate('/dashboard')}
             >
               <PlusOutlined /> Write post
             </button>
             <button 
-              className="border border-violet-800 text-violet-800 text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min hover:bg-white-800 hover:text-violet-600 hover:border-violet-600 dark:text-[#ffffff]"
+              className=" border border-violet-800 text-violet-800 text-sm py-2 px-4 md:py-2 md:px-3 rounded min-w-min hover:bg-white-800 hover:text-violet-600 hover:border-violet-600 dark:text-[#D3D3D3]"
               onClick={() => setShowModal(true)}
             >
               <EditOutlined /> Edit profile

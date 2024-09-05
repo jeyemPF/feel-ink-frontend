@@ -28,7 +28,7 @@ const MyInks = () => {
             <Card
               key={post.id}
               hoverable
-              className="shadow-md rounded-lg bg-white dark:bg-[#333] dark:text-white 
+              className="shadow-md rounded-lg bg-white dark:bg-[#333] dark:text-[#D3D3D3]
                         transition-all duration-300 border border-transparent 
                         dark:border-violet-800"
               onClick={() => openModal(post.id)}

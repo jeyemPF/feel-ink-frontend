@@ -20,10 +20,10 @@ const ProfileHeader = ({ coverPhoto, onCoverPhotoChange, fileInputRef }) => (
     />
     <label
       htmlFor="coverPhoto"
-      className="absolute bottom-4 right-6 md:right-32 dark:text-[#ffffff] dark:bg-[#3e3e3e] bg-white text-black py-2 px-4 md:px-2 rounded cursor-pointer text-sm flex items-center space-x-2 shadow-md hover:bg-gray-200 transition duration-200 z-10"
+      className="absolute bottom-4 right-6 md:right-32 dark:text-[#D3D3D3] dark:bg-[#3e3e3e] bg-white text-black py-2 px-4 md:px-2 rounded cursor-pointer text-sm flex items-center space-x-2 shadow-md hover:bg-gray-200 transition duration-200 z-10"
     >
       <CameraOutlined />
-      <span className="font-thin md:block hidden dark:text-[#ffffff]">Add cover photo</span>
+      <span className="font-thin md:block hidden dark:text-[#D3D3D3]">Add cover photo</span>
     </label>
   </div>
 );
