@@ -4,6 +4,7 @@ import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
+import PhotoHistory from './PhotoHistory';
 import MyInks from './MyInks';
 import { AppContext } from '../../../context/AppContext';
 
@@ -169,11 +170,15 @@ const Profile = () => {
      
         </div>
         </div>
-        <div className='dark:bg-[#18191A] '>
+        <div className='dark:bg-[#18191A] flex flex-row-reverse'>
+    
           <MyInks 
             post={userPosts} // Use userPosts instead of user?.post
           />
+          <PhotoHistory />
+
         </div>
+
       
       
     </div>
