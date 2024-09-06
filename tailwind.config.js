@@ -27,6 +27,9 @@ module.exports = {
       screens: {
         'md': '1040px', // Set 'md' breakpoint to 863px
       },
+      aspectRatio: {
+        '4/3': '4 / 3',
+      },
     },
   },
 

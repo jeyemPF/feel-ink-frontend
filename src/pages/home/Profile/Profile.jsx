@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../../components/Header';
 import CropComponent from '../../../components/CropComponent';
@@ -17,11 +17,16 @@ const Profile = () => {
   const [coverPhoto, setCoverPhoto] = useState(user?.cover_photo || 'https://via.placeholder.com/1500x500');
   const [cropImage, setCropImage] = useState(null);
   const [showCrop, setShowCrop] = useState(false);
+  const [photoHistory, setPhotoHistory] = useState([]);
+
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
-  const token = user?.token;
+  const token = localStorage.getItem('access_token'); // Directly fetching token
+
+
+  
 
   const handlePostChange = (e) => setPostContent(e.target.value);
 
@@ -85,6 +90,37 @@ const Profile = () => {
       setError('Failed to update cover photo.');
     }
   };
+
+  // For getting the history of photos from the user
+  useEffect(() => {
+    const fetchPhotoHistory = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/user/photo-history/${user.id}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log(data.photo_history); // Check the fetched data
+        setPhotoHistory(data.photo_history); // Ensure we're setting the correct property
+      } catch (error) {
+        console.error("Error fetching photo history:", error);
+      }
+    };
+  
+    if (user?.id && token) {
+      fetchPhotoHistory();
+    }
+  }, [user?.id, token]);
+  
+  
 
   const handleAvatarChange = async (e) => {
     e.preventDefault();
@@ -176,10 +212,12 @@ const Profile = () => {
               post={userPosts} // Use userPosts instead of user?.post
               />
           </div>
-
-            <div>
-              <PhotoHistory />
-            </div>
+          <div>
+            <PhotoHistory photoHistory={photoHistory} />
+          </div>
+        
+            
+          
         </div>
 
       

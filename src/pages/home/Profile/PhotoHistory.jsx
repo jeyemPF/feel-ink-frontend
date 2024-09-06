@@ -3,32 +3,34 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-const PhotoHistory = () => {
-  // Array of 9 placeholder images (using a dummy URL service)
-  const dummyPhotos = Array(9).fill("https://picsum.photos/200");
+const PhotoHistory = ({ photoHistory }) => {
+  // Ensure photoHistory is an array
+  const photos = Array.isArray(photoHistory) ? photoHistory : [];
 
   return (
-    <div className="mt-9 rounded px-4 md:px-0  ">
-         <div className='dark:bg-[#292b2d] rounded p-8 md:p-8 flex flex-col gap-1 '>
-        <div className="">
-          <Title
-            level={4}
-            className=""
-            style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}
-          >
-            Photo History
-          </Title>
-        </div>
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-2 ">
-          {dummyPhotos.map((photoUrl, index) => (
-            <div key={index} className="relative w-full p-16 overflow-hidden rounded-lg shadow-md">
-              <img
-                src={photoUrl}
-                alt={`Dummy Photo ${index + 1}`}
-                className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
-              />
-            </div>
-          ))}
+    <div className="mt-5 md:px-2 max-w-screen-lg  md:max-w-screen-sm mx-auto  p-4 rounded    "> 
+      <div className="dark:bg-[#292b2d] rounded p-2 md:p-4  px-5 py-5 md:py-7 flex flex-col gap-2 md:px-10">
+        <Title
+          level={4}
+          style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive', fontSize: '1.25rem' }} 
+        >
+          Photo History
+        </Title>
+        <div className="grid grid-cols-3 gap-2 mb-1 "> 
+          {photos.length > 0 ? (
+            photos.map((photo, index) => (
+              <div key={photo.id} className="relative overflow-hidden rounded-lg shadow-md">
+                <img
+                  src={photo.photo_url}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  style={{ aspectRatio: '1 / 1' }}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No photos available.</p>
+          )}
         </div>
       </div>
     </div>
