@@ -206,7 +206,7 @@ const Profile = () => {
      
         </div>
         </div>
-        <div className='dark:bg-[#18191A] flex flex-col-reverse justify-center md:flex-row-reverse '>
+        <div className='dark:bg-[#18191A] flex flex-col-reverse justify-center md:flex-row-reverse  '>
           <div>
               <MyInks 
               post={userPosts} // Use userPosts instead of user?.post

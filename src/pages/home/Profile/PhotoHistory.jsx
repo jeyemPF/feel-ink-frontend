@@ -8,7 +8,7 @@ const PhotoHistory = ({ photoHistory }) => {
   const photos = Array.isArray(photoHistory) ? photoHistory : [];
 
   return (
-    <div className="mt-5 md:px-2 max-w-screen-lg  md:max-w-screen-sm mx-auto  p-4 rounded    "> 
+    <div className="mt-1 md:px-2 max-w-screen-lg  md:max-w-screen-sm mx-auto  p-4 rounded    "> 
       <div className="dark:bg-[#292b2d] rounded p-2 md:p-4  px-5 py-5 md:py-7 flex flex-col gap-2 md:px-10">
         <Title
           level={4}

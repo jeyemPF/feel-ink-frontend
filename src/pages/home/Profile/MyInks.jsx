@@ -17,7 +17,7 @@ const MyInks = () => {
 
 
   return (
-    <div className="mt-8 p-4 rounded w-full max-w-4xl mx-auto pt-30 md:pt-1  ">
+    <div className="mt-4 p-4 rounded w-full max-w-4xl mx-auto pt-30 md:pt-1 md:mt-4  ">
     <div className='dark:bg-[#292b2d] rounded p-8   '>
       <div className=" ">
         <Title level={4} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
