@@ -1,39 +1,61 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { PlusOutlined, EditOutlined, CameraOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import EditProfileModal from '../../../components/modals/EditProfileModal';
+import { AppContext } from '../../../context/AppContext';
 
-const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
-  const [previewUrl, setPreviewUrl] = useState(null); // To show a preview of the selected image
-  const [showModal, setShowModal] = useState(false); // State to show/hide modal
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
+  const { user, setUser } = useContext(AppContext);
+  const [name, setName] = useState(user.name); // Add state for name
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef(null);
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Check if the selected file is an image
       if (!file.type.startsWith('image/')) {
         console.error('Selected file is not an image');
         return;
       }
 
-      // Create a preview URL for the selected file
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
       };
       reader.readAsDataURL(file);
 
-      // Call the passed-in handleAvatarChange function
       handleAvatarChange(event);
     }
   };
 
-  const handleSaveChanges = () => {
-    setShowModal(false);
-    // You can add any additional logic to save changes here
+  const handleSaveChanges = async (newName) => {
+    const token = localStorage.getItem('access_token');
+    try {
+      const response = await axios.put(`${apiUrl}/api/user/update-name/${user.id}`, 
+        { name: newName },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const updatedUser = response.data.user;
+        setUser(updatedUser);
+        setName(updatedUser.name); // Update the local name state
+      } else {
+        throw new Error('Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating name:', error.response?.data?.message || error.message);
+    }
   };
 
   return (
@@ -41,14 +63,14 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
       <div className="absolute -top-28 w-10/12 flex flex-col md:flex-row items-center p-4 rounded md:gap-8 ">
         <div className="relative left-4">
           <img
-            src={previewUrl || avatar} // Show preview if available, otherwise show the current avatar
+            src={previewUrl || avatar}
             alt="Avatar"
             className="w-44 h-44 md:w-44 md:h-44 rounded-full border-4 border-white dark:border-[#602888] cursor-pointer select-none"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/150';
             }}
           />
-           <div
+          <div
             className="absolute bottom-2 right-1 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors duration-200"
             onClick={() => fileInputRef.current.click()}
           >
@@ -88,8 +110,7 @@ const ProfileInfo = ({ toggleDropdown, avatar, name, handleAvatarChange }) => {
       {showModal && (
         <EditProfileModal
           name={name}
-          handleFileChange={handleFileChange}
-          fileInputRef={fileInputRef}
+          setName={setName} // Pass setName to EditProfileModal if needed
           onClose={() => setShowModal(false)}
           onSave={handleSaveChanges}
         />
