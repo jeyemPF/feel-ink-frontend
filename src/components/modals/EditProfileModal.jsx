@@ -2,13 +2,15 @@ import React from 'react';
 import { Typography } from 'antd';
 import { ShrinkOutlined } from '@ant-design/icons';
 
+
+
 const { Title } = Typography;
 
 const EditProfileModal = ({ name, setName, handleFileChange, fileInputRef, onClose, onSave }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
-      <div className="relative bg-white p-6 rounded-lg shadow-lg z-10 w-full max-w-sm">
+      <div className="relative dark:bg-[#292b2d] bg-white p-6 rounded-lg shadow-lg z-10 w-full max-w-sm">
         <div className="flex justify-between items-center mb-4">
           <div className="flex justify-center flex-1">
             <Title
@@ -30,7 +32,7 @@ const EditProfileModal = ({ name, setName, handleFileChange, fileInputRef, onClo
         </div>
  
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+          <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="name">
             Name
           </label>
           <input
@@ -38,13 +40,13 @@ const EditProfileModal = ({ name, setName, handleFileChange, fileInputRef, onClo
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none placeholder-gray-400 focus:border-violet-500 text-sm"
+            className="border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none placeholder-gray-400 dark:bg-[#3A3B3C] dark:placeholder-gray-500 focus:border-violet-500 text-sm"
             placeholder="Enter your name"
             style={{ padding: '9px', lineHeight: '1.4' }}
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="avatar">
+          <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="avatar">
             Avatar
           </label>
           <input
