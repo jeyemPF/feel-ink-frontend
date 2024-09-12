@@ -33,30 +33,32 @@ const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
     }
   };
 
-  const handleSaveChanges = async (newName) => {
+  const handleSaveChanges = async (newName, avatarFile) => {
     const token = localStorage.getItem('access_token');
+  
     try {
-      const response = await axios.put(`${apiUrl}/api/user/update-name/${user.id}`, 
-        { name: newName },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        const updatedUser = response.data.user;
-        setUser(updatedUser);
-        setName(updatedUser.name); // Update the local name state
-      } else {
-        throw new Error('Failed to update profile');
+      const formData = new FormData();
+      formData.append('name', newName);
+      
+      if (avatarFile) {
+        formData.append('avatar', avatarFile); // Include the avatar in the request if it was changed
       }
+  
+      const response = await axios.post(`${apiUrl}/api/update-profile/${user.id}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      // Update the user's data in the context
+      setUser({ ...user, name: response.data.user.name, avatar: response.data.user.avatar });
+      alert('Profile updated successfully!');
     } catch (error) {
-      console.error('Error updating name:', error.response?.data?.message || error.message);
+      console.error('Failed to update profile:', error);
     }
   };
+  
 
   return (
     <div className="w-full flex justify-center relative mt-8 dark:bg-[#ffffff]">
@@ -109,8 +111,9 @@ const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
 
       {showModal && (
         <EditProfileModal
-          name={name}
-          setName={setName} // Pass setName to EditProfileModal if needed
+          name={user.name}
+          fileInputRef={fileInputRef}
+          handleFileChange={handleAvatarChange}
           onClose={() => setShowModal(false)}
           onSave={handleSaveChanges}
         />

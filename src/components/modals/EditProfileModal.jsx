@@ -8,9 +8,15 @@
 
   const EditProfileModal = ({ name, handleFileChange, fileInputRef, onClose, onSave }) => {
     const [newName, setNewName] = useState(name);
+    const [avatar, setAvatar] = useState(null); // New state for the avatar
   
     const handleSave = () => {
-      onSave(newName); 
+      onSave(newName, avatar); // Pass both name and avatar to the parent component
+    };
+  
+    const handleAvatarFileChange = (e) => {
+      handleFileChange(e); // This will update the avatar in the parent component
+      setAvatar(e.target.files[0]); // Store the avatar locally in the modal
     };
   
     return (
@@ -18,29 +24,14 @@
         <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
         <div className="relative dark:bg-[#292b2d] bg-white p-6 rounded-lg shadow-lg z-10 w-full max-w-sm">
           <div className="flex justify-between items-center mb-4">
-            <div className="flex justify-center flex-1">
-              <Title
-                level={3}
-                style={{
-                  color: '#5B21B6',
-                  fontWeight: 'bold',
-                  fontFamily: 'Lobster, cursive',
-                  textAlign: 'center',
-                }}
-              >
-                Edit Profile
-              </Title>
-            </div>
-            <ShrinkOutlined
-              className="text-lg text-gray-500 hover:text-gray-800 cursor-pointer"
-              onClick={onClose}
-            />
+            <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive', textAlign: 'center' }}>
+              Edit Profile
+            </Title>
+            <ShrinkOutlined className="text-lg text-gray-500 hover:text-gray-800 cursor-pointer" onClick={onClose} />
           </div>
-   
+  
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="name">
-              Name
-            </label>
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="name">Name</label>
             <input
               id="name"
               type="text"
@@ -51,39 +42,26 @@
               style={{ padding: '9px', lineHeight: '1.4' }}
             />
           </div>
+  
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="avatar">
-              Avatar
-            </label>
-            <input
-              ref={fileInputRef}
-              type="file"
-              id="avatar"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="avatar">Avatar</label>
+            <input ref={fileInputRef} type="file" id="avatar" accept="image/*" className="hidden" onChange={handleAvatarFileChange} />
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-sm w-full focus:outline-none"
               onClick={() => fileInputRef.current.click()}
-              style={{
-                backgroundColor: '#5B21B6',
-                transition: 'background-color 0.3s ease',
-              }}
+              style={{ backgroundColor: '#5B21B6', transition: 'background-color 0.3s ease' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#7C3AED'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#5B21B6'}
             >
               Change Avatar
             </button>
           </div>
+  
           <div className="flex items-center justify-between mb-6">
             <button
               className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-sm w-full focus:outline-none"
-              onClick={handleSave} // Call the handleSave function
-              style={{
-                backgroundColor: '#5B21B6',
-                transition: 'background-color 0.3s ease',
-              }}
+              onClick={handleSave}
+              style={{ backgroundColor: '#5B21B6', transition: 'background-color 0.3s ease' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#7C3AED'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#5B21B6'}
             >
@@ -95,6 +73,5 @@
     );
   };
   
-  
-
   export default EditProfileModal;
+  
