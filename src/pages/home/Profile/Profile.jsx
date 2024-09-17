@@ -23,7 +23,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
-  const token = localStorage.getItem('access_token'); // Directly fetching token
+  const token = localStorage.getItem('access_token'); 
 
 
   
@@ -52,7 +52,7 @@ const Profile = () => {
         const reader = new FileReader();
         reader.onload = () => {
           setCropImage(reader.result);
-          setShowCrop(true); // Show the cropping UI
+          setShowCrop(true); 
         };
         reader.readAsDataURL(file);
       }
@@ -63,11 +63,11 @@ const Profile = () => {
 
   const handleCropComplete = async (croppedImageFile) => {
     try {
-      setCoverPhoto(URL.createObjectURL(croppedImageFile)); // Set a URL for display purposes
+      setCoverPhoto(URL.createObjectURL(croppedImageFile)); 
       setShowCrop(false);
 
       const formData = new FormData();
-      formData.append('cover_photo', croppedImageFile); // Use File directly
+      formData.append('cover_photo', croppedImageFile); 
 
       const token = localStorage.getItem('access_token');
       if (!token) {
@@ -91,7 +91,7 @@ const Profile = () => {
     }
   };
 
-  // For getting the history of photos from the user
+
   useEffect(() => {
     const fetchPhotoHistory = async () => {
       try {
@@ -108,8 +108,8 @@ const Profile = () => {
         }
   
         const data = await response.json();
-        console.log(data.photo_history); // Check the fetched data
-        setPhotoHistory(data.photo_history); // Ensure we're setting the correct property
+        console.log(data.photo_history);
+        setPhotoHistory(data.photo_history); 
       } catch (error) {
         console.error("Error fetching photo history:", error);
       }
@@ -209,7 +209,7 @@ const Profile = () => {
         <div className='dark:bg-[#18191A] flex flex-col-reverse justify-center md:flex-row-reverse  '>
           <div>
               <MyInks 
-              post={userPosts} // Use userPosts instead of user?.post
+              post={userPosts} 
               />
           </div>
           <div>

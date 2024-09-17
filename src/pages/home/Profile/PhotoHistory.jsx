@@ -21,8 +21,8 @@ const PhotoHistory = ({ photoHistory }) => {
   const hiddenPhotos = photos.slice(9);
 
   return (
-    <div className="mt-1 md:px-2 max-w-screen-lg md:max-w-screen-sm mx-auto p-4 rounded dark:bg-[#292b2d] bg-white">
-      <div className="rounded p-2 md:p-4 px-5 py-5 md:py-7 flex flex-col gap-2 md:px-10 dark:bg-[#292b2d] bg-white">
+    <div className="mt-5 mx-4 md:px-2 max-w-screen-lg md:max-w-screen-sm  p-4 rounded dark:bg-[#292b2d] bg-white">
+      <div className="rounded p-2 md:p-4 px-5 py-5 md:py-7   flex flex-col gap-2 md:px-10 dark:bg-[#292b2d] bg-white">
         {/* Flex container for title and button */}
         <div className="flex justify-between items-center mb-4">
           <Title

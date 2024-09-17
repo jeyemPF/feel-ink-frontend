@@ -7,7 +7,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 const MyInks = () => {
-  const { posts, postLoading, postError, updatePost } = useContext(AppContext); // Assuming updatePost is provided for updating the post
+  const { posts, postLoading, postError, updatePost } = useContext(AppContext); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
   const [editedContent, setEditedContent] = useState('');
@@ -24,7 +24,6 @@ const MyInks = () => {
   };
 
   const handleSave = () => {
-    // Call updatePost function to save the edited content (assuming updatePost is available from context)
     if (currentPost) {
       updatePost(currentPost.id, editedContent);
       setIsModalOpen(false);
@@ -67,7 +66,7 @@ const MyInks = () => {
         </div>
       </div>
 
-      {/* Modal for editing post */}
+ 
       <Modal
         title="Edit Post"
         visible={isModalOpen}
