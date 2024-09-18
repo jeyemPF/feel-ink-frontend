@@ -6,7 +6,7 @@ import { ShrinkOutlined } from '@ant-design/icons';
 const CardPostedModal = ({ isOpen, onClose, card }) => {
   if (!isOpen || !card) return null;
 
-  const { content, color, timestamp, user } = card;
+  const { content, color, timestamp, user, is_anonymous } = card;
   const { avatar, name: username } = user || {};
 
   return (
@@ -23,7 +23,7 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center w-full justify-between">
               <div className="flex flex-row">
-                {avatar && (
+                {!is_anonymous && avatar && (
                   <img
                     className="w-10 h-10 rounded-full mr-4"
                     src={avatar}
@@ -31,7 +31,11 @@ const CardPostedModal = ({ isOpen, onClose, card }) => {
                   />
                 )}
                 <div className="flex flex-col justify-center">
-                  {username && <p className="text-sm font-semibold dark:text-gray-200">{username}</p>}
+                  {card.is_anonymous ? (
+                    <p className="text-sm font-semibold dark:text-gray-200">Anonymous</p>
+                  ) : (
+                    <p className="text-sm font-semibold dark:text-gray-200">{username}</p>
+                  )}
                   <p className="text-xs mb-4 dark:text-gray-400">{formatTimestamp(timestamp)}</p>
                 </div>
               </div>
