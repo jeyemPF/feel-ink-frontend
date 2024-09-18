@@ -34,7 +34,7 @@ const PhotoHistory = ({ photoHistory }) => {
           {hiddenPhotos.length > 0 && (
             <button
               onClick={handleToggle}
-              className="border border-violet-800 text-violet-800 text-sm py-1 px-4 md:py-2 md:px-3 rounded min-w-min hover:bg-white-800 hover:text-violet-600 hover:border-violet-600 dark:text-[#D3D3D3] dark:border-[#D3D3D3] dark:hover:bg-violet-700 dark:hover:text-white"
+              className="  text-violet-800 text-sm py-1 px-4 md:py-2 md:px-3 rounded min-w-min hover:bg-white-800 hover:text-violet-600  dark:text-[#D3D3D3] dark:border-[#D3D3D3] dark:hover:text-white"
             >
               {showMore ? 'Show Less' : 'See More'}
             </button>
