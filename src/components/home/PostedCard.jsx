@@ -38,7 +38,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
 
   const UserInfo = ({ name, avatar, color }) => (
     card.is_anonymous ? (
-      <p className="text-sm font-medium dark:text-[#D3D3D3] text-[#333333]" style={{ color: textColor(color) }}>
+      <p className="text-sm font-semibold dark:text-[#D3D3D3] text-[#333333] " style={{ color: textColor(color) }}>
         Anonymous
       </p>
     ) : (
@@ -48,7 +48,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           src={avatar || 'default-avatar-url'}
           alt="Avatar"
         />
-        <p className="text-sm font-medium select-none dark:text-[#D3D3D3] text-[#696969]" style={{ color: textColor(color) }}>
+        <p className="text-sm font-semibold select-none dark:text-[#D3D3D3] text-[#696969]" style={{ color: textColor(color) }}>
           {name}
         </p>
       </div>
@@ -63,11 +63,11 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           avatar={card.user?.avatar} 
           color={card.color} 
         />
-        <p className="text-xs dark:text-[#D3D3D3]] text-[#696969]" style={{ color: textColor(card.color) }}>
+        <p className="text-xs dark:text-[#D3D3D3]] font-normal text-[#696969]" style={{ color: textColor(card.color) }}>
           {formatTimestamp(card.timestamp)}
         </p>
       </div>
-      <p className="font-light pt-5 text-sm overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2 dark:text-[#D3D3D3] text-[#333333]">
+      <p className="font-normal pt-5 text-sm overflow-hidden webkit-box webkit-box-orient-vertical webkit-line-clamp-2 dark:text-[#D3D3D3] text-[#333333]">
         {card.content}
       </p>
       <div className="flex items-center mt-2 justify-end w-full">
