@@ -179,9 +179,10 @@ const Dashboard = () => {
         <div className="hidden md:block bg-gray-300 dark:bg-violet-900 w-px min-h-full"></div>
 
         <div className="w-full md:w-2/3 p-4">
-          <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
+          {/* <Title level={3} style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}>
             Inkstream
-          </Title>
+          </Title> */}
+          <p className='text-violet-800 font-bold text-2xl ' >Inkstream</p>
 
           {allPostLoading ? (
   <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">

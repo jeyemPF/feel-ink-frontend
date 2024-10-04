@@ -16,13 +16,14 @@ const CardForm = ({ formState, handleFormChange, postCard }) => {
     <div className="w-full md:w-1/2 p-4 mb-4 md:mb-0">
       <div className="p-4 rounded relative bg-white dark:bg-[#242526] shadow">
         <div className="flex items-center">
-          <Title
+          {/* <Title
             level={5}
             style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive' }}
             className="font-bold justify-start text-justify pt-1 dark:bg-[#242526] dark:text-[#D3D3D3]"
           >
             Compose Your Ink
-          </Title>
+          </Title> */}
+          <p className="font-bold justify-start text-justify pt-1 text-violet-800 text-lg  dark:bg-[#242526] dark:text-[#D3D3D3] ">Compose your ink</p>
         </div>
 
         <textarea

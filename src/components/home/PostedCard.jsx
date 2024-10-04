@@ -38,7 +38,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
 
   const UserInfo = ({ name, avatar, color }) => (
     card.is_anonymous ? (
-      <p className="text-sm font-semibold dark:text-[#D3D3D3] text-[#333333] " style={{ color: textColor(color) }}>
+      <p className="text-sm font-thin dark:text-[#D3D3D3] text-[#333333] " style={{ color: textColor(color) }}>
         Anonymous
       </p>
     ) : (
@@ -48,7 +48,7 @@ const PostedCard = ({ card, openModal, handleReaction }) => {
           src={avatar || 'default-avatar-url'}
           alt="Avatar"
         />
-        <p className="text-sm font-semibold select-none dark:text-[#D3D3D3] text-[#696969]" style={{ color: textColor(color) }}>
+        <p className="text-sm font-thin select-none dark:text-[#D3D3D3] text-[#696969]" style={{ color: textColor(color) }}>
           {name}
         </p>
       </div>
