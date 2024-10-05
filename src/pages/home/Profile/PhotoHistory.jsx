@@ -24,13 +24,14 @@ const PhotoHistory = ({ photoHistory }) => {
       <div className="rounded p-2 md:p-4 px-5 py-1 md:py-1   flex flex-col gap-2 md:px-5 dark:bg-[#292b2d] bg-white">
         {/* Flex container for title and button */}
         <div className="flex justify-between items-center   ">
-          <Title
+          {/* <Title
             level={4}
             style={{ color: '#5B21B6', fontWeight: 'bold', fontFamily: 'Lobster, cursive', fontSize: '1.25rem' }}
             className="dark:text-white"
           >
             Photo History
-          </Title>
+          </Title> */}
+          <p className='text-xl font-bold text-violet-700'>Photo History</p>
           {hiddenPhotos.length > 0 && (
             <button
               onClick={handleToggle}
