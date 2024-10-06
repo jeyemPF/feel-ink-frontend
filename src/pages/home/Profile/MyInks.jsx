@@ -1,20 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Typography, Card, Popover, Modal, Input, Button } from 'antd';
+import { Typography, Card, Popover } from 'antd';
 import { HeartOutlined, EditOutlined } from '@ant-design/icons';
 import { AppContext } from '../../../context/AppContext';
-
-const { Title } = Typography;
-const { TextArea } = Input;
+import EditPostModal from '../../../components/modals/EditPostModal'; // Import the new modal
 
 const MyInks = () => {
-  const { posts, postLoading, postError, updatePost } = useContext(AppContext);
+  const { posts, updatePost } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
-  const [editedContent, setEditedContent] = useState('');
 
   const openModal = (post) => {
     setCurrentPost(post);
-    setEditedContent(post.content);
     setIsModalOpen(true);
   };
 
@@ -23,7 +19,7 @@ const MyInks = () => {
     setCurrentPost(null);
   };
 
-  const handleSave = () => {
+  const handleSave = (editedContent) => {
     if (currentPost) {
       updatePost(currentPost.id, editedContent);
       setIsModalOpen(false);
@@ -34,7 +30,7 @@ const MyInks = () => {
     <div className="mt-4 p-4 rounded w-full max-w-4xl mx-auto pt-30 md:pt-1 md:mt-4">
       <div className="dark:bg-[#292b2d] rounded p-8">
         <div>
-          <p className="text-xl font-bold text-violet-700">My Inks</p>
+          <p className='text-xl font-bold text-violet-700'>My Inks</p>
         </div>
         <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
           {posts.length > 0 ? (
@@ -64,37 +60,13 @@ const MyInks = () => {
         </div>
       </div>
 
-      {/* Customized Modal */}
-      <Modal
-        title={<span style={{ fontWeight: 'bold', fontSize: '18px', color: '#5B21B6' }}>Edit Your Post</span>}
-        open={isModalOpen}
-        onCancel={handleCancel}
-        width={600} // Change the width of the modal
-        bodyStyle={{
-          backgroundColor: '#292b2d', // Dark background for dark mode
-          color: '#fff', // Text color in the modal
-        }}
-        footer={[
-          <Button key="cancel" style={{ background: '#f5f5f5', color: '#333' }} onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="save" type="primary" style={{ background: '#5B21B6', borderColor: '#5B21B6' }} onClick={handleSave}>
-            Save
-          </Button>,
-        ]}
-      >
-        <TextArea
-          value={editedContent}
-          onChange={(e) => setEditedContent(e.target.value)}
-          rows={4}
-          style={{
-            backgroundColor: '#333',
-            color: '#fff',
-            borderColor: '#5B21B6',
-          }}
-          placeholder="Edit your post..."
+      {isModalOpen && (
+        <EditPostModal
+          postContent={currentPost.content}
+          onClose={handleCancel}
+          onSave={handleSave}
         />
-      </Modal>
+      )}
     </div>
   );
 };
