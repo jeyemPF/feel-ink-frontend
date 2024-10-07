@@ -51,6 +51,10 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
     }
   };
 
+  const handleClickAvatar = () => {
+    navigate('/profile')
+  }
+
   return (
     <div className="relative" ref={dropdownRef}>
       <img
@@ -62,12 +66,14 @@ const ProfileDropdown = ({ direction, avatar, username, email }) => {
       {isDropdownOpen && (
         <div
           className={`absolute ${direction === 'up' ? 'bottom-10' : 'mt-2'} right-0 w-64 bg-white dark:bg-[#242526] rounded-md shadow-lg border border-gray-200 dark:border-violet-900 z-10`}
+         
         >
           <div className="px-4 py-3 flex items-center">
             <img
               src={avatar || 'https://via.placeholder.com/150'}
               alt="Avatar"
-              className="w-12 h-12 rounded-full mr-3 select-none"
+              className="w-12 h-12 rounded-full mr-3 select-none hover:opacity-80 transition-opacity duration-200 cursor-pointer"
+              onClick={handleClickAvatar}
             />
             <div className="flex flex-col">
               <p className="text-violet-800 dark:text-[#D3D3D3] font-bold">{username || 'User'}</p>
