@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -183,6 +184,35 @@ export default function AppProvider({ children }) {
       console.error('Error updating user:', error);
     }
   };
+
+  const updatePost = async (postId, editedContent) => {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.put(
+        `${apiUrl}/api/posts/${postId}`,
+        { content: editedContent },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.id === postId ? { ...post, content: editedContent } : post
+          )
+        );
+        alert('Post updated successfully!');
+      }
+    } catch (error) {
+      console.error('Failed to update post:', error.response?.data?.message || error.message);
+      alert('Failed to update the post. Please try again.');
+    }
+  };
+  
   
 
   return (
@@ -201,7 +231,8 @@ export default function AppProvider({ children }) {
         allPosts,
         allPostLoading,
         allPostError,
-        updateUser
+        updateUser,
+        updatePost
       }}
     >
       {children}

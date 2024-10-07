@@ -19,12 +19,13 @@ const MyInks = () => {
     setCurrentPost(null);
   };
 
-  const handleSave = (editedContent) => {
+  const handleSave = async (editedContent) => {
     if (currentPost) {
-      updatePost(currentPost.id, editedContent);
+      await updatePost(currentPost.id, editedContent);
       setIsModalOpen(false);
     }
   };
+  
 
   return (
     <div className="mt-4 p-4 rounded w-full max-w-4xl mx-auto pt-30 md:pt-1 md:mt-4">
