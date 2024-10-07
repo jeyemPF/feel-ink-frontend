@@ -8,7 +8,7 @@ const EditPostModal = ({ postContent, onClose, onSave }) => {
   const [editedContent, setEditedContent] = useState(postContent);
 
   const handleSave = () => {
-    onSave(editedContent); // Pass the edited content back to the parent component
+    onSave(editedContent); 
   };
 
   return (

@@ -8,15 +8,15 @@
 
   const EditProfileModal = ({ name, handleFileChange, fileInputRef, onClose, onSave }) => {
     const [newName, setNewName] = useState(name);
-    const [avatar, setAvatar] = useState(null); // New state for the avatar
+    const [avatar, setAvatar] = useState(null); 
   
     const handleSave = () => {
-      onSave(newName, avatar); // Pass both name and avatar to the parent component
+      onSave(newName, avatar); 
     };
   
     const handleAvatarFileChange = (e) => {
-      handleFileChange(e); // This will update the avatar in the parent component
-      setAvatar(e.target.files[0]); // Store the avatar locally in the modal
+      handleFileChange(e);
+      setAvatar(e.target.files[0]); 
     };
   
     return (

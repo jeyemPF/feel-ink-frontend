@@ -9,7 +9,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
   const { user, setUser } = useContext(AppContext);
-  const [name, setName] = useState(user.name); // Add state for name
+  const [name, setName] = useState(user.name); 
   const [previewUrl, setPreviewUrl] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef(null);
@@ -33,32 +33,46 @@ const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
     }
   };
 
-  const handleSaveChanges = async (newName, avatarFile) => {
+  // Separate function to handle name change only
+  const handleSaveName = async (newName) => {
     const token = localStorage.getItem('access_token');
-  
+    try {
+      const response = await axios.put(`${apiUrl}/api/user/update-name/${user.id}`, { name: newName }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Update the name in the user context
+      setUser({ ...user, name: response.data.user.name });
+      alert('Name updated successfully!');
+    } catch (error) {
+      console.error('Failed to update name:', error);
+    }
+  };
+
+  // Separate function for handling avatar changes
+  const handleSaveAvatar = async (avatarFile) => {
+    const token = localStorage.getItem('access_token');
+
     try {
       const formData = new FormData();
-      formData.append('name', newName);
-      
-      if (avatarFile) {
-        formData.append('avatar', avatarFile); // Include the avatar in the request if it was changed
-      }
-  
+      formData.append('avatar', avatarFile);
+
       const response = await axios.post(`${apiUrl}/api/update-profile/${user.id}`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
-  
-      // Update the user's data in the context
-      setUser({ ...user, name: response.data.user.name, avatar: response.data.user.avatar });
-      alert('Profile updated successfully!');
+
+      // Update the avatar in the user context
+      setUser({ ...user, avatar: response.data.user.avatar });
+      alert('Avatar updated successfully!');
     } catch (error) {
-      console.error('Failed to update profile:', error);
+      console.error('Failed to update avatar:', error);
     }
   };
-  
 
   return (
     <div className="w-full flex justify-center relative mt-8 dark:bg-[#ffffff]">
@@ -113,9 +127,14 @@ const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
         <EditProfileModal
           name={user.name}
           fileInputRef={fileInputRef}
-          handleFileChange={handleAvatarChange}
+          handleFileChange={handleFileChange}
           onClose={() => setShowModal(false)}
-          onSave={handleSaveChanges}
+          onSave={(newName, avatarFile) => {
+            handleSaveName(newName); // Call the function to update the name
+            if (avatarFile) {
+              handleSaveAvatar(avatarFile); // Call the function to update the avatar if provided
+            }
+          }}
         />
       )}
     </div>
