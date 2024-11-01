@@ -7,7 +7,7 @@ import { AppContext } from '../../../context/AppContext';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const ProfileInfo = ({ toggleDropdown, avatar, handleAvatarChange, token }) => {
+const ProfileInfo = ({ avatar, handleAvatarChange, token }) => {
   const { user, setUser } = useContext(AppContext);
   const [name, setName] = useState(user.name); 
   const [previewUrl, setPreviewUrl] = useState(null);

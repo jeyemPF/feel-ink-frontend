@@ -1,13 +1,11 @@
 // src/App.jsx
 
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/auth/Login';
-import Register from './pages/auth/Register'; // Import the Register component
+import Register from './pages/auth/Register'; 
 import Dashboard from './pages/home/Dashboard';
-import Profile from './pages/home/profile/Profile';
+  import Profile from './pages/home/profile/Profile';
 import PrivateRoute from './components/PrivateRoute';
-import GoogleCallback from './components/auth/GoogleCallback';
 import './index.css';
 import LoginSuccess from './components/auth/LoginSucess';
 
