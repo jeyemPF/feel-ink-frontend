@@ -2,7 +2,7 @@
 
 # 🖋️ Feel Ink: Express Yourself, One Stroke at a Time
 
-![Feel Ink Logo](https://placeholder.svg?height=200&width=200&text=Feel+Ink)
+![Feel Ink Logo](https://res.cloudinary.com/dihmqs39z/image/upload/v1729827554/Feel_Ink_pd4mn4.png)
 
 *Your digital canvas for emotions, thoughts, and everything in between.*
 
