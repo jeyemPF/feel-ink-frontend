@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Typography, Card, Popover } from 'antd';
 import { HeartOutlined, EditOutlined } from '@ant-design/icons';
 import { AppContext } from '../../../context/AppContext';
-import EditPostModal from '../../../components/modals/EditPostModal'; // Import the new modal
+import EditPostModal from '../../../components/modals/EditPostModal'; 
 
 const MyInks = () => {
   const { posts, updatePost } = useContext(AppContext);
@@ -33,7 +33,7 @@ const MyInks = () => {
         <div>
           <p className='text-xl font-bold text-violet-700'>My Inks</p>
         </div>
-        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div className="mt-2 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4">
           {posts.length > 0 ? (
             posts.map((post) => (
               <Card
@@ -41,7 +41,7 @@ const MyInks = () => {
                 hoverable
                 className="shadow-md rounded-lg bg-white dark:bg-[#333] dark:text-[#D3D3D3] transition-all duration-300 border border-transparent"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center truncate">
                   <p>{post.content}</p>
                   <EditOutlined
                     onClick={() => openModal(post)}
