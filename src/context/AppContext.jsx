@@ -127,8 +127,8 @@ export default function AppProvider({ children }) {
         const data = await response.json();
         setToken(data.access_token); // Update state
         setUser(data.user);
-        localStorage.setItem('access_token', data.access_token); // Update local storage
-        localStorage.setItem('user', JSON.stringify(data.user)); // Update local storage
+        localStorage.setItem('access_token', data.access_token); 
+        localStorage.setItem('user', JSON.stringify(data.user)); 
       } else {
         console.error('Failed to authenticate with Google:', await response.text());
       }
